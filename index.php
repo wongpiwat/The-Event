@@ -10,12 +10,7 @@
 <body>
     <div class="title">
         <span class="title-text">The Event</span>
-        <span style="float:right;font-size: 20px;padding-top:1%">Sign in / Sign up</span>
-    </div>
-    <div class="body">
-        <div class="row">
-            <p></p>
-        </div>
+        <a onclick="document.getElementById('login').style.display='block'"  href="#" style="float:right;font-size: 20px;padding-top:1%">Sign in / Sign up</a>
     </div>
 
     <div class="body">
@@ -32,23 +27,23 @@
         </div>
     </div>
 
-        <div class="finder">
-            <span class="body-text">Finder</span>
+        <div class="categories">
+            <p class="body-text">Categories</p>
         <div class="row">
             <div class="col-4">
-                <p>Business</p>
-                <p>Education</p>
-                <p>Family</p>
+                <a href="#">Business</a><br>
+                <a href="#">Education</a><br>
+                <a href="#">Family</a><br>
             </div>
             <div class="col-4">
-                <p>Health</p>
-                <p>Hobbies</p>
-                <p>Science Technology</p>
+                <a href="#">Health</a><br>
+                <a href="#">Hobbies</a><br>
+                <a href="#">Technology</a><br>
             </div>
             <div class="col-4">
-                <p>Travel</p>
-                <p>Sports</p>
-                <p>Food</p>
+                <a href="#">Travel</a><br>
+                <a href="#">Sports</a><br>
+                <a href="#">Food</a><br>
             </div>
         </div>
     </div>
@@ -59,6 +54,45 @@
         <p><b>&copy; Designed by Kiticha Garden</b></p>
         <br>
     </footer>
+
+<div id="login" class="login">
+  
+  <form class="login-content animate" action="index.php">
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+        
+      <button type="submit">Login</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('login').style.display='none'" class="cancelbtn">Cancel</button>
+      <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+  </form>
+</div>
+
+<script>
+var login = document.getElementById('login');
+window.onclick = function(event) {
+    if (event.target == login) {
+        login.style.display = "none";
+    }
+}
+</script>
+
+
+
+
+
+
+
 </body>
 
 </html>
