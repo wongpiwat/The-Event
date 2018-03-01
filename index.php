@@ -258,9 +258,25 @@ window.onclick = function(e){
 }
 
 
-
-
 </script>
+
+<?php   
+    require 'vendor/autoload.php';
+    use KittichaiGarden\Controllers\Controller;
+    $controller = new Controller();
+    // $controller = new PDO("mysql:host=localhost:3306;dbname=kittichai_garden;charset=utf8mb4","root","");
+    // $statement = $controller->query('SELECT * FROM account');
+    // while($row = $statement->fetch(PDO::FETCH_BOTH)){
+    //     echo $row["username"];
+    // }
+   // $d = new Database();
+    echo "Hello";
+    
+    if(isset($_POST["Login"])){
+        echo "<br>Login";
+        $controller->login($_POST["username"],$_POST["password"]);
+    }
+?>
 
 
 
