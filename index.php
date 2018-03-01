@@ -24,7 +24,9 @@
                 </div>
             </div> 
             <li style="float:right"><a href="profile.php">Profile</a></li>
+
             <li style="float:right"><a href="#" onclick="document.getElementById('create').style.display='block'">Create a Event</a></li>
+
         </ul>
   
     </div>
@@ -142,6 +144,7 @@
   </form>
 </div>
 
+
 <div id="create" class="create">
     <form class="create-content animate" action="index.php">
         <center><h1>Create a Event</h1></center>
@@ -212,6 +215,7 @@
     
 </div>
 
+
 <script>
 
 
@@ -230,12 +234,14 @@ window.onclick = function(e) {
       }
   }
 }
+
 var login = document.getElementById('login')
 window.onclick = function(e){
     if (event.target == login){
         login.style.display = "none";    }
 
 }
+er
 
 
 </script>

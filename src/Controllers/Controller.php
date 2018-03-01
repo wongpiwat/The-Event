@@ -5,41 +5,36 @@ use PDO;
 class Controller{
 
     private $database;
-
     private $user;
-
     //constructor
     function __construct(){
       $this->database = new Database("3306","kittichai_garden","guest","");
-      echo "helloSun+++++++++++";
-      
     }
 
-    function login($username,$password){
+    function signIn($username,$password){
+      // echo "$username<br>$password";
       // echo "<br>";
-      // echo $username,$password;
-      // echo "<br>";
-    
-      $connect= $this->database->getConnect();
-      $statement = $connect->query('SELECT * FROM account WHERE username='."'".$username."'".' and password='."'".$password."'");
-      //var_dump($statement);
-      $row = $statement->fetch(PDO::FETCH_BOTH);
-      //echo $row["username"]." ".$row["password"]."-----";
-      
-      //------------------------------------
-      //check if has user in database
-      if($row["username"] == "" && $row["password"] == ""){
-        echo "false";
+      if($this->database->findUser($username,$password)){
+        echo "Login Success.";
+        $this->user = $this->database->readAccount($username,$password);
+        // echo "<pre>";
+        // var_dump($this->user);
+        // echo "</pre>";
       }else{
-        echo "true";
-
-        $statement->setFetchMode(PDO::FETCH_CLASS, 'Account'); 
-        $this->user = $statement->fetch();
-        var_dump($this->user);
-
+        echo "Login Fail.";      
       }
-
     }
+
+
+    function createAccount($username,$password){
+        if($this->database->checkUsername($username)){
+          echo "Username is Already Use!!!";
+        }else{
+          
+        }
+    }
+
+
 
     function getDatabase(){
         return $this->database;
