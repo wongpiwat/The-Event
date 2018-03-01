@@ -12,6 +12,7 @@
         <span class="title-text">The Event</span>
         
         <a onclick="document.getElementById('signUp').style.display='block'"  href="#" style="float:right;font-size: 20px;padding-top:1%"> Sign up</a>
+        <p style="font-size: 20px;float: right;margin-top:1%;">&nbsp;/&nbsp</p>
         <a onclick="document.getElementById('login').style.display='block'"  href="#" style="float:right;font-size: 20px;padding-top:1%">Sign in</a>
     </div>
 
@@ -120,30 +121,20 @@
 
 
         
-        <button type="submit">SignUp</button>
+        <button id="signupbtn" type="submit">SignUp</button>
 
     </from>
-    </div>
-
-    <div class="container" style="background-color:#f1f1f1">
-      <button type="button" onclick="document.getElementById('login').style.display='none'" class="cancelbtn">Cancel</button>
-      <span class="psw">Forgot <a href="#">password?</a></span>
     </div>
   </form>
 </div>
 
 <script>
-
-
-
 var login = document.getElementById('login');
 window.onclick = function(event) {
     if (event.target == login) {
         login.style.display = "none";
     }
 }
-
-
 var signUp = document.getElementById('signUp');
 window.onclick = function(event) {
     if (event.target == signUp){
