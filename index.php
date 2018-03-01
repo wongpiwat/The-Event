@@ -24,9 +24,7 @@
                 </div>
             </div> 
             <li style="float:right"><a href="profile.php">Profile</a></li>
-
             <li style="float:right"><a href="#" onclick="document.getElementById('create').style.display='block'">Create a Event</a></li>
-
         </ul>
   
     </div>
@@ -69,7 +67,7 @@
     <footer class="footer">
 
     <br>
-        <p><b>&copy; Designed by Kiticha Garden</b></p>
+        <p><b>&copy; Designed by Kittichai Garden</b></p>
         <br>
     </footer>
 
@@ -107,16 +105,18 @@
         <input type="password" placeholder="Enter Password" name="psw" required>
 
         <label for="psw"><b>Confirm Your Password</b></label>
-        <input type="password" placeholder="Enter Password again" name="psw" required>
+        <input type="password" placeholder="Enter Password Again" name="psw" required>
 
         <label for="email"><b>Email</b></label>
         <input type="text" placeholder="Enter Email" name="umail" required>
 
-        <label for="FLname"><b>Name</b></label>
-        <input type="text" placeholder="FirstName" name="uFname" required><input type="text" placeholder="LastName" name="uLname" required>
+        <label for="Fname"><b>FirstName</b></label>
+        <input type="text" placeholder="FirstName" name="uFname" required>
+        <label for="Lname"><b>LastName</b></label>
+        <input type="text" placeholder="LastName" name="uLname" required>
 
-        <label for="id"><b>Id Card</b></label>
-        <input type="text" placeholder="Enter Id Card" name="uid" required>
+        <label for="id"><b>Id No.</b></label>
+        <input type="text" placeholder="Enter Id No." name="uid" required>
 
         <form action="/action_page.php">
             <label for="birth"><b>Birthday</b></label>
@@ -133,7 +133,7 @@
         <input type="text" placeholder="Enter Address" name="uaddress" required>
 
         <label for="phone"><b>Phone Number</b></label>
-        <input type="text" placeholder="Enter Phone Number" name="uphone" required>
+        <input type="text" onKeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Enter Phone Number" name="uphone" required>
 
 
             <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtnSignup">Cancel</button>
@@ -143,7 +143,6 @@
     </div>
   </form>
 </div>
-
 
 <div id="create" class="create">
     <form class="create-content animate" action="index.php">
@@ -191,8 +190,8 @@
 
             <form>
                 <label for="Etype"><b>Event type</b></label> 
-                <input type="radio" name="paid" value="paid" > Paid
-                <input type="radio" name="free" value="free"> Free
+                <input type="radio" name="type" value="paid" checked > Paid
+                <input type="radio" name="type" value="free"> Free
             </form>
 
             <label for="cost"><b>Ticket price (Thai Baht)</b></label>
@@ -215,7 +214,6 @@
     
 </div>
 
-
 <script>
 
 
@@ -234,14 +232,12 @@ window.onclick = function(e) {
       }
   }
 }
-
 var login = document.getElementById('login')
 window.onclick = function(e){
     if (event.target == login){
         login.style.display = "none";    }
 
 }
-er
 
 
 </script>
