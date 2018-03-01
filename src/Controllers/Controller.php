@@ -33,9 +33,12 @@ class Controller{
       }else{
         echo "true";
 
+        $statement = $connect->query('SELECT * FROM account WHERE username='."'".$username."'".' and password='."'".$password."'");
         $statement->setFetchMode(PDO::FETCH_CLASS, 'Account'); 
         $this->user = $statement->fetch();
+        echo "<pre>";
         var_dump($this->user);
+        echo "</pre>";
 
       }
 
