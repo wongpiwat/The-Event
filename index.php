@@ -8,11 +8,23 @@
     <title>The Event</title>
 </head>
 <body>
-    <div class="title">
-        <span class="title-text">The Event</span>
-        
-        <a onclick="document.getElementById('signUp').style.display='block'"  href="#" style="float:right;font-size: 20px;padding-top:1%"> Sign up</a>
-        <a onclick="document.getElementById('login').style.display='block'"  href="#" style="float:right;font-size: 20px;padding-top:1%">Sign in</a>
+    <div class="navbar">
+        <ul>
+            <li><a href="index.php"><span class="title-text">The Event</span></a></li>
+            <li style="float:right"><a onclick="document.getElementById('signUp').style.display='block'"  href="#"> Sign up</a></li>
+            <li style="float:right"><a onclick="document.getElementById('login').style.display='block'"  href="#">Sign in</a></li>
+            <div class="dropdown">
+                <a class="dropbtn" onclick="myFunction()">Dropdown</a>
+                <div class="dropdown-content" id="myDropdown">
+                    <a href="#">Settings</a>
+                    <a href="#">Feedback</a>
+                    <a href="#">Help</a>
+                    <a href="#">Sign out</a>
+                </div>
+            </div> 
+            <li style="float:right"><a href="profile.php">Profile</a></li>
+            <li style="float:right"><a href="#">Create a Event</a></li>
+        </ul>
     </div>
 
     <div class="body">
@@ -53,7 +65,7 @@
     <footer class="footer">
 
     <br>
-        <p><b>&copy; Designed by Kittichai Garden</b></p>
+        <p><b>&copy; Designed by Kiticha Garden</b></p>
         <br>
     </footer>
 
@@ -119,37 +131,34 @@
         <input type="text" placeholder="Enter Phone Number" name="uphone" required>
 
 
-        
-        <button type="submit">SignUp</button>
+            <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtnSignup">Cancel</button>
+            <button id="signupbtn" type="submit" style="width: 60%; height: 40%;float: right;">SignUp</button>
+
 
     </from>
-    </div>
-
-    <div class="container" style="background-color:#f1f1f1">
-      <button type="button" onclick="document.getElementById('login').style.display='none'" class="cancelbtn">Cancel</button>
-      <span class="psw">Forgot <a href="#">password?</a></span>
     </div>
   </form>
 </div>
 
 <script>
 
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
 
-
-var login = document.getElementById('login');
-window.onclick = function(event) {
-    if (event.target == login) {
-        login.style.display = "none";
-    }
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
+    var myDropdown = document.getElementById("myDropdown");
+      if (myDropdown.classList.contains('show')) {
+        myDropdown.classList.remove('show');
+      }
+  }
 }
 
 
-var signUp = document.getElementById('signUp');
-window.onclick = function(event) {
-    if (event.target == signUp){
-        signUp.style.display = "none";
-    }
-}
 </script>
 
 
