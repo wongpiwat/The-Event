@@ -5,6 +5,9 @@ use PDO;
 class Controller{
 
     private $database;
+
+    private $user;
+
     //constructor
     function __construct(){
       $this->database = new Database("3306","kittichai_garden","guest","");
@@ -29,6 +32,11 @@ class Controller{
         echo "false";
       }else{
         echo "true";
+
+        $statement->setFetchMode(PDO::FETCH_CLASS, 'Account'); 
+        $this->user = $statement->fetch();
+        var_dump($this->user);
+
       }
 
     }

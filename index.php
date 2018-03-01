@@ -25,7 +25,9 @@
             </div> 
             <li style="float:right"><a href="profile.php">Profile</a></li>
 
+
             <li style="float:right"><a onclick="document.getElementById('create').style.display='block'" href="#">Create a Event</a></li>
+
 
         </ul>
   
@@ -75,15 +77,17 @@
 
 <div id="login" class="login">
   
-  <form class="login-content animate" action="index.php">
+
+  <form class="login-content animate" action="index.php" method="POST">
     <div class="container">
       <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
+      <input type="text" placeholder="Enter Username" name="username" required>
 
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <input type="password" placeholder="Enter Password" name="password" required>
         
-      <button type="submit">Login</button>
+      <button type="submit" name="Login">Login</button>
+
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
@@ -132,7 +136,9 @@
         <input type="text" placeholder="Enter Address" name="uaddress" required>
 
         <label for="phone"><b>Phone Number</b></label>
+
         <input maxlength="10" onKeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" placeholder="Enter Phone Number" name="uphone" required>
+
 
 
             <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtnSignup">Cancel</button>
@@ -143,6 +149,11 @@
     </div>
   </form>
 </div>
+
+
+<script>
+
+
 
 
 
@@ -220,12 +231,15 @@
 
 <script>
 
+
 /* When the user clicks on the button, 
 toggle between hiding and showing the dropdown content */
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
 
+
 }
+
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(e) {
   if (!e.target.matches('.dropbtn')) {
@@ -235,12 +249,14 @@ window.onclick = function(e) {
       }
   }
 }
+
 var login = document.getElementById('login')
 window.onclick = function(e){
     if (event.target == login){
         login.style.display = "none";    }
 
 }
+
 
 
 
@@ -254,4 +270,28 @@ window.onclick = function(e){
 
 </body>
 
+
 </html>
+
+<?php   
+    require 'vendor/autoload.php';
+    use KittichaiGarden\Controllers\Controller;
+    $controller = new Controller();
+
+    // $controller = new PDO("mysql:host=localhost:3306;dbname=kittichai_garden;charset=utf8mb4","root","");
+    // $statement = $controller->query('SELECT * FROM account');
+    // while($row = $statement->fetch(PDO::FETCH_BOTH)){
+    //     echo $row["username"];
+    // }
+   // $d = new Database();
+    echo "Hello";
+    
+
+    if(isset($_POST["Login"])){
+        echo "<br>Login";
+        $controller->login($_POST["username"],$_POST["password"]);
+    }
+?>
+
+
+
