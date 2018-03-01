@@ -8,12 +8,25 @@
     <title>The Event</title>
 </head>
 <body>
-    <div class="title">
-        <span class="title-text">The Event</span>
-        
-        <a onclick="document.getElementById('signUp').style.display='block'"  href="#" style="float:right;font-size: 20px;padding-top:1%"> Sign up</a>
-        <p style="font-size: 20px;float: right;margin-top:1%;">&nbsp;/&nbsp</p>
-        <a onclick="document.getElementById('login').style.display='block'"  href="#" style="float:right;font-size: 20px;padding-top:1%">Sign in</a>
+
+    <div class="navbar">
+        <ul>
+            <li><a href="index.php"><span class="title-text">The Event</span></a></li>
+            <li style="float:right"><a onclick="document.getElementById('signUp').style.display='block'"  href="#"> Sign up</a></li>
+            <li style="float:right"><a onclick="document.getElementById('login').style.display='block'"  href="#">Sign in</a></li>
+            <div class="dropdown">
+                <a class="dropbtn" onclick="myFunction()">Dropdown</a>
+                <div class="dropdown-content" id="myDropdown">
+                    <a href="#">Settings</a>
+                    <a href="#">Feedback</a>
+                    <a href="#">Help</a>
+                    <a href="#">Sign out</a>
+                </div>
+            </div> 
+            <li style="float:right"><a href="profile.php">Profile</a></li>
+            <li style="float:right"><a onclick="document.getElementById('create').style.display='block'" href="#">Create a Event</a></li>
+        </ul>
+  
     </div>
 
     <div class="body">
@@ -117,7 +130,7 @@
         <input type="text" placeholder="Enter Address" name="uaddress" required>
 
         <label for="phone"><b>Phone Number</b></label>
-        <input type="text" placeholder="Enter Phone Number" name="uphone" required>
+        <input maxlength="10" onKeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" placeholder="Enter Phone Number" name="uphone" required>
 
 
             <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtnSignup">Cancel</button>
@@ -129,19 +142,98 @@
   </form>
 </div>
 
-<script>
 
-var signUp = document.getElementById('signUp');
-window.onclick = function(event) {
-    if (event.target == signUp){
-        signUp.style.display  ;
-    }
+<div id="create" class="create">
+  
+    <form class="create-content animate" action="index.php">
+        <center><h1>Create a Event</h1></center>
+        <div class="container">
+        <label for="orgaName"><b>Organizer name</b></label>
+        <input type="text" placeholder="Company Name" name="orname" required>
+
+        <label for="conName"><b>Contact name</b></label>
+        <input type="text" placeholder="Kitti Tera" name="cname" required><br>
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="John@hotmail.com" name="mail" required>
+
+        <label for="Numphone" ><b>Phone</b></label>
+        <input maxlength="10" onKeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" placeholder="0xx-xxx-xxxx" name="phone" required><br>
+
+        <form action="/action_page.php">
+            <label for="birth"><b>Date of event</b></label>
+            <input type="date" name="bday">
+        </form>
+
+        <label for="size"><b>Size of event</b></label>
+            <select>
+            <option value="one">1 - 50 People</option>
+            <option value="fifty">51 - 100 People</option>
+            <option value="one-hundred-one">101 - 500 People</option>
+            <option value="five-hundred-one">501 - 1000 People</option>
+            <option value="one-thoudsand-one">1001 - 5000 People</option>
+            <option value="over">More than 5000 people</option>
+            </select>
+        
+        <label for="event"><b>Event category</b></label>
+            <select>
+            <option value="business">Business</option>
+            <option value="education">Education</option>
+            <option value="family">Family</option>
+            <option value="health">Health</option>
+            <option value="hobbies">Hobbies</option>
+            <option value="technology">Technology</option>
+            <option value="travel">Travel</option>
+            <option value="sport">Sport</option>
+            <option value="food">Food</option>
+            </select><br>
+        
+
+
+        <form>
+            <label for="Etype"><b>Event type</b></label> 
+            <input type="radio" name="paid" value="paid" > Paid
+            <input type="radio" name="free" value="free"> Free
+        </form>
+
+
+        <label for="cost"><b>Ticket price (Thai Baht)</b></label>
+        <input type="text" placeholder="xx.xx Baht" name="costticket" required><br>
+
+        <label for="cTime"><b>Contact Time</b></label>
+        <input type="text" placeholder="08.00-18.00 everyday" name="time" required>
+
+        <label for="adMes"><b>Additional message</b></label>
+        <input  type="text" placeholder="text......" name="message" required>
+
+        <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('create').style.display='none'" class="cancelbtnSignup">Cancel</button>
+        <button id="signupbtn" type="submit" style="width: 60%; height: 40%;float: right;">Create a event</button>
+
+ 
+
+    </form>
+    </div>
+
+
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
 }
-var login = document.getElementById('login');
-window.onclick = function(event) {
-    if (event.target == login) {
-        login.style.display = "none" ;
-    }
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
+    var myDropdown = document.getElementById("myDropdown");
+      if (myDropdown.classList.contains('show')) {
+        myDropdown.classList.remove('show');
+      }
+  }
+}
+var login = document.getElementById('login')
+window.onclick = function(e){
+    if (event.target == login){
+        login.style.display = "none";    }
 }
 </script>
 
