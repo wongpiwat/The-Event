@@ -10,7 +10,9 @@
 <body>
     <div class="title">
         <span class="title-text">The Event</span>
-        <a onclick="document.getElementById('login').style.display='block'"  href="#" style="float:right;font-size: 20px;padding-top:1%">Sign in / Sign up</a>
+        
+        <a onclick="document.getElementById('signUp').style.display='block'"  href="#" style="float:right;font-size: 20px;padding-top:1%"> Sign up</a>
+        <a onclick="document.getElementById('login').style.display='block'"  href="#" style="float:right;font-size: 20px;padding-top:1%">Sign in</a>
     </div>
 
     <div class="body">
@@ -51,7 +53,7 @@
     <footer class="footer">
 
     <br>
-        <p><b>&copy; Designed by Kiticha Garden</b></p>
+        <p><b>&copy; Designed by Kittichai Garden</b></p>
         <br>
     </footer>
 
@@ -78,11 +80,74 @@
   </form>
 </div>
 
+<div id="signUp" class="signUp">
+    <form class="signUp-content animate" action="index.php">
+    <div class="container">
+        <label for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="uname" required>
+
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" required>
+
+        <label for="psw"><b>Confirm Your Password</b></label>
+        <input type="password" placeholder="Enter Password again" name="psw" required>
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="umail" required>
+
+        <label for="FLname"><b>Name</b></label>
+        <input type="text" placeholder="FirstName" name="uFname" required><input type="text" placeholder="LastName" name="uLname" required>
+
+        <label for="id"><b>Id Card</b></label>
+        <input type="text" placeholder="Enter Id Card" name="uid" required>
+
+        <form action="/action_page.php">
+            <label for="birth"><b>Birthday</b></label>
+            <input type="date" name="bday">
+        </form>
+
+        <form>
+            <label for="gen"><b>Gender</b></label><br>
+            <input type="radio" name="gender" value="male" checked> Male
+            <input type="radio" name="gender" value="female"> Female<br>
+        </form> 
+
+        <label for="address"><b>Address</b></label>
+        <input type="text" placeholder="Enter Address" name="uaddress" required>
+
+        <label for="phone"><b>Phone Number</b></label>
+        <input type="text" placeholder="Enter Phone Number" name="uphone" required>
+
+
+        
+        <button type="submit">SignUp</button>
+
+    </from>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('login').style.display='none'" class="cancelbtn">Cancel</button>
+      <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+  </form>
+</div>
+
 <script>
+
+
+
 var login = document.getElementById('login');
 window.onclick = function(event) {
     if (event.target == login) {
         login.style.display = "none";
+    }
+}
+
+
+var signUp = document.getElementById('signUp');
+window.onclick = function(event) {
+    if (event.target == signUp){
+        signUp.style.display = "none";
     }
 }
 </script>
