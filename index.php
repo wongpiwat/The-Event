@@ -81,7 +81,8 @@
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="password" required>
         
-      <button type="submit" name="Login">Login</button>
+
+      <button type="submit" name="SignIn">Login</button>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
@@ -179,18 +180,14 @@ window.onclick = function(e) {
     require 'vendor/autoload.php';
     use KittichaiGarden\Controllers\Controller;
     $controller = new Controller();
-
-    // $controller = new PDO("mysql:host=localhost:3306;dbname=kittichai_garden;charset=utf8mb4","root","");
-    // $statement = $controller->query('SELECT * FROM account');
-    // while($row = $statement->fetch(PDO::FETCH_BOTH)){
-    //     echo $row["username"];
-    // }
-   // $d = new Database();
-    echo "Hello";
     
 
-    if(isset($_POST["Login"])){
-        echo "<br>Login<br>";
-        $controller->login($_POST["username"],$_POST["password"]);
+    if(isset($_POST["SignIn"])){
+        echo "<br>---Sign in---<br>";
+        $controller->signIn($_POST["username"],$_POST["password"]);
+    }else if(isset($_POST["SignUp"])){
+        echo "<br>---Sign up---<br>";
+        // $controller->signIn($_POST["username"],$_POST["password"]);
+
     }
 ?>
