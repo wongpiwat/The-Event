@@ -24,7 +24,9 @@
                 </div>
             </div> 
             <li style="float:right"><a href="profile.php">Profile</a></li>
+
             <li style="float:right"><a onclick="document.getElementById('create').style.display='block'" href="#">Create a Event</a></li>
+
         </ul>
   
     </div>
@@ -67,7 +69,7 @@
     <footer class="footer">
 
     <br>
-        <p><b>&copy; Designed by Kittichai Garden</b></p>
+        <p><b>&copy; Designed by Kiticha Garden</b></p>
         <br>
     </footer>
 
@@ -143,6 +145,7 @@
 </div>
 
 
+
 <div id="create" class="create">
   
     <form class="create-content animate" action="index.php">
@@ -216,10 +219,12 @@
 
 
 <script>
+
 /* When the user clicks on the button, 
 toggle between hiding and showing the dropdown content */
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
+
 }
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(e) {
@@ -234,7 +239,11 @@ var login = document.getElementById('login')
 window.onclick = function(e){
     if (event.target == login){
         login.style.display = "none";    }
+
 }
+
+
+
 </script>
 
 
