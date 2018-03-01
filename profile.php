@@ -9,11 +9,9 @@
 </head>
 <body>
     <div class="title">
-        <ul>
-            <li><span class="title-text">The Event</span></li>
-            <li><a href="profile.php" style="float:right">Profile</a></li>
-            <li><a onclick="document.getElementById('login').style.display='block'"  href="#" style="float:right">Sign in / Sign up</a></li>
-        </ul>
+        <span class="title-text">The Event</span>
+        <a onclick="profile.php"  href="#">Profile</a>
+        <a onclick="document.getElementById('login').style.display='block'"  href="#">Sign in / Sign up</a>
     </div>
 
     <div class="body">
