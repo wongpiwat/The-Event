@@ -129,16 +129,17 @@
 </div>
 
 <script>
-var login = document.getElementById('login');
-window.onclick = function(event) {
-    if (event.target == login) {
-        login.style.display = "none";
-    }
-}
+
 var signUp = document.getElementById('signUp');
 window.onclick = function(event) {
     if (event.target == signUp){
-        signUp.style.display = "none";
+        signUp.style.display  ;
+    }
+}
+var login = document.getElementById('login');
+window.onclick = function(event) {
+    if (event.target == login) {
+        login.style.display = "none" ;
     }
 }
 </script>
