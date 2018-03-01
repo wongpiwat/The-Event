@@ -81,6 +81,7 @@
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="password" required>
         
+
       <button type="submit" name="SignIn">Login</button>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
@@ -180,11 +181,13 @@ window.onclick = function(e) {
     use KittichaiGarden\Controllers\Controller;
     $controller = new Controller();
     
+
     if(isset($_POST["SignIn"])){
         echo "<br>---Sign in---<br>";
         $controller->signIn($_POST["username"],$_POST["password"]);
     }else if(isset($_POST["SignUp"])){
         echo "<br>---Sign up---<br>";
         // $controller->signIn($_POST["username"],$_POST["password"]);
+
     }
 ?>
