@@ -1,6 +1,4 @@
 html {
-    /* background:#279df2; */
-    /* margin: 0%; */
     font-family: sans-serif;
     line-height: 1.15;
     
@@ -12,6 +10,24 @@ body {
     margin-right: 5%;
 }
 
+ul {
+    list-style-type: none;
+    overflow: hidden;
+}
+
+li {
+    font-size: 20px;
+    float: left;
+}
+
+
+li a {
+    
+    display: block;
+    text-align: center;
+    padding: 0px 16px;
+    text-decoration: none;
+}
 a {
     color: #000000;
     text-decoration: none;
@@ -21,27 +37,21 @@ a:hover {
     text-decoration: underline;
 }
 
-h1 {
-    margin-top: 0%;
-    margin-bottom: 1%;
-}
-
 .row {
     display: flex;
     flex-wrap: wrap;
 }
 
-span.title-text, p.title-text {
+.title-text {
     font-size: 42px;
 }
 
-span.body-text, p.body-text {
+.body-text {
     font-size: 36px;
 }
 
 
-.title {
-    display: inherit;
+.navbar {
     padding-left: 5%;
     padding-right: 5%;
     padding-top: 2%;
@@ -145,7 +155,8 @@ span.psw {
     padding-top: 16px;
 }
 
-.login {
+
+.login , .signUp{
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -159,11 +170,19 @@ span.psw {
     padding-top: 60px;
 }
 
-.login-content {
+
+.login-content  {
     background-color: #fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
     width: 20%; /* Could be more or less, depending on screen size */
+}
+
+.signUp-content{
+    background-color: #fefefe;
+    margin: 2% auto 15% auto; 
+    border: 1px solid #888;
+    width: 50%;
 }
 
 /* The Close Button (x) */
@@ -181,6 +200,50 @@ span.psw {
     color: red;
     cursor: pointer;
 }
+
+.dropdown {
+    float: right;
+    overflow: hidden;
+}
+
+.dropdown .dropbtn {
+    cursor: pointer;
+    font-size: 20px;    
+    border: none;
+    outline: none;
+    color: #000000;
+    padding: 14px 16px;
+    background-color: inherit;
+
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    /* background-color: #ddd; */
+    text-decoration: underline;
+}
+
+.show {
+    display: block;
+}
+
+
 
 /* Add Zoom Animation */
 .animate {
