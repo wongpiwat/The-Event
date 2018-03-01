@@ -120,8 +120,9 @@
         <input type="text" placeholder="Enter Phone Number" name="uphone" required>
 
 
-        
-        <button id="signupbtn" type="submit">SignUp</button>
+            <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtnSignup">Cancel</button>
+            <button id="signupbtn" type="submit" style="width: 60%; height: 40%;float: right;">SignUp</button>
+
 
     </from>
     </div>
