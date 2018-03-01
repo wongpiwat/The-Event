@@ -8,6 +8,7 @@
     <title>The Event</title>
 </head>
 <body>
+
     <div class="navbar">
         <ul>
             <li><a href="index.php"><span class="title-text">The Event</span></a></li>
@@ -25,6 +26,7 @@
             <li style="float:right"><a href="profile.php">Profile</a></li>
             <li style="float:right"><a href="#">Create a Event</a></li>
         </ul>
+  
     </div>
 
     <div class="body">
@@ -142,6 +144,7 @@
 
 <script>
 
+
 /* When the user clicks on the button, 
 toggle between hiding and showing the dropdown content */
 function myFunction() {
@@ -157,6 +160,7 @@ window.onclick = function(e) {
       }
   }
 }
+
 
 
 </script>
