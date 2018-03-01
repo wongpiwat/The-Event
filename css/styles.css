@@ -145,7 +145,8 @@ span.psw {
     padding-top: 16px;
 }
 
-.login {
+
+.login , .signUp{
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -159,11 +160,19 @@ span.psw {
     padding-top: 60px;
 }
 
-.login-content {
+
+.login-content  {
     background-color: #fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
     width: 20%; /* Could be more or less, depending on screen size */
+}
+
+.signUp-content{
+    background-color: #fefefe;
+    margin: 2% auto 15% auto; 
+    border: 1px solid #888;
+    width: 50%;
 }
 
 /* The Close Button (x) */
