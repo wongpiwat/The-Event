@@ -11,26 +11,27 @@ class Controller{
       $this->database = new Database("3306","kittichai_garden","guest","");
     }
 
+    //SingIn ของผู้ใช้
     function signIn($username,$password){
       // echo "$username<br>$password";
       // echo "<br>";
       if($this->database->findUser($username,$password)){
-        echo "Login Success.";
+        echo "SignIn Success.";
         $this->user = $this->database->readAccount($username,$password);
         // echo "<pre>";
         // var_dump($this->user);
         // echo "</pre>";
       }else{
-        echo "Login Fail.";      
+        echo "SignIn Fail.";      
       }
     }
 
-
-    function createAccount($username,$password){
-        if($this->database->checkUsername($username)){
+    //SignUp ของผู้ใช้ 
+    function  SignUp($username,$password){
+        if($this->database->checkAccount($username,$email)){
           echo "Username is Already Use!!!";
         }else{
-          
+          echo "SignUp";
         }
     }
 
