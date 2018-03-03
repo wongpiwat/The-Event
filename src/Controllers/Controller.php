@@ -27,11 +27,11 @@ class Controller{
     }
 
     //SignUp ของผู้ใช้ 
-    function  SignUp($username,$password){
+    function  SignUp($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone){
         if($this->database->checkAccount($username,$email)){
-          echo "Username is Already Use!!!";
+          echo "Username is Available";
         }else{
-          echo "SignUp";
+          echo "Username is Already Use!!!";
         }
     }
 

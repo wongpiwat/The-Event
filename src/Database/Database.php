@@ -45,7 +45,6 @@ class Database {
     function createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,$type,$status){
         $statement = $this->connect->prepare('INSERT INTO `account`(`username`, `password`, `email`, `firstName`, `lastName`, `ID_No`, `birthday`, `gender`, `address`, `phone`, `type_Account`, `status`) VALUES (:username,:password , :email , :firstName ,
         :lastName , :id_No , :birthday , ;gender, :address , :phone , :type , :status)');
-
         $statement->execute([':username' => $username , ':password' => $password , ':email' => $email , ':firstName' => $firstName ,
         ':lastname' => $lastName , ':id_No' => $id_No , ':birthday' => $birthday , ':gender' => $gender ,
         ':address' => $address , ':phone' => $phone , ':type' => $type , ':status' => $status]);
@@ -53,7 +52,7 @@ class Database {
         var_dump($statement);
 
     }
-
+    
 
 
 

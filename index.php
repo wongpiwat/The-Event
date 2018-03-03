@@ -73,7 +73,7 @@
 
 <div id="login" class="login">
   
-  <form class="login-content animate" action="index.php" method="POST">
+  <form class="login-content animate" action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
     <div class="container">
       <label for="uname"><b>Username/Email</b></label>
       <input type="text" placeholder="Enter Username or Email" name="username" required>
@@ -96,16 +96,16 @@
 </div>
 
 <div id="signUp" class="signUp">
-    <form class="signUp-content animate" action="index.php" method="POST">
+    <form class="signUp-content animate"  method="POST">
     <div class="container">
         <label for="uname"><b>Username</b></label>
         <input type="text" placeholder="Enter Username" name="uname" required>
 
         <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
+        <input type="password" placeholder="Enter Password" name="psw"  id="psw" required>
 
         <label for="psw"><b>Confirm Your Password</b></label>
-        <input type="password" placeholder="Enter Password Again" name="cPsw" required>
+        <input type="password" placeholder="Enter Password Again" name="cPsw" id="cPsw" required>
 
         <label for="email"><b>Email</b></label>
         <input type="text" placeholder="Enter Email" name="umail" required>
@@ -118,16 +118,14 @@
         <label for="id"><b>Id No.</b></label>
         <input type="text" placeholder="Enter Id No." name="uid" required>
 
-        <form action="/action_page.php">
-            <label for="birth"><b>Birthday</b></label>
-            <input type="date" name="bday">
-        </form>
+        <label for="birth"><b>Birthday</b></label>
+        <input type="date" name="bday" id="bday" require><br>
+       
 
-        <form>
-            <label for="gen"><b>Gender</b></label><br>
-            <input type="radio" name="gender" value="male" checked> Male
-            <input type="radio" name="gender" value="female"> Female<br>
-        </form> 
+        <label for="gen"><b>Gender</b></label><br>
+        <input type="radio" name="gender" value="male" checked> Male
+        <input type="radio" name="gender" value="female"> Female<br>
+      
 
         <label for="address"><b>Address</b></label>
         <input type="text" placeholder="Enter Address" name="uaddress" required>
@@ -136,16 +134,16 @@
         <input type="text" onKeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Enter Phone Number" name="uphone" required>
 
 
-            <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtnSignup">Cancel</button>
-            <button id="creataevent" type="submit" style="width: 60%; height: 40%;float: right;" name="SignUp">SignUp</button>
+        <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtnSignup">Cancel</button>
+        <button id="signupbtn" type="button" style="width: 60%; height: 40%;float: right;" name="SignUp" onclick="signUp()" >SignUp</button>
 
-    </from>
+    
     </div>
   </form>
 </div>
 
 <div id="create" class="create">
-    <form class="create-content animate" action="index.php">
+    <form class="create-content animate" action="<?php echo $_SERVER['PHP_SELF'];?>">
         <center><h1>Create a Event</h1></center>
         <div class="container">
             <label for="orgaName"><b>Organizer name</b></label>
@@ -204,9 +202,9 @@
             <input  type="text" placeholder="text......" name="message" required>
 
             <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('create').style.display='none'" class="cancelbtnSignup">Cancel</button>
-            <button id="signupbtn" type="submit" style="width: 60%; height: 40%;float: right;">Create a event</button>
-
-
+            <button id="creataevent" type="submit" style="width: 60%; height: 40%;float: right;">Create a event</button>
+            
+            
 
 
         </div>
@@ -242,6 +240,38 @@ window.onclick = function(e){
 
 </script>
 
+<script src="js/jquery-3.3.1.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    
+    function signUp(){
+        var psw = document.getElementById('psw').value;
+        var cPsw = document.getElementById('cPsw').value;
+        var bday = document.getElementById('bday').value;
+        console.log(psw);
+        console.log(cPsw);
+        console.log(bday);
+        if(psw == cPsw && bday != ""){
+            console.log("Same");
+            document.getElementById('signupbtn').type = "submit";
+            document.getElementById('signupbtn').trigger('click');
+        }else if(psw != cPsw){
+            console.log("Not Same");
+            document.getElementById('psw').value = "";
+            document.getElementById('cPsw').value = "";
+            alert("Password Not the same.");
+            //ฝากทำให้ช่องพาสเวิสเป็นสีแดงด้วยครับ ^^
+        }else if(bday == ""){
+            alert("Input Birthday.");
+        }
+
+        // $.post('index.php',{SignUp:"true",psw:psw,cPsw:cPsw},
+        // function(data){
+        //     console.log(data);
+        // });
+    }
+
+</script>
+
 
 
 
@@ -258,18 +288,16 @@ window.onclick = function(e){
     require 'vendor/autoload.php';
     use KittichaiGarden\Controllers\Controller;
     $controller = new Controller();
-    
-    //เมื่อมีการกดปุ่ม SignIn
-    if(isset($_POST["SignIn"])){
-        echo "<br>---Sign in---<br>";
-        $controller->signIn($_POST["username"],$_POST["password"]);
-    }else if(isset($_POST["SignUp"])){ //เมื่อมีการกดปุ่ม SignUp
-        echo "<br>---Sign up---<br>";
-       if($_POST["psw"] == $_POST["cPsw"]){//ตรวจสอบว่า Password กับ Confirm Password ตรงกันรึเปล่า
-            echo "Password and Confirm Password is same. <br>";
-       }else{
-           echo "Password and Confirm Password is not same. <br>";
-       }
-
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        echo "POST";
+        //เมื่อมีการกดปุ่ม SignIn
+        if(isset($_POST["SignIn"])){
+            echo "<br>---Sign in---<br>";
+            $controller->signIn($_POST["username"],$_POST["password"]);
+        }
+        else if(isset($_POST["SignUp"])){ //เมื่อมีการกดปุ่ม SignUp
+            echo "<br>---Sign up---<br>";
+            $controller->SignUp($_POST["uname"],$_POST["psw"],$_POST["umail"],$_POST["uFname"],$_POST["uLname"],$_POST["uid"],$_POST["bday"],$_POST["gender"],$_POST["uaddress"],$_POST["uphone"]);
+        }
     }
 ?>
