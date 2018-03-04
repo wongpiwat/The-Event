@@ -1,13 +1,15 @@
 <?php
 require 'vendor/autoload.php';
 use KittichaiGarden\Controllers\Controller;
-echo "header<br>";
+//echo "header<br>";
 
 session_start();
 
 $type_Account = "guest";
 $status = null;
 $login = false;
+$username = null;
+$userImage = null;
 
 if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
     $username = $_SESSION["username"];
@@ -65,7 +67,7 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
          
         // </ul>
   
-    </div>`);
+    // </div>`);
     }
 
 </script>

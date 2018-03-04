@@ -136,9 +136,9 @@
         <label for="phone"><b>Phone Number</b></label>
         <input type="text" onKeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Enter Phone Number" name="uphone" required>
 
-
-        <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtnSignup">Cancel</button>
-        <button id="signupbtn" type="button" style="width: 60%; height: 40%;float: right;" name="SignUp" onclick="signUp()" >SignUp</button>
+        <!-- 20,40 -->
+        <button style="width: 20%; height: 7%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtnSignup">Cancel</button>
+        <button id="signupbtn" type="button" style="width: 60%; height: 7%;float: right;" name="SignUp" onclick="signUp()" >SignUp</button>
 
     
     </div>
@@ -262,8 +262,11 @@ window.onclick = function(e){
         document.getElementById('loginForm').reset();
         $.post('src/indexPHP.php',{signIn:"true",username:username,password:password},
         function(data){
+            console.log(data);
+
          if(data == 0){// login ได้
             location.reload();
+            console.log("Sun");
          }
         });
 
@@ -275,7 +278,7 @@ window.onclick = function(e){
 
     function signOut(){
         $.post('src/indexPHP.php',{signOut:"true"},function(data){
-            console.log(data);
+            //console.log(data);
             location.reload();
         });
     }
@@ -311,16 +314,16 @@ window.onclick = function(e){
 
 
 
-    $.ajax({
-        url: 'src/indexPHP.php',
-        method : 'POST',
-        data: { user: "check" },
-        success : function(response) {
-        console.log(response);
+    // $.ajax({
+    //     url: 'src/indexPHP.php',
+    //     method : 'POST',
+    //     data: { user: "check" },
+    //     success : function(response) {
+    //     console.log(response);
         
                     
-         }
-        });
+    //      }
+    //     });
 
 </script>
 
@@ -335,25 +338,4 @@ window.onclick = function(e){
 </html>
 
 
-<?php   
-    // //-----------ส่วนของ PHP-----------
 
-    // require 'vendor/autoload.php';
-    // use KittichaiGarden\Controllers\Controller;
-    
-    // $controller = new Controller();
-
-    // // $_SESSION['control'] = $controller;
-    // if($_SERVER["REQUEST_METHOD"] == "POST"){
-    //     echo "POST";
-    //     //เมื่อมีการกดปุ่ม SignIn
-    //     if(isset($_POST["SignIn"])){
-    //         echo "<br>---Sign in---<br>";
-    //         $controller->signIn($_POST["username"],$_POST["password"]);
-    //     }
-    //     else if(isset($_POST["SignUp"])){ //เมื่อมีการกดปุ่ม SignUp
-    //         echo "<br>---Sign up---<br>";
-    //         $controller->SignUp($_POST["uname"],$_POST["psw"],$_POST["umail"],$_POST["uFname"],$_POST["uLname"],$_POST["uid"],$_POST["bday"],$_POST["gender"],$_POST["uaddress"],$_POST["uphone"],"1");
-    //     }
-    // }
-?>

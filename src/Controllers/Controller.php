@@ -37,6 +37,14 @@ class Controller{
         $_SESSION['username'] = $this->user->getUsername();
         $_SESSION['userImage'] = $this->user->getImage();
         // รีเทิน เลข 0 แสดงว่า admin รีเทินเลข 1 แสดงว่า user ปกติ รีเทินเลข 2 แสดงว่า user ยังไม่ activate
+        if($this->user->getTypeAccount() == "admin"){
+          //$this->database->setConnect("3306","kittichai_garden","admin","password");
+        }else if( $this->user->getTypeAccount() == "user"){
+          if( $this->user->getStatus() == "activate"){ //สร้าง user ใน database ด้วย
+            // $this->database->setConnect("3306","kittichai_garden","user","1234");
+          }
+        }
+
         echo "0";
 
       }else{

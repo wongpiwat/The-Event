@@ -71,6 +71,7 @@ class Database {
     }
 
     function setConnect($port,$databaseName,$username,$password){
+        $this->connect = null;
         $this->connect = new PDO(
             "mysql:host=localhost:".$port.";dbname=".$databaseName.";charset=utf8mb4",
             $username,$password
