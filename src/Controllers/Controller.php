@@ -37,6 +37,8 @@ class Controller{
           }
         }
 
+        echo $this->user;
+
       }else{
         //รีเทิน -1 คือล๊อคอินไม่ได้
         echo "-1";      

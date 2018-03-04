@@ -266,16 +266,21 @@ window.onclick = function(e){
         $.post('src/indexPHP.php',{signIn:"true",username:username,password:password},
         function(data){
             sun(data);
+            var a = "<?php echo "hello";?>";
+            console.log(a);
         });
 
-        function sun(type){
+        
+ 
+    }
+
+    function sun(type){
             console.log(type);
             if(type == -1){
                 alert("Cannot Login");
             }
             
         }
-    }
     
     function signUp(){
         var psw = document.getElementById('psw').value;
@@ -318,24 +323,24 @@ window.onclick = function(e){
 
 
 <?php   
-    //-----------ส่วนของ PHP-----------
+    // //-----------ส่วนของ PHP-----------
 
-    require 'vendor/autoload.php';
-    use KittichaiGarden\Controllers\Controller;
+    // require 'vendor/autoload.php';
+    // use KittichaiGarden\Controllers\Controller;
     
-    $controller = new Controller();
+    // $controller = new Controller();
 
-    // $_SESSION['control'] = $controller;
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-        echo "POST";
-        //เมื่อมีการกดปุ่ม SignIn
-        if(isset($_POST["SignIn"])){
-            echo "<br>---Sign in---<br>";
-            $controller->signIn($_POST["username"],$_POST["password"]);
-        }
-        else if(isset($_POST["SignUp"])){ //เมื่อมีการกดปุ่ม SignUp
-            echo "<br>---Sign up---<br>";
-            $controller->SignUp($_POST["uname"],$_POST["psw"],$_POST["umail"],$_POST["uFname"],$_POST["uLname"],$_POST["uid"],$_POST["bday"],$_POST["gender"],$_POST["uaddress"],$_POST["uphone"],"1");
-        }
-    }
+    // // $_SESSION['control'] = $controller;
+    // if($_SERVER["REQUEST_METHOD"] == "POST"){
+    //     echo "POST";
+    //     //เมื่อมีการกดปุ่ม SignIn
+    //     if(isset($_POST["SignIn"])){
+    //         echo "<br>---Sign in---<br>";
+    //         $controller->signIn($_POST["username"],$_POST["password"]);
+    //     }
+    //     else if(isset($_POST["SignUp"])){ //เมื่อมีการกดปุ่ม SignUp
+    //         echo "<br>---Sign up---<br>";
+    //         $controller->SignUp($_POST["uname"],$_POST["psw"],$_POST["umail"],$_POST["uFname"],$_POST["uLname"],$_POST["uid"],$_POST["bday"],$_POST["gender"],$_POST["uaddress"],$_POST["uphone"],"1");
+    //     }
+    // }
 ?>

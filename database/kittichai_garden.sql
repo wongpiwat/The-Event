@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2018 at 08:29 AM
+-- Generation Time: Mar 04, 2018 at 10:45 AM
 -- Server version: 10.1.29-MariaDB
 -- PHP Version: 7.2.0
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `kittichai_garden`
+-- Database: `poom`
 --
 
 -- --------------------------------------------------------
@@ -49,10 +49,8 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`username`, `password`, `email`, `firstName`, `lastName`, `ID_No`, `birthday`, `gender`, `address`, `phone`, `type_Account`, `Image`, `status`) VALUES
-('sun', '123', '2', '2', '2', '111', '2018-03-10', 'male', '1', '0812345678', 'user', '', 'unActivate'),
-('sunny', '1234', 'vasupol.ch@hotmail.com', 'vasupol', 'chongsathidkiet', '1103300189338', '2018-02-28', 'male', '1', '1', 'user', '', 'unActivate'),
-('sun_vsp', '1234', 'vasupol.ch@ku.th', 'Vasupol', 'Chongsathidkiet', '1234567891111', '1997-08-30', 'male', 'bangkok', '0852224434', 'user', '', 'activate'),
-('toon', '1234', 'kanokpon.th@ku.th', 'kanokpon', 'tonabut', '1145211789654', '1997-04-21', 'male', 'bangkok', '0878102159', 'user', '', 'activate');
+('sun_vsp', '1234', 'vasupol.ch@ku.th', 'Vasupol', 'Chongsathidkiet', '1234567891111', '1997-08-30', 'male', 'bangkok', '852224434', 'user', '', 'activate'),
+('toon', '1234', 'kanokpon.th@ku.th', 'kanokpon', 'tonabut', '1145211789654', '1997-04-21', 'male', 'bangkok', '878102159', 'user', '', 'activate');
 
 -- --------------------------------------------------------
 
