@@ -18,6 +18,7 @@
 
     <div class="navbar">
         <ul>
+            <!--menu bar-->
             <div class="dropdown">
                 <a class="dropbtn" onclick="myFunction()">⌄</a>
                 <div class="dropdown-content" id="myDropdown">
@@ -257,6 +258,7 @@ window.onclick = function(e){
         }
     });
 
+    // set home page
     function home(){
         $('#create').hide();
         $('#profile').hide();
@@ -280,7 +282,7 @@ window.onclick = function(e){
         
  
     }
-
+    //เช็คคน login 1==log pass -1 log not pass 
     function checkLogin(type){
             console.log(type);
             if(type == -1){
