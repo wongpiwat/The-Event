@@ -1,7 +1,14 @@
+<?php
+    if(!isset($_SESSION)){
+        session_start();
+      }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta charset="U+2304">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/styles.css">
@@ -11,11 +18,9 @@
 
     <div class="navbar">
         <ul>
-            <li><a href="index.php"><span class="title-text">The Event</span></a></li>
-            <li style="float:right"><a onclick="document.getElementById('signUp').style.display='block'"  href="#"> Sign up</a></li>
-            <li style="float:right"><a onclick="document.getElementById('login').style.display='block'"  href="#">Sign in</a></li>
+            <!--menu bar-->
             <div class="dropdown">
-                <a class="dropbtn" onclick="myFunction()">Dropdown</a>
+                <a class="dropbtn" onclick="myFunction()">⌄</a>
                 <div class="dropdown-content" id="myDropdown">
                     <a href="#">Settings</a>
                     <a href="#">Feedback</a>
@@ -23,8 +28,11 @@
                     <a href="#">Sign out</a>
                 </div>
             </div> 
-            <li style="float:right"><a href="profile.php">Profile</a></li>
-            <li style="float:right"><a href="#" onclick="document.getElementById('create').style.display='block'">Create a Event</a></li>
+            <li><a href="index.php"><span class="title-text">The Event</span></a></li>
+            <li id="signup" style="float:right"><a onclick="document.getElementById('signUp').style.display='block'"  href="#"> Sign up</a></li>
+            <li id="signin" style="float:right"><a onclick="document.getElementById('login').style.display='block'"  href="#">Sign in</a></li>
+            <li id="profile" style="float:right"><a href="profile.php">Profile</a></li>
+            <li id="create" style="float:right"><a href="#" onclick="document.getElementById('create').style.display='block'">Create a Event</a></li>
         </ul>
   
     </div>
@@ -73,16 +81,16 @@
 
 <div id="login" class="login">
   
-  <form class="login-content animate" action="index.php" method="POST">
+  <form class="login-content animate" id="loginForm" method="POST">
     <div class="container">
       <label for="uname"><b>Username/Email</b></label>
-      <input type="text" placeholder="Enter Username or Email" name="username" required>
+      <input type="text" placeholder="Enter Username or Email" name="username" id="username" required>
 
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="password" required>
+      <input type="password" placeholder="Enter Password" name="password" id="password" required>
         
 
-      <button type="submit" name="SignIn">Login</button>
+      <button type="button" name="SignIn" onclick="signIn()" id="logBtn" >Login</button>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
@@ -96,16 +104,16 @@
 </div>
 
 <div id="signUp" class="signUp">
-    <form class="signUp-content animate" action="index.php">
+    <form class="signUp-content animate"  method="POST">
     <div class="container">
         <label for="uname"><b>Username</b></label>
         <input type="text" placeholder="Enter Username" name="uname" required>
 
         <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
+        <input type="password" placeholder="Enter Password" name="psw"  id="psw" required>
 
         <label for="psw"><b>Confirm Your Password</b></label>
-        <input type="password" placeholder="Enter Password Again" name="psw" required>
+        <input type="password" placeholder="Enter Password Again" name="cPsw" id="cPsw" required>
 
         <label for="email"><b>Email</b></label>
         <input type="text" placeholder="Enter Email" name="umail" required>
@@ -118,16 +126,14 @@
         <label for="id"><b>Id No.</b></label>
         <input type="text" placeholder="Enter Id No." name="uid" required>
 
-        <form action="/action_page.php">
-            <label for="birth"><b>Birthday</b></label>
-            <input type="date" name="bday">
-        </form>
+        <label for="birth"><b>Birthday</b></label>
+        <input type="date" name="bday" id="bday" require><br>
+       
 
-        <form>
-            <label for="gen"><b>Gender</b></label><br>
-            <input type="radio" name="gender" value="male" checked> Male
-            <input type="radio" name="gender" value="female"> Female<br>
-        </form> 
+        <label for="gen"><b>Gender</b></label><br>
+        <input type="radio" name="gender" value="male" checked> Male
+        <input type="radio" name="gender" value="female"> Female<br>
+      
 
         <label for="address"><b>Address</b></label>
         <input type="text" placeholder="Enter Address" name="uaddress" required>
@@ -136,16 +142,16 @@
         <input type="text" onKeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Enter Phone Number" name="uphone" required>
 
 
-            <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtnSignup">Cancel</button>
-            <button id="creataevent" type="submit" style="width: 60%; height: 40%;float: right;">SignUp</button>
+        <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtnSignup">Cancel</button>
+        <button id="signupbtn" type="button" style="width: 60%; height: 40%;float: right;" name="SignUp" onclick="signUp()" >SignUp</button>
 
-    </from>
+    
     </div>
   </form>
 </div>
 
 <div id="create" class="create">
-    <form class="create-content animate" action="index.php">
+    <form class="create-content animate" action="<?php echo $_SERVER['PHP_SELF'];?>">
         <center><h1>Create a Event</h1></center>
         <div class="container">
             <label for="orgaName"><b>Organizer name</b></label>
@@ -204,9 +210,9 @@
             <input  type="text" placeholder="text......" name="message" required>
 
             <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('create').style.display='none'" class="cancelbtnSignup">Cancel</button>
-            <button id="signupbtn" type="submit" style="width: 60%; height: 40%;float: right;">Create a event</button>
-
-
+            <button id="creataevent" type="submit" style="width: 60%; height: 40%;float: right;">Create a event</button>
+            
+            
 
 
         </div>
@@ -242,6 +248,84 @@ window.onclick = function(e){
 
 </script>
 
+<script src="js/jquery-3.3.1.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+
+    document.getElementById('login').addEventListener("keyup", function(event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            document.getElementById("logBtn").click();
+        }
+    });
+
+    // set home page
+    function home(){
+        $('#create').hide();
+        $('#profile').hide();
+        $('.dropdown').hide();
+    }
+    home();
+    function signIn(){
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        console.log(username);
+        console.log(password);
+        document.getElementById('login').style.display='none';
+        document.getElementById('loginForm').reset();
+        $.post('src/indexPHP.php',{signIn:"true",username:username,password:password},
+        function(data){
+            checkLogin(data);
+            var a = "<?php echo "hello";?>";
+            console.log(a);
+        });
+
+        
+ 
+    }
+    //เช็คคน login 1==log pass -1 log not pass 
+    function checkLogin(type){
+            console.log(type);
+            if(type == -1){
+                alert("Cannot Login");
+            }else if (type == 1) {
+                $('#signin').hide();
+                $('#signup').hide();
+                $('.dropdown').show();
+                $('#create').show();
+                $('#profile').show();
+            }
+            
+        }
+    
+    function signUp(){
+        var psw = document.getElementById('psw').value;
+        var cPsw = document.getElementById('cPsw').value;
+        var bday = document.getElementById('bday').value;
+        console.log(psw);
+        console.log(cPsw);
+        console.log(bday);
+        if(psw == cPsw && bday != ""){
+            console.log("Same");
+            document.getElementById('signupbtn').type = "submit";
+            document.getElementById('signupbtn').trigger('click');
+        }else if(psw != cPsw){
+            console.log("Not Same");
+            document.getElementById('psw').value = "";
+            document.getElementById('cPsw').value = "";
+            alert("Password Not the same.");
+            //ฝากทำให้ช่องพาสเวิสเป็นสีแดงด้วยครับ ^^
+        }else if(bday == ""){
+            alert("Input Birthday.");
+        }
+
+        // $.post('index.php',{SignUp:"true",psw:psw,cPsw:cPsw},
+        // function(data){
+        //     console.log(data);
+        // });
+    }
+
+</script>
+
 
 
 
@@ -252,18 +336,26 @@ window.onclick = function(e){
 
 </html>
 
+
 <?php   
-    require 'vendor/autoload.php';
-    use KittichaiGarden\Controllers\Controller;
-    $controller = new Controller();
+    // //-----------ส่วนของ PHP-----------
+
+    // require 'vendor/autoload.php';
+    // use KittichaiGarden\Controllers\Controller;
     
+    // $controller = new Controller();
 
-    if(isset($_POST["SignIn"])){
-        echo "<br>---Sign in---<br>";
-        $controller->signIn($_POST["username"],$_POST["password"]);
-    }else if(isset($_POST["SignUp"])){
-        echo "<br>---Sign up---<br>";
-        // $controller->signIn($_POST["username"],$_POST["password"]);
-
-    }
+    // // $_SESSION['control'] = $controller;
+    // if($_SERVER["REQUEST_METHOD"] == "POST"){
+    //     echo "POST";
+    //     //เมื่อมีการกดปุ่ม SignIn
+    //     if(isset($_POST["SignIn"])){
+    //         echo "<br>---Sign in---<br>";
+    //         $controller->signIn($_POST["username"],$_POST["password"]);
+    //     }
+    //     else if(isset($_POST["SignUp"])){ //เมื่อมีการกดปุ่ม SignUp
+    //         echo "<br>---Sign up---<br>";
+    //         $controller->SignUp($_POST["uname"],$_POST["psw"],$_POST["umail"],$_POST["uFname"],$_POST["uLname"],$_POST["uid"],$_POST["bday"],$_POST["gender"],$_POST["uaddress"],$_POST["uphone"],"1");
+    //     }
+    // }
 ?>
