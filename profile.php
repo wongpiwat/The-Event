@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta charset="U+2304">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/styles.css">
@@ -13,7 +14,7 @@
 <div class="navbar">
         <ul>
             <div class="dropdown">
-                <img src="3.png" width="30" class="dropbtn" onclick="myFunction()">
+                <a class="dropbtn" onclick="myFunction()">⌄</a>
                 <div class="dropdown-content" id="myDropdown">
                     <a href="#">Settings</a>
                     <a href="#">Feedback</a>
@@ -44,7 +45,7 @@
     <footer class="footer">
 
     <br>
-        <p><b>&copy; Designed by Kiticha Garden</b></p>
+        <p><b>&copy; Designed by Kittichai Garden</b></p>
         <br>
     </footer>
 
@@ -121,13 +122,11 @@
 
 
 <script>
-
 /* When the user clicks on the button, 
 toggle between hiding and showing the dropdown content */
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
 }
-
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(e) {
   if (!e.target.matches('.dropbtn')) {
@@ -137,15 +136,6 @@ window.onclick = function(e) {
       }
   }
 }
-
-
-
-
-
-
-
-
-
 </script>
 
 
