@@ -1,38 +1,33 @@
-<?php
-    if(!isset($_SESSION)){
-        session_start();
-      }
-
+<?php //ใส่ทุกอัน
+    include 'header.php'
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta charset="U+2304">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/styles.css">
     <title>The Event</title>
 </head>
 <body>
-
+    <!--ต้องลบทิ้ง navbar-->
     <div class="navbar">
         <ul>
-            <!--menu bar-->
+            <li><a href="index.php"><span class="title-text">The Event</span></a></li>
+            <li style="float:right"><a onclick="document.getElementById('signUp').style.display='block'"  href="#"> Sign up</a></li>
+            <li style="float:right"><a onclick="document.getElementById('login').style.display='block'"  href="#">Sign in</a></li>
             <div class="dropdown">
-                <a class="dropbtn" onclick="myFunction()">⌄</a>
+                <a class="dropbtn" onclick="myFunction()">Dropdown</a>
                 <div class="dropdown-content" id="myDropdown">
                     <a href="#">Settings</a>
                     <a href="#">Feedback</a>
                     <a href="#">Help</a>
-                    <a href="#">Sign out</a>
+                    <a href="#" onclick="signOut()">Sign out</a>
                 </div>
             </div> 
-            <li><a href="index.php"><span class="title-text">The Event</span></a></li>
-            <li id="signup" style="float:right"><a onclick="document.getElementById('signUp').style.display='block'"  href="#"> Sign up</a></li>
-            <li id="signin" style="float:right"><a onclick="document.getElementById('login').style.display='block'"  href="#">Sign in</a></li>
-            <li id="profile" style="float:right"><a href="profile.php">Profile</a></li>
-            <li id="create" style="float:right"><a href="#" onclick="document.getElementById('create').style.display='block'">Create a Event</a></li>
+            <li style="float:right"><a href="profile.php">Profile</a></li>
+            <li style="float:right"><a href="#" onclick="document.getElementById('create').style.display='block'">Create a Event</a></li>
         </ul>
   
     </div>
@@ -141,9 +136,9 @@
         <label for="phone"><b>Phone Number</b></label>
         <input type="text" onKeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Enter Phone Number" name="uphone" required>
 
-
-        <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtnSignup">Cancel</button>
-        <button id="signupbtn" type="button" style="width: 60%; height: 40%;float: right;" name="SignUp" onclick="signUp()" >SignUp</button>
+        <!-- 20,40 -->
+        <button style="width: 20%; height: 7%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtnSignup">Cancel</button>
+        <button id="signupbtn" type="button" style="width: 60%; height: 7%;float: right;" name="SignUp" onclick="signUp()" >SignUp</button>
 
     
     </div>
@@ -258,13 +253,6 @@ window.onclick = function(e){
         }
     });
 
-    // set home page
-    function home(){
-        $('#create').hide();
-        $('#profile').hide();
-        $('.dropdown').hide();
-    }
-    home();
     function signIn(){
         var username = document.getElementById('username').value;
         var password = document.getElementById('password').value;
@@ -274,28 +262,24 @@ window.onclick = function(e){
         document.getElementById('loginForm').reset();
         $.post('src/indexPHP.php',{signIn:"true",username:username,password:password},
         function(data){
-            checkLogin(data);
-            var a = "<?php echo "hello";?>";
-            console.log(a);
+         if(data == 0){// login ได้
+            location.reload();
+         }
         });
 
         
  
     }
-    //เช็คคน login 1==log pass -1 log not pass 
-    function checkLogin(type){
-            console.log(type);
-            if(type == -1){
-                alert("Cannot Login");
-            }else if (type == 1) {
-                $('#signin').hide();
-                $('#signup').hide();
-                $('.dropdown').show();
-                $('#create').show();
-                $('#profile').show();
-            }
-            
-        }
+
+
+
+    function signOut(){
+        $.post('src/indexPHP.php',{signOut:"true"},function(data){
+            //console.log(data);
+            location.reload();
+        });
+    }
+
     
     function signUp(){
         var psw = document.getElementById('psw').value;
@@ -323,6 +307,20 @@ window.onclick = function(e){
         //     console.log(data);
         // });
     }
+
+
+
+
+    $.ajax({
+        url: 'src/indexPHP.php',
+        method : 'POST',
+        data: { user: "check" },
+        success : function(response) {
+        console.log(response);
+        
+                    
+         }
+        });
 
 </script>
 
