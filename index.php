@@ -79,7 +79,7 @@
 
 <div id="login" class="login">
   
-  <form class="login-content animate" action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
+  <form class="login-content animate" id="loginForm" method="POST">
     <div class="container">
       <label for="uname"><b>Username/Email</b></label>
       <input type="text" placeholder="Enter Username or Email" name="username" id="username" required>
@@ -88,7 +88,7 @@
       <input type="password" placeholder="Enter Password" name="password" id="password" required>
         
 
-      <button type="submit" name="SignIn" onclick="signIn()" >Login</button>
+      <button type="button" name="SignIn" onclick="signIn()" id="logBtn" >Login</button>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
@@ -249,19 +249,31 @@ window.onclick = function(e){
 <script src="js/jquery-3.3.1.min.js" charset="utf-8"></script>
 <script type="text/javascript">
 
+    document.getElementById('login').addEventListener("keyup", function(event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            document.getElementById("logBtn").click();
+        }
+    });
+
     function signIn(){
         var username = document.getElementById('username').value;
         var password = document.getElementById('password').value;
         console.log(username);
         console.log(password);
+        document.getElementById('login').style.display='none';
+        document.getElementById('loginForm').reset();
         $.post('src/indexPHP.php',{signIn:"true",username:username,password:password},
         function(data){
-            console.log(data);
-            sun();
+            sun(data);
         });
 
-        function sun(){
-            console.log("hello I'am sun");
+        function sun(type){
+            console.log(type);
+            if(type == -1){
+                alert("Cannot Login");
+            }
+            
         }
     }
     

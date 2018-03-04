@@ -1,6 +1,7 @@
 <?php
 namespace KittichaiGarden\Controllers;
 use KittichaiGarden\Database\Database;
+use KittichaiGarden\Models\Account;
 use PDO;
 
 
@@ -26,20 +27,18 @@ class Controller{
         // รีเทิน เลข 0 แสดงว่า admin รีเทินเลข 1 แสดงว่า user ปกติ รีเทินเลข 2 แสดงว่า user ยังไม่ activate
 
 
-        // if($this->user->getTypeAccount() == "admin"){
-        //   echo "0";
-        // }else if( $this->user->getTypeAccount() == "user" ){
-        //   if($this->user->getStatus() == "activate"){
-        //     echo "1";
-        //   }else if($this->user->getStatus() == "unActivate"){
-        //     echo "2";
-        //   }
-        // }
-        echo "<pre>";
-        var_dump($this->user);
-        echo "</pre>";
+        if($this->user->getTypeAccount() == "admin"){
+          echo "0";
+        }else if( $this->user->getTypeAccount() == "user" ){
+          if($this->user->getStatus() == "activate"){
+            echo "1";
+          }else if($this->user->getStatus() == "unActivate"){
+            echo "2";
+          }
+        }
+
       }else{
-        //รีเทิน -1 คือล๊อคอินไ่ได้
+        //รีเทิน -1 คือล๊อคอินไม่ได้
         echo "-1";      
       }
     }

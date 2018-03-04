@@ -1,6 +1,9 @@
-<?php
+<?php 
 namespace KittichaiGarden\Database;
+use KittichaiGarden\Models\Account;
 use PDO;
+
+
 
 class Database {
 
@@ -15,8 +18,8 @@ class Database {
     //อ่าน User จากดาต้าเบส
     function readAccount ($username,$password){
         $statement = $this->connect->query('SELECT * FROM account WHERE username='."'".$username."'".' and password='."'".$password."'");
-        $statement->setFetchMode(PDO::FETCH_CLASS, 'Account'); 
-        $account  = $statement->fetch();
+        $result = $statement->fetch(PDO::FETCH_BOTH);
+        $account = new Account($result[0],$result[1],$result[2],$result[3],$result[4],$result[5],$result[6],$result[7],$result[8],$result[9],$result[10],$result[11],$result[12]);
         return $account;
     }
     //ตรวจสอบว่ามี Username Email บัตรปชช.โทรศัพท์ อยู่ในดาต้าเบสหรือยัง ?
@@ -75,5 +78,6 @@ class Database {
 
 
 }
+
 
 ?>
