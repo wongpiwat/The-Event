@@ -24,7 +24,7 @@
                 </div>
             </div> 
             <li style="float:right"><a href="profile.php">Profile</a></li>
-            <li style="float:right"><a href="#">Create a Event</a></li>
+            <li style="float:right"><a href="#" onclick="document.getElementById('create').style.display='block'">Create a Event</a></li>
         </ul>
   
     </div>
@@ -67,21 +67,22 @@
     <footer class="footer">
 
     <br>
-        <p><b>&copy; Designed by Kiticha Garden</b></p>
+        <p><b>&copy; Designed by Kittichai Garden</b></p>
         <br>
     </footer>
 
 <div id="login" class="login">
   
-  <form class="login-content animate" action="index.php">
+  <form class="login-content animate" action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
     <div class="container">
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
+      <label for="uname"><b>Username/Email</b></label>
+      <input type="text" placeholder="Enter Username or Email" name="username" required>
 
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
+      <input type="password" placeholder="Enter Password" name="password" required>
         
-      <button type="submit">Login</button>
+
+      <button type="submit" name="SignIn">Login</button>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
@@ -95,51 +96,122 @@
 </div>
 
 <div id="signUp" class="signUp">
-    <form class="signUp-content animate" action="index.php">
+    <form class="signUp-content animate"  method="POST">
     <div class="container">
         <label for="uname"><b>Username</b></label>
         <input type="text" placeholder="Enter Username" name="uname" required>
 
         <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
+        <input type="password" placeholder="Enter Password" name="psw"  id="psw" required>
 
         <label for="psw"><b>Confirm Your Password</b></label>
-        <input type="password" placeholder="Enter Password again" name="psw" required>
+        <input type="password" placeholder="Enter Password Again" name="cPsw" id="cPsw" required>
 
         <label for="email"><b>Email</b></label>
         <input type="text" placeholder="Enter Email" name="umail" required>
 
-        <label for="FLname"><b>Name</b></label>
-        <input type="text" placeholder="FirstName" name="uFname" required><input type="text" placeholder="LastName" name="uLname" required>
+        <label for="Fname"><b>FirstName</b></label>
+        <input type="text" placeholder="FirstName" name="uFname" required>
+        <label for="Lname"><b>LastName</b></label>
+        <input type="text" placeholder="LastName" name="uLname" required>
 
-        <label for="id"><b>Id Card</b></label>
-        <input type="text" placeholder="Enter Id Card" name="uid" required>
+        <label for="id"><b>Id No.</b></label>
+        <input type="text" placeholder="Enter Id No." name="uid" required>
 
-        <form action="/action_page.php">
-            <label for="birth"><b>Birthday</b></label>
-            <input type="date" name="bday">
-        </form>
+        <label for="birth"><b>Birthday</b></label>
+        <input type="date" name="bday" id="bday" require><br>
+       
 
-        <form>
-            <label for="gen"><b>Gender</b></label><br>
-            <input type="radio" name="gender" value="male" checked> Male
-            <input type="radio" name="gender" value="female"> Female<br>
-        </form> 
+        <label for="gen"><b>Gender</b></label><br>
+        <input type="radio" name="gender" value="male" checked> Male
+        <input type="radio" name="gender" value="female"> Female<br>
+      
 
         <label for="address"><b>Address</b></label>
         <input type="text" placeholder="Enter Address" name="uaddress" required>
 
         <label for="phone"><b>Phone Number</b></label>
-        <input type="text" placeholder="Enter Phone Number" name="uphone" required>
+        <input type="text" onKeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Enter Phone Number" name="uphone" required>
 
 
-            <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtnSignup">Cancel</button>
-            <button id="signupbtn" type="submit" style="width: 60%; height: 40%;float: right;">SignUp</button>
+        <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtnSignup">Cancel</button>
+        <button id="signupbtn" type="button" style="width: 60%; height: 40%;float: right;" name="SignUp" onclick="signUp()" >SignUp</button>
 
-
-    </from>
+    
     </div>
   </form>
+</div>
+
+<div id="create" class="create">
+    <form class="create-content animate" action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
+        <center><h1>Create a Event</h1></center>
+        <div class="container">
+            <label for="eventName"><b>Event Name</b></label>
+            <input type="text" name="eventName" required="">
+
+            <label for="location"><b>Location</b></label>
+            <input type="text" name="location" required="">
+
+            <label for="birth"><b>Date of Event</b></label>
+            <input type="date" name="dateOfEvent">
+            <br>
+            <label for="size"><b>Size of Event</b></label>
+            <select>
+                <option value="one">1 - 50 People</option>
+                <option value="fifty">51 - 100 People</option>
+                <option value="one-hundred-one">101 - 500 People</option>
+                <option value="five-hundred-one">501 - 1000 People</option>
+                <option value="one-thoudsand-one">1001 - 5000 People</option>
+                <option value="over">More than 5000 people</option>
+            </select>
+            <br>
+            <label for="eventCategory"><b>Event Category</b></label>
+            <select>
+                <option value="business">Business</option>
+                <option value="education">Education</option>
+                <option value="family">Family</option>
+                <option value="health">Health</option>
+                <option value="hobbies">Hobbies</option>
+                <option value="technology">Technology</option>
+                <option value="travel">Travel</option>
+                <option value="sport">Sport</option>
+                <option value="food">Food</option>
+            </select>
+            <br>
+            <form>
+                <label for="eventType"><b>Event Type</b></label> 
+                <input type="radio" name="type" value="paid" checked>Paid</input>
+                <input type="radio" name="type" value="free">Free</input>
+            </form>
+            <br>
+            <label for="price"><b>Ticket Price (Thai Baht)</b></label>
+            <input type="text" name="price" required><br>
+
+            <label for="details"><b>Details</b></label>
+            <input  type="text" placeholder="" name="message" required>
+
+
+            <label for="organizerName"><b>Organizer Name</b></label>
+            <input type="text" name="organizerName" required="">
+
+            <label for="contactName"><b>Contact Name</b></label>
+            <input type="text" name="contactName" required><br>
+
+            <label for="email"><b>Email</b></label>
+            <input type="text" name="mail" required>
+
+            <label for="phone" ><b>Phone</b></label>
+            <input maxlength="10" onKeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" name="phone" required>
+
+            <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('create').style.display='none'" class="cancelbtnSignup">Cancel</button>
+            <button id="creataevent" type="submit" style="width: 60%; height: 40%;float: right;" name="CreateEvent">Create a event</button>
+            
+            
+
+
+        </div>
+    </form>
+    
 </div>
 
 <script>
@@ -160,8 +232,45 @@ window.onclick = function(e) {
       }
   }
 }
+var login = document.getElementById('login')
+window.onclick = function(e){
+    if (event.target == login){
+        login.style.display = "none";    }
+
+}
 
 
+</script>
+
+<script src="js/jquery-3.3.1.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+    
+    function signUp(){
+        var psw = document.getElementById('psw').value;
+        var cPsw = document.getElementById('cPsw').value;
+        var bday = document.getElementById('bday').value;
+        console.log(psw);
+        console.log(cPsw);
+        console.log(bday);
+        if(psw == cPsw && bday != ""){
+            console.log("Same");
+            document.getElementById('signupbtn').type = "submit";
+            document.getElementById('signupbtn').trigger('click');
+        }else if(psw != cPsw){
+            console.log("Not Same");
+            document.getElementById('psw').value = "";
+            document.getElementById('cPsw').value = "";
+            alert("Password Not the same.");
+            //ฝากทำให้ช่องพาสเวิสเป็นสีแดงด้วยครับ ^^
+        }else if(bday == ""){
+            alert("Input Birthday.");
+        }
+
+        // $.post('index.php',{SignUp:"true",psw:psw,cPsw:cPsw},
+        // function(data){
+        //     console.log(data);
+        // });
+    }
 
 </script>
 
@@ -174,3 +283,29 @@ window.onclick = function(e) {
 </body>
 
 </html>
+
+
+<?php   
+    //-----------ส่วนของ PHP-----------
+    require 'vendor/autoload.php';
+    use KittichaiGarden\Controllers\Controller;
+    $controller = new Controller();
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        echo "POST";
+        //เมื่อมีการกดปุ่ม SignIn
+        if(isset($_POST["SignIn"])){
+            echo "<br>---Sign in---<br>";
+            $controller->signIn($_POST["username"],$_POST["password"]);
+        }
+        if(isset($_POST["SignUp"])){ //เมื่อมีการกดปุ่ม SignUp
+            echo "<br>---Sign up---<br>";
+            $controller->SignUp($_POST["uname"],$_POST["psw"],$_POST["umail"],$_POST["uFname"],$_POST["uLname"],$_POST["uid"],$_POST["bday"],$_POST["gender"],$_POST["uaddress"],$_POST["uphone"]);
+        }
+        if (isset($_POST["CreateEvent"])) { //เมื่อมีการกดปุ่ม Create Event
+            echo "CreateEvent";
+            $controller->createEvent($_POST["orname"],$_POST["cname"],$_POST["mail"],$_POST[""],$_POST[""],$_POST[""],$_POST[""],$_POST[""],$_POST[""],$_POST[""]);
+        }
+
+
+    }
+?>
