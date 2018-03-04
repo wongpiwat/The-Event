@@ -1,7 +1,7 @@
 <?php
 require 'vendor/autoload.php';
 use KittichaiGarden\Controllers\Controller;
-echo "header<br>";
+//echo "header<br>";
 
 session_start();
 
@@ -67,7 +67,7 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
          
         // </ul>
   
-    </div>`);
+    // </div>`);
     }
 
 </script>

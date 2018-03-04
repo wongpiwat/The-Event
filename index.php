@@ -311,16 +311,16 @@ window.onclick = function(e){
 
 
 
-    $.ajax({
-        url: 'src/indexPHP.php',
-        method : 'POST',
-        data: { user: "check" },
-        success : function(response) {
-        console.log(response);
+    // $.ajax({
+    //     url: 'src/indexPHP.php',
+    //     method : 'POST',
+    //     data: { user: "check" },
+    //     success : function(response) {
+    //     console.log(response);
         
                     
-         }
-        });
+    //      }
+    //     });
 
 </script>
 
