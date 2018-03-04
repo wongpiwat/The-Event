@@ -1,3 +1,9 @@
+<?php
+    if(!isset($_SESSION)){
+        session_start();
+      }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,13 +82,13 @@
   <form class="login-content animate" action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
     <div class="container">
       <label for="uname"><b>Username/Email</b></label>
-      <input type="text" placeholder="Enter Username or Email" name="username" required>
+      <input type="text" placeholder="Enter Username or Email" name="username" id="username" required>
 
       <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="password" required>
+      <input type="password" placeholder="Enter Password" name="password" id="password" required>
         
 
-      <button type="submit" name="SignIn">Login</button>
+      <button type="submit" name="SignIn" onclick="signIn()" >Login</button>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
@@ -242,6 +248,22 @@ window.onclick = function(e){
 
 <script src="js/jquery-3.3.1.min.js" charset="utf-8"></script>
 <script type="text/javascript">
+
+    function signIn(){
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        console.log(username);
+        console.log(password);
+        $.post('src/indexPHP.php',{signIn:"true",username:username,password:password},
+        function(data){
+            console.log(data);
+            sun();
+        });
+
+        function sun(){
+            console.log("hello I'am sun");
+        }
+    }
     
     function signUp(){
         var psw = document.getElementById('psw').value;
@@ -285,9 +307,13 @@ window.onclick = function(e){
 
 <?php   
     //-----------ส่วนของ PHP-----------
+
     require 'vendor/autoload.php';
     use KittichaiGarden\Controllers\Controller;
+    
     $controller = new Controller();
+
+    // $_SESSION['control'] = $controller;
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         echo "POST";
         //เมื่อมีการกดปุ่ม SignIn
@@ -297,7 +323,7 @@ window.onclick = function(e){
         }
         else if(isset($_POST["SignUp"])){ //เมื่อมีการกดปุ่ม SignUp
             echo "<br>---Sign up---<br>";
-            $controller->SignUp($_POST["uname"],$_POST["psw"],$_POST["umail"],$_POST["uFname"],$_POST["uLname"],$_POST["uid"],$_POST["bday"],$_POST["gender"],$_POST["uaddress"],$_POST["uphone"]);
+            $controller->SignUp($_POST["uname"],$_POST["psw"],$_POST["umail"],$_POST["uFname"],$_POST["uLname"],$_POST["uid"],$_POST["bday"],$_POST["gender"],$_POST["uaddress"],$_POST["uphone"],"1");
         }
     }
 ?>

@@ -19,12 +19,12 @@ class Database {
         $account  = $statement->fetch();
         return $account;
     }
-    //ตรวจสอบว่ามี Username หรือ Email อยู่ในดาต้าเบสหรือยัง ?
-    function checkAccount($username,$email){
-        $statement = $this->connect->prepare('SELECT username,email FROM account WHERE username=:username or email=:email');
-        $statement->execute([':username' => $username , ':email' => $email]);
+    //ตรวจสอบว่ามี Username Email บัตรปชช.โทรศัพท์ อยู่ในดาต้าเบสหรือยัง ?
+    function checkAccount($username,$email,$id_No,$phone){
+        $statement = $this->connect->prepare('SELECT username,email,phone,ID_No FROM account WHERE username=:username or email=:email or phone=:phone or ID_No=:id_No');
+        $statement->execute([':username' => $username , ':email' => $email , ':phone' => $phone , 'id_No' => $id_No ]);
         $result = $statement->fetch(PDO::FETCH_BOTH);
-        if($result["username"] == "" && $result["email"] == ""){
+        if($result["username"] == "" && $result["email"] == "" && $result["phone"] == "" && $result["ID_No"] == "" ){
             return true;
         }else{
             return false;
@@ -43,14 +43,14 @@ class Database {
     }
     //สร้าง User ลงในดาต้าเบส
     function createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,$type,$status){
-        $statement = $this->connect->prepare('INSERT INTO `account`(`username`, `password`, `email`, `firstName`, `lastName`, `ID_No`, `birthday`, `gender`, `address`, `phone`, `type_Account`, `status`) VALUES (:username,:password , :email , :firstName ,
-        :lastName , :id_No , :birthday , ;gender, :address , :phone , :type , :status)');
-        $statement->execute([':username' => $username , ':password' => $password , ':email' => $email , ':firstName' => $firstName ,
-        ':lastname' => $lastName , ':id_No' => $id_No , ':birthday' => $birthday , ':gender' => $gender ,
-        ':address' => $address , ':phone' => $phone , ':type' => $type , ':status' => $status]);
-        
-        var_dump($statement);
-
+        $statement = $this->connect->exec('INSERT INTO account (`username`, `password`, `email`, `firstName`, `lastName`, `ID_No`, `birthday`, `gender`, `address`, `phone`, `type_Account`, `status`) 
+        VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$id_No."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
+         $phone."'".','."'".$type."'".','."'".$status."'".')');
+        // echo "<br>";
+        // var_dump($statement);
+        // echo 'INSERT INTO account (`username`, `password`, `email`, `firstName`, `lastName`, `ID_No`, `birthday`, `gender`, `address`, `phone`, `type_Account`, `status`) 
+        // VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$id_No."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
+        //  $phone."'".','."'".$type."'".','."'".$status."'".')';
     }
     
 

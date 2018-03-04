@@ -28,7 +28,7 @@ class Account {
             $this->phone = $phone;
             $this->idCard = $idCard;
             $this->address = $address;
-            $this->typeAccoutn = $typeAccount;
+            $this->typeAccount = $typeAccount;
             $this->status = $status;
         }
 
