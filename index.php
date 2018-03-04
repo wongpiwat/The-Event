@@ -1,8 +1,5 @@
-<?php
-    if(!isset($_SESSION)){
-        session_start();
-      }
-
+<?php //ใส่ทุกอัน
+    include 'header.php'
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +11,7 @@
     <title>The Event</title>
 </head>
 <body>
-
+    <!--ต้องลบทิ้ง navbar-->
     <div class="navbar">
         <ul>
             <li><a href="index.php"><span class="title-text">The Event</span></a></li>
@@ -26,7 +23,7 @@
                     <a href="#">Settings</a>
                     <a href="#">Feedback</a>
                     <a href="#">Help</a>
-                    <a href="#">Sign out</a>
+                    <a href="#" onclick="signOut()">Sign out</a>
                 </div>
             </div> 
             <li style="float:right"><a href="profile.php">Profile</a></li>
@@ -265,22 +262,24 @@ window.onclick = function(e){
         document.getElementById('loginForm').reset();
         $.post('src/indexPHP.php',{signIn:"true",username:username,password:password},
         function(data){
-            sun(data);
-            var a = "<?php echo "hello";?>";
-            console.log(a);
+         if(data == 0){// login ได้
+            location.reload();
+         }
         });
 
         
  
     }
 
-    function sun(type){
-            console.log(type);
-            if(type == -1){
-                alert("Cannot Login");
-            }
-            
-        }
+
+
+    function signOut(){
+        $.post('src/indexPHP.php',{signOut:"true"},function(data){
+            console.log(data);
+            location.reload();
+        });
+    }
+
     
     function signUp(){
         var psw = document.getElementById('psw').value;
@@ -308,6 +307,20 @@ window.onclick = function(e){
         //     console.log(data);
         // });
     }
+
+
+
+
+    $.ajax({
+        url: 'src/indexPHP.php',
+        method : 'POST',
+        data: { user: "check" },
+        success : function(response) {
+        console.log(response);
+        
+                    
+         }
+        });
 
 </script>
 

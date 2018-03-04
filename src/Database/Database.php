@@ -19,8 +19,7 @@ class Database {
     function readAccount ($username,$password){
         $statement = $this->connect->query('SELECT * FROM account WHERE username='."'".$username."'".' and password='."'".$password."'");
         $result = $statement->fetch(PDO::FETCH_BOTH);
-        $account = new Account($result[0],$result[1],$result[2],$result[3],$result[4],$result[5],$result[6],$result[7],$result[8],$result[9],$result[10],$result[11],$result[12]);
-        return $account;
+        return $result;
     }
     //ตรวจสอบว่ามี Username Email บัตรปชช.โทรศัพท์ อยู่ในดาต้าเบสหรือยัง ?
     function checkAccount($username,$email,$id_No,$phone){
@@ -55,7 +54,15 @@ class Database {
         // VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$id_No."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
         //  $phone."'".','."'".$type."'".','."'".$status."'".')';
     }
-    
+    function checkType($username){
+        $statement = $this->connect->prepare('SELECT type_Account,status FROM account WHERE username=:username');
+        $statement->execute([ ':username' => $username]);
+        $result = $statement->fetch(PDO::FETCH_BOTH);
+        if($result["type_Account"] != "" && $result["status"] != ""){
+            return $result;
+        }
+        return null;
+    }
 
 
 
