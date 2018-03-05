@@ -48,7 +48,7 @@
         $(function(){
             $("#box").jqCarouselImg({
                 imgLen:5,
-                imgUrl:['https://previews.123rf.com/images/clairev/clairev1207/clairev120700095/14604517-sun-theme-abstract-background-1-illustration.jpg','https://picsum.photos/1800/888/?random','https://picsum.photos/1900/850/?random','https://picsum.photos/1800/960/?random','https://picsum.photos/1800/850/?random',],
+                imgUrl:['https://picsum.photos/1800/900/?random','https://picsum.photos/1800/888/?random','https://picsum.photos/1900/850/?random','https://picsum.photos/1800/960/?random','https://picsum.photos/1800/850/?random',],
                 speed:6000,
                 direction:false,
             })
