@@ -67,6 +67,7 @@ class Database {
         $statement = $this->connect->exec('INSERT INTO account (`username`, `password`, `email`, `firstName`, `lastName`, `idNo`, `birthday`, `gender`, `address`, `phone`, `typeAccount`, `status`) 
         VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$idNo."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
          $phone."'".','."'".$type."'".','."'".$status."'".')');
+         echo "1";
     }
 
     //เมื่อผู้ใช้อยู่ในระบบอยู่แล้ว
@@ -109,50 +110,17 @@ class Database {
     
 
     function readEventRec(){
-        $result = '';
-        $count = 0;
         $date = date("Y-m-d");
-        $statement = $this->connect->prepare('SELECT * FROM event WHERE date>=:date');
-        $statement->execute([ ':date' => $date]);
-        while($row = $statement->fetch(PDO::FETCH_BOTH)){
-            if($count == 3){
-                break;
-            }
-            $s =  $this->connect->prepare('SELECT image FROM image_event WHERE idEvent=:e');
-            $s->execute([':e' => $row["idEvent"] ]);
-            $img = $s->fetch(PDO::FETCH_BOTH);
-            if($row["type"] == "free"){
-                $result .= '
-                <div class="media">
-                    <div class="media-left">
-                        <div class="poster-container" ><img class="media-object" src="'.$img[0].'" style="width:140px;height:140px;">
-                        </div>
-                    </div>
-                    <div class="media-body">
-                        <div class="event-title"><b>'.$row["eventName"].'</b></div>
-                        <button name="button" type="submit" class="btn btn-sm btn-secondary pull-right event-btn">Get Tickets</button>
-                        <div class="event-detail">
-                            <i class="fa fa-clock-o fa-fw"></i>'.$row["date"].'|'.$row["time"].'<br>
-                            <i class="fa fa-map-marker fa-fw">
-                            </i>'.$row["location"].'
-                        </div>
-                    </div>
-                </div>
-
-                ';
-            }
-            $count += 1;
-        }
-        return $result;
+        $time = date("h:i:s");
+        $statement = $this->connect->prepare('SELECT * FROM event WHERE date>=:date and time>=:time');
+        $statement->execute([ ':date' => $date , ':time' => $time]);
+        return $this->returnEvent($statement);
 
     }
 
-    function readEventUp(){
+    function returnEvent($statement){
         $result = '';
         $count = 0;
-        $date = date("Y-m-d");
-        $statement = $this->connect->prepare('SELECT * FROM event WHERE date>=:date ORDER BY date');
-        $statement->execute([ ':date' => $date]);
         while($row = $statement->fetch(PDO::FETCH_BOTH)){
             if($count == 3){
                 break;
@@ -183,6 +151,15 @@ class Database {
             $count += 1;
         }
         return $result;
+    }
+
+    function readEventUp(){
+       
+        $date = date("Y-m-d");
+        $time = date("h:i:s");
+        $statement = $this->connect->prepare('SELECT * FROM event WHERE date>=:date and time>=:time ORDER BY date,time');
+        $statement->execute([ ':date' => $date , ':time' => $time]);
+        return $this->returnEvent($statement);
 
     }
 

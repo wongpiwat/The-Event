@@ -17,7 +17,7 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
     $username = $_SESSION["username"];
     $userImage = $_SESSION["userImage"];
     // echo "$username<br>$userImage<br>";
-    
+  
 
     $user = $controller->checkType($username);
 

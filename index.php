@@ -179,7 +179,7 @@
 
     <div id="login" class="login">
 
-    <form class="login-content animate" id="loginForm" method="POST">
+    <form class="login-content animate" id="signInForm" method="POST">
       <div class="container">
         <label for="uname"><b>Username/Email</b></label>
         <input type="text" placeholder="Enter Username or Email" name="username" id="username" required>
@@ -201,10 +201,10 @@
   </div>
 
   <div id="signUp" class="signUp">
-      <form class="signUp-content animate"  method="POST">
+      <form class="signUp-content animate"  id="signUpForm" method="POST" action="src/indexPHP.php">
       <div class="container">
           <label for="uname"><b>Username</b></label>
-          <input type="text" placeholder="Enter Username" name="uname" required>
+          <input type="text" placeholder="Enter Username" name="uname" id="usrn" required>
           <label for="psw"><b>Password</b></label>
           <input type="password" placeholder="Enter Password" name="psw"  id="psw" required>
 
@@ -212,19 +212,25 @@
           <input type="password" placeholder="Enter Password Again" name="cPsw" id="cPsw" required>
 
           <label for="email"><b>Email</b></label>
-          <input type="text" placeholder="Enter Email" name="umail" required>
+          <input type="text" placeholder="Enter Email" name="umail" id="umail" required>
 
           <label for="Fname"><b>FirstName</b></label>
-          <input type="text" placeholder="FirstName" name="uFname" required>
+          <input type="text" placeholder="FirstName" name="uFname" id="firstName" required>
           <label for="Lname"><b>LastName</b></label>
-          <input type="text" placeholder="LastName" name="uLname" required>
+          <input type="text" placeholder="LastName" name="uLname" id="lastName" required>
           <label for="id"><b>Id No.</b></label>
-          <input type="text" placeholder="Enter Id No." name="uid" required>
+          <input type="text" placeholder="Enter Id No." name="uid" id="idNo" required>
           <label for="birth"><b>Birthday</b></label>
           <input type="date" name="bday" id="bday" require><br>
           <label for="gen"><b>Gender</b></label><br>
-          <input type="radio" name="gender" value="male" checked> Male
-          <input type="radio" name="gender" value="female"> Female<br>
+          <input type="radio" name="gender" value="male" id="male" checked> Male
+          <input type="radio" name="gender" value="female"  > Female<br>
+          
+        <label for="address"><b>Address</b></label>
+        <input type="text" placeholder="Enter Address" name="uaddress" id="address" required>
+
+        <label for="phone"><b>Phone Number</b></label>
+        <input type="text" onKeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Enter Phone Number" name="uphone" id="phone" required>
           <!-- 20,40 -->
           <button style="width: 20%; height: 7%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtnSignup">Cancel</button>
           <button id="signupbtn" type="button" style="width: 60%; height: 7%;float: right;" name="SignUp" onclick="signUp()" >SignUp</button>
@@ -456,12 +462,12 @@
           console.log(username);
           console.log(password);
           document.getElementById('login').style.display='none';
-          document.getElementById('loginForm').reset();
+          document.getElementById('signInForm').reset();
           $.post('src/indexPHP.php',{signIn:"true",username:username,password:password},
           function(data){
               console.log(data);
 
-           if(data == 0){// login ได้
+           if(data == 1){// login ได้
               location.reload();
               console.log("Sun");
            }
@@ -482,18 +488,45 @@
 
 
       function signUp(){
+          var username = document.getElementById('usrn').value;
           var psw = document.getElementById('psw').value;
           var cPsw = document.getElementById('cPsw').value;
+          var email = document.getElementById('umail').value;
+          var firstName = document.getElementById('firstName').value;
+          var lastName = document.getElementById('lastName').value;
+          var idNo = document.getElementById('idNo').value;
+          var gender = "male";
+          var address = document.getElementById('address').value;
+          var phone = document.getElementById('phone').value;
           var bday = document.getElementById('bday').value;
+          if(document.getElementById('male').checked == false){
+            gender = "female";
+          }
           console.log(psw);
           console.log(cPsw);
           console.log(bday);
           if(psw == cPsw && bday != ""){
               console.log("Same");
-              document.getElementById('signupbtn').type = "submit";
-              document.getElementById('signupbtn').trigger('click');
+              $.post('src/indexPHP.php',{signUp:"true",uname:username,psw:psw,umail:email,uFname:firstName,
+              uLname:lastName,uid:idNo,bday:bday,gender:gender,uaddress:address,uphone:phone},
+          function(data){
+              console.log(data);
+
+           if(data == 1){
+                console.log("SignUp Successful.");
+                alert("SignUp Successful.");
+                location.reload();
+           }else if(data == -1){
+                alert("Username is already use!!!.")
+                document.getElementById('usrn').value = "";
+                document.getElementById('psw').value = "";
+                document.getElementById('cPsw').value = "";
+           }
+          });
+
           }else if(psw != cPsw){
               console.log("Not Same");
+              document.getElementById('username').value = "";
               document.getElementById('psw').value = "";
               document.getElementById('cPsw').value = "";
               alert("Password Not the same.");
