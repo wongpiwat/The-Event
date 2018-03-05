@@ -31,11 +31,13 @@ class Controller{
       }
     }
 
+
     function checkType($username){
       $result = $this->database->autoSignIn($username);
       if($result != null){
         $this->user = new Account($result[0],$result[1],$result[2],$result[3],$result[4],$result[5],$result[6],$result[7],$result[8],$result[9],$result[10],$result[11],$result[12]);
         $this->changeRole();
+        echo "1";
         return $this->user;
       }
       return null;
@@ -63,15 +65,14 @@ class Controller{
     //SignUp ของผู้ใช้ และ Admin
     function  signUp($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,$check){
         if($this->database->checkAccount($username,$email,$id_No,$phone)){
-          echo "Username is Available";
           if($check == 1){
             $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"user","unActivate");
           }else if($check == 0){
             $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"admin","activate");
           }
-
+          
         }else{
-          echo "Username is Already Use!!!";
+          echo "-1";
         }
     }
 
@@ -106,10 +107,10 @@ class Controller{
 
 
 
-    // //test function นะครับ
-    // public function test () {
-    //     echo __METHOD__, PHP_EOL;
-    // }
+    //test function นะครับ
+    public function test () {
+        echo __METHOD__, PHP_EOL;
+    }
 
 
     
