@@ -1,5 +1,5 @@
 <?php //ใส่ทุกอัน
-    include 'header.php'
+    include 'header.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +22,7 @@
         }
         #box{
             position: relative;
-            width: 95%;
+            width: 90%;
             height: 70%;
             overflow: hidden;
             /* display: flex;
@@ -495,7 +495,7 @@
                 </tr>
             {% } %}
             </script>
-            <script src="js/jquery-3.3.1.min.js"></script>
+
             <script src="js/vendor/jquery.ui.widget.js"></script>
             <script src="js/tmpl.min.js"></script>
             <script src="js/load-image.all.min.js"></script>
