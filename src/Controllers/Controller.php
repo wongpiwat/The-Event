@@ -9,13 +9,14 @@ use PDO;
 
 class Controller{
 
+
     private $database = null;
     private $user = null;
+
     //constructor
     function __construct(){
       $this->database = new Database("3306","kittichai_garden","guest","");
     }
-
 
 
     function changeRole(){
@@ -40,12 +41,14 @@ class Controller{
       return null;
     }
 
+
     //SingIn ของผู้ใช้
     function signIn($username,$password){
       // echo "$username<br>$password";
       // echo "<br>";
       if($this->database->findUser($username,$password)){
         //echo "SignIn Success.";
+
         $result = $this->database->signIn($username,$password);
        
         $this->user = new Account($result[0],$result[1],$result[2],$result[3],$result[4],$result[5],$result[6],$result[7],$result[8],$result[9],$result[10],$result[11],$result[12]);
@@ -53,6 +56,7 @@ class Controller{
         $_SESSION['username'] = $this->user->getUsername();
         $_SESSION['userImage'] = $this->user->getImage();
         
+
       }
     }
 
@@ -73,6 +77,7 @@ class Controller{
 
 
     function signOut(){
+
       $this->user = null;
       session_unset();
       session_destroy();

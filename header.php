@@ -4,19 +4,24 @@ use KittichaiGarden\Controllers\Controller;
 //echo "header<br>";
 
 session_start();
+
 $type_Account = "guest";
 $status = null;
 $login = false;
 $username = null;
 $userImage = null;
+
 $user = null;
+
 
 if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
     $username = $_SESSION["username"];
     $userImage = $_SESSION["userImage"];
     // echo "$username<br>$userImage<br>";
     $controller = new Controller();
+
     $user = $controller->checkType($username);
+
     // echo "<pre>";
     // var_dump($detialUser);
     // echo "</pre>";
@@ -24,11 +29,13 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
     // //เขียน HTML ตรงนี้  User
     // echo "<br>".$detialUser["type_Account"];
     // echo "<br>".$detialUser["status"];
+
     if($user != null){
         $type_Account = $user->getTypeAccount();
         $status = $user->getStatus();
         $login = true;
     }
+
 }
 
 ?>
@@ -36,12 +43,14 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
 <!DOCTYPE html>
 <html>
 <body>
+
 <!--header first page-->
 
 <div id="header"></div> <!--tag for call in javascript-->
 <script src="js/jquery-3.3.1.min.js" charset="utf-8"></script>
 <script type="text/javascript">
     
+
     var typeAccount = "<?php echo $type_Account; ?>";
     var status  = "<?php echo $status; ?>";
     var login = "<?php echo $login; ?>";
@@ -49,6 +58,7 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
     var userImage = "<?php echo $userImage; ?>";
     console.log(typeAccount);
     console.log(status);
+
     if(login == true){ // อยู่ในระบบ Create Event Profile
         $("#home").hide();
         $("#header").html(`<div class="navbar">
@@ -79,8 +89,10 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
         </ul>
   
     </div>`);
+
     }
 
 </script>
 </body>
 </html>
+

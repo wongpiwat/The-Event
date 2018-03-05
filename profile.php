@@ -1,6 +1,8 @@
+
 <?php //ใส่ทุกอัน
     include 'header.php'
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,10 +17,12 @@
 <body >
 
 
+
         <!-- profile -->
         <h2 style="text-align: left;">User Profile</h2>
         <div class="card">
           <img src="theToys.JPG" alt="TheToys" style="width:100%">
+
           <h1>BankKy</h1>
           <p class="title">Student</p>
           <p>Kasetsart University</p>
