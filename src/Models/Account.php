@@ -8,7 +8,7 @@ class Account {
         private $email;
         private $firstName;
         private $surName;
-        private $id_No;
+        private $idNo;
         private $birthday;
         private $gender;
         private $address;
@@ -27,7 +27,7 @@ class Account {
             $this->gender = $gender;
             $this->email = $email;
             $this->phone = $phone;
-            $this->id_No = $id_No;
+            $this->idNo = $id_No;
             $this->address = $address;
             $this->typeAccount = $typeAccount;
             $this->status = $status;
@@ -68,8 +68,8 @@ class Account {
             return $this->phone;
         }
 
-        function getId_No(){
-            return $this->id_No;
+        function getIdNo(){
+            return $this->idNo;
         }
 
         function getAddress(){
@@ -117,8 +117,8 @@ class Account {
             $this->phone = $p;
         }
 
-        function setId_No($c){
-            $this->id_No = $c;
+        function setIdNo($c){
+            $this->idNo = $c;
         }
 
         function setTypeAccount($t){
