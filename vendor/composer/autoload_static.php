@@ -25,7 +25,6 @@ class ComposerStaticInit7f9847aa6786b2fc65db3913f7fc76c1
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit7f9847aa6786b2fc65db3913f7fc76c1::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit7f9847aa6786b2fc65db3913f7fc76c1::$prefixDirsPsr4;
-
         }, null, ClassLoader::class);
     }
 }

@@ -4,15 +4,14 @@ use KittichaiGarden\Controllers\Controller;
 //echo "header<br>";
 
 session_start();
-
+$sun = "helloWorld";
 $type_Account = "guest";
 $status = null;
 $login = false;
 $username = null;
 $userImage = null;
-
 $user = null;
-
+$controller = null;
 
 if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
     $username = $_SESSION["username"];
@@ -43,6 +42,9 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
 <!DOCTYPE html>
 <html>
 <body>
+<head>
+<link rel="stylesheet" href="css/styles.css">
+</head>
 
 <!--header first page-->
 

@@ -1,7 +1,6 @@
 <?php
 namespace KittichaiGarden\Models;
 
-
 class Account {
         private $username;
         private $password;
@@ -67,7 +66,6 @@ class Account {
         function getPhone(){
             return $this->phone;
         }
-
         function getIdNo(){
             return $this->idNo;
         }
@@ -83,11 +81,9 @@ class Account {
         function getStatus(){
             return $this->status;
         }
-
         function getImage(){
             return $this->image;
         }
-
         //setter
         function setPassword($password){
             $this->password = $password;
@@ -128,7 +124,6 @@ class Account {
         function setStatus($s){
             $this->status = $s;
         }
-
         function setImage($m){
             $this->image = $m;
         }

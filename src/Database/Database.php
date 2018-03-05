@@ -3,12 +3,10 @@ namespace KittichaiGarden\Database;
 use KittichaiGarden\Models\Account;
 use PDO;
 
-
-
 class Database {
 
     //ตัวแปรเอาไว้ติดต่อกับ Database
-    private $connect;
+    private $connect = null;
 
     function __construct($port, $databaseName, $username, $password){
 
@@ -46,15 +44,29 @@ class Database {
         }
     }
     //สร้าง User ลงในดาต้าเบส
+
+    //ตรวจสอบว่ามี event อยู่ในดาต้าเบสหรือเปล่า
+    function checkEvent($eventName) {
+        $statement = $this->connect->prepare('SELECT eventName FROM event WHERE eventName=:eventName');
+        $statement->execute([':eventName' => $eventName]);
+        $result = $statement->fetch(PDO::FETCH_BOTH);
+        if($result["eventName"] == ""){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    //สร้างevent
+    function createEvent($eventName,$location,$date,$size,$Category,$type,$price,$detail,$organizerName,$contactName,$email,$phone) {
+        $statement = $this->connect->exec('INSERT INTO event (`nameEvent`, `password`, `email`, `firstName`, `lastName`, `ID_No`, `birthday`, `gender`, `address`, `phone`, `type_Account`, `status`) 
+        VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$id_No."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
+         $phone."'".','."'".$type."'".','."'".$status."'".')');
+    }
+
     function createAccount($username,$password,$email,$firstName,$lastName,$idNo,$birthday,$gender,$address,$phone,$type,$status){
         $statement = $this->connect->exec('INSERT INTO account (`username`, `password`, `email`, `firstName`, `lastName`, `idNo`, `birthday`, `gender`, `address`, `phone`, `typeAccount`, `status`) 
         VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$idNo."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
          $phone."'".','."'".$type."'".','."'".$status."'".')');
-        // echo "<br>";
-        // var_dump($statement);
-        // echo 'INSERT INTO account (`username`, `password`, `email`, `firstName`, `lastName`, `ID_No`, `birthday`, `gender`, `address`, `phone`, `type_Account`, `status`) 
-        // VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$id_No."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
-        //  $phone."'".','."'".$type."'".','."'".$status."'".')';
     }
 
     //เมื่อผู้ใช้อยู่ในระบบอยู่แล้ว
@@ -68,14 +80,17 @@ class Database {
         return null;
     }
 
+    //อ่านผู้ใช้งานจากระบบ
     function readAccount(){
-        $statement = $connect->query('SELECT * FROM account');
+        $output ="";
+        $statement = $this->connect->query('SELECT * FROM account');
         while($row = $statement->fetch(PDO::FETCH_BOTH)){
         $output .= '
             <tr>
                 <td>'.$row["0"].'</td>
                 <td>'.$row["1"].'</td>
                 <td>'.$row["2"].'</td>
+                <td>'.$row["3"].'</td>
                 <td>'.$row["4"].'</td>
                 <td>'.$row["5"].'</td>
                 <td>'.$row["6"].'</td>
@@ -84,25 +99,99 @@ class Database {
                 <td>'.$row["9"].'</td>
                 <td>'.$row["10"].'</td>
                 <td>'.$row["11"].'</td>
-                <td>'.$row["12"].'</td>
+                <td>'.$row["12"].'</td> 
             </tr>
         ';
         }
     return $output;
 
     }
+    
 
+    function readEventRec(){
+        $result = '';
+        $count = 0;
+        $date = date("Y-m-d");
+        $statement = $this->connect->prepare('SELECT * FROM event WHERE date>=:date');
+        $statement->execute([ ':date' => $date]);
+        while($row = $statement->fetch(PDO::FETCH_BOTH)){
+            if($count == 3){
+                break;
+            }
+            $s =  $this->connect->prepare('SELECT image FROM image_event WHERE idEvent=:e');
+            $s->execute([':e' => $row["idEvent"] ]);
+            $img = $s->fetch(PDO::FETCH_BOTH);
+            if($row["type"] == "free"){
+                $result .= '
+                <div class="media">
+                    <div class="media-left">
+                        <div class="poster-container" ><img class="media-object" src="'.$img[0].'" style="width:140px;height:140px;">
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <div class="event-title"><b>'.$row["eventName"].'</b></div>
+                        <button name="button" type="submit" class="btn btn-sm btn-secondary pull-right event-btn">Get Tickets</button>
+                        <div class="event-detail">
+                            <i class="fa fa-clock-o fa-fw"></i>'.$row["date"].'|'.$row["time"].'<br>
+                            <i class="fa fa-map-marker fa-fw">
+                            </i>'.$row["location"].'
+                        </div>
+                    </div>
+                </div>
 
+                ';
+            }
+            $count += 1;
+        }
+        return $result;
 
+    }
+
+    function readEventUp(){
+        $result = '';
+        $count = 0;
+        $date = date("Y-m-d");
+        $statement = $this->connect->prepare('SELECT * FROM event WHERE date>=:date ORDER BY date');
+        $statement->execute([ ':date' => $date]);
+        while($row = $statement->fetch(PDO::FETCH_BOTH)){
+            if($count == 3){
+                break;
+            }
+            $s =  $this->connect->prepare('SELECT image FROM image_event WHERE idEvent=:e');
+            $s->execute([':e' => $row["idEvent"] ]);
+            $img = $s->fetch(PDO::FETCH_BOTH);
+            if($row["type"] == "free"){
+                $result .= '
+                <div class="media">
+                    <div class="media-left">
+                        <div class="poster-container" ><img class="media-object" src="'.$img[0].'" style="width:140px;height:140px;">
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <div class="event-title"><b>'.$row["eventName"].'</b></div>
+                        <button name="button" type="submit" class="btn btn-sm btn-secondary pull-right event-btn">Get Tickets</button>
+                        <div class="event-detail">
+                            <i class="fa fa-clock-o fa-fw"></i>'.$row["date"].'|'.$row["time"].'<br>
+                            <i class="fa fa-map-marker fa-fw">
+                            </i>'.$row["location"].'
+                        </div>
+                    </div>
+                </div>
+
+                ';
+            }
+            $count += 1;
+        }
+        return $result;
+
+    }
 
     function getConnect(){
         return $this->connect;
     }
 
     function setConnect($port,$databaseName,$username,$password){
-
         $this->connect = null;
-
         $this->connect = new PDO(
             "mysql:host=localhost:".$port.";dbname=".$databaseName.";charset=utf8mb4",
             $username,$password
@@ -117,6 +206,4 @@ class Database {
 
 
 }
-
-
 ?>

@@ -31,6 +31,7 @@ class Controller{
       }
     }
 
+
     function checkType($username){
       $result = $this->database->autoSignIn($username);
       if($result != null){
@@ -83,6 +84,14 @@ class Controller{
       session_destroy();
     }
 
+    function createNewEvent($eventName,$location,$date,$size,$Category,$type,$price,$detail,$organizerName,$contactName,$email,$phone) {
+      if ($this->database->checkEvent($eventName)) {
+        echo "Event is Available";
+        $this->database->createEvent($eventName,$location,$date,$size,$Category,$type,$price,$detail,$organizerName,$contactName,$email,$phone);
+      } else {
+        echo "Event is Already Use!!!";
+      }
+    }
 
 
     function getDatabase(){
@@ -98,10 +107,10 @@ class Controller{
 
 
 
-    // //test function นะครับ
-    // public function test () {
-    //     echo __METHOD__, PHP_EOL;
-    // }
+    //test function นะครับ
+    public function test () {
+        echo __METHOD__, PHP_EOL;
+    }
 
 
     
