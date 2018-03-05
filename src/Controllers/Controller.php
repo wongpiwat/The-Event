@@ -16,10 +16,26 @@ class Controller{
       $this->database = new Database("3306","kittichai_garden","guest","");
     }
 
+
+
+    function changeRole(){
+      if($this->user->getTypeAccount() == "admin"){
+        $this->database->setConnect("3306","kittichai_garden","admin","password");
+        echo "admin";
+      }else if( $this->user->getTypeAccount() == "user"){
+        if( $this->user->getStatus() == "activate"){ //สร้าง user ใน database ด้วย
+          $this->database->setConnect("3306","kittichai_garden","user","user");
+          echo "user";
+        }
+      }
+    }
+
     function checkType($username){
-      $result = $this->database->checkType($username);
+      $result = $this->database->autoSignIn($username);
       if($result != null){
-        return $result;
+        $this->user = new Account($result[0],$result[1],$result[2],$result[3],$result[4],$result[5],$result[6],$result[7],$result[8],$result[9],$result[10],$result[11],$result[12]);
+        $this->changeRole();
+        return $this->user;
       }
       return null;
     }
@@ -30,26 +46,13 @@ class Controller{
       // echo "<br>";
       if($this->database->findUser($username,$password)){
         //echo "SignIn Success.";
-        $result = $this->database->readAccount($username,$password);
+        $result = $this->database->signIn($username,$password);
        
         $this->user = new Account($result[0],$result[1],$result[2],$result[3],$result[4],$result[5],$result[6],$result[7],$result[8],$result[9],$result[10],$result[11],$result[12]);
       
         $_SESSION['username'] = $this->user->getUsername();
         $_SESSION['userImage'] = $this->user->getImage();
-        // รีเทิน เลข 0 แสดงว่า admin รีเทินเลข 1 แสดงว่า user ปกติ รีเทินเลข 2 แสดงว่า user ยังไม่ activate
-        if($this->user->getTypeAccount() == "admin"){
-          //$this->database->setConnect("3306","kittichai_garden","admin","password");
-        }else if( $this->user->getTypeAccount() == "user"){
-          if( $this->user->getStatus() == "activate"){ //สร้าง user ใน database ด้วย
-            // $this->database->setConnect("3306","kittichai_garden","user","1234");
-          }
-        }
-
-        echo "0";
-
-      }else{
-        //รีเทิน -1 คือล๊อคอินไม่ได้
-        echo "-1";      
+        
       }
     }
 

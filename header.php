@@ -16,7 +16,7 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
     $userImage = $_SESSION["userImage"];
     // echo "$username<br>$userImage<br>";
     $controller = new Controller();
-    $detialUser = $controller->checkType($username);
+    $user = $controller->checkType($username);
     // echo "<pre>";
     // var_dump($detialUser);
     // echo "</pre>";
@@ -24,9 +24,11 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
     // //เขียน HTML ตรงนี้  User
     // echo "<br>".$detialUser["type_Account"];
     // echo "<br>".$detialUser["status"];
-    $type_Account = $detialUser["type_Account"];
-    $status = $detialUser["status"];
-    $login = true;
+    if($user != null){
+        $type_Account = $user->getTypeAccount();
+        $status = $user->getStatus();
+        $login = true;
+    }
 }
 
 ?>

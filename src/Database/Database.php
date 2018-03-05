@@ -16,7 +16,7 @@ class Database {
     }
 
     //อ่าน User จากดาต้าเบส
-    function readAccount ($username,$password){
+    function signIn($username,$password){
         $statement = $this->connect->query('SELECT * FROM account WHERE username='."'".$username."'".' and password='."'".$password."'");
         $result = $statement->fetch(PDO::FETCH_BOTH);
         return $result;
@@ -54,15 +54,18 @@ class Database {
         // VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$id_No."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
         //  $phone."'".','."'".$type."'".','."'".$status."'".')';
     }
-    function checkType($username){
-        $statement = $this->connect->prepare('SELECT type_Account,status FROM account WHERE username=:username');
+    //เมื่อผู้ใช้อยู่ในระบบอยู่แล้ว
+    function autoSignIn($username){
+        $statement = $this->connect->prepare('SELECT * FROM account WHERE username=:username');
         $statement->execute([ ':username' => $username]);
         $result = $statement->fetch(PDO::FETCH_BOTH);
-        if($result["type_Account"] != "" && $result["status"] != ""){
+        if($result["username"] != "" ){
             return $result;
         }
         return null;
     }
+
+
 
 
 
