@@ -3,7 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+
 -- Generation Time: Mar 05, 2018 at 06:30 AM
+
 -- Server version: 10.1.29-MariaDB
 -- PHP Version: 7.2.0
 
@@ -19,7 +21,9 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
+
 -- Database: `kittichai_garden`
+
 --
 
 -- --------------------------------------------------------
@@ -49,7 +53,9 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`username`, `password`, `email`, `firstName`, `lastName`, `ID_No`, `birthday`, `gender`, `address`, `phone`, `type_Account`, `Image`, `status`) VALUES
+
 ('adminSun', '1234', '-', '-', '-', '-', '0000-00-00', 'male', '-', '-', 'admin', '-', 'activate'),
+
 ('sun_vsp', '1234', 'vasupol.ch@ku.th', 'Vasupol', 'Chongsathidkiet', '1234567891111', '1997-08-30', 'male', 'bangkok', '852224434', 'user', '', 'activate'),
 ('toon', '1234', 'kanokpon.th@ku.th', 'kanokpon', 'tonabut', '1145211789654', '1997-04-21', 'male', 'bangkok', '878102159', 'user', '', 'activate');
 
