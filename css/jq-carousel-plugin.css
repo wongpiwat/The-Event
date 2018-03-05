@@ -1,0 +1,97 @@
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+    imgUl
+*/
+
+
+.imgUl {
+  display: flex;
+  position: absolute;
+  list-style: none;
+  width: 500%;
+  height: 100%;
+  transition: all 2s;
+}
+
+.imgUl .imgLi {
+  width: 20%;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.imgUl .imgLi .carouselImg {
+  width:100%;
+  height: 100%;
+}
+
+/*
+    prev next按钮
+*/
+
+
+.btn-img {
+  position: absolute;
+  display: block;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  top: 50%;
+  margin-top: -25px;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  cursor: pointer;
+  font-size: 40px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  display: none;
+  -moz-user-select: none;
+  /*火狐*/
+  -webkit-user-select: none;
+  /*webkit浏览器*/
+  -ms-user-select: none;
+  /*IE10*/
+  -khtml-user-select: none;
+  /*早期浏览器*/
+  user-select: none;
+}
+
+.prevImg { left: 10px; }
+
+.nextImg { right: 10px; }
+
+.btn-img-hover { background-color: rgba(0, 0, 0, 0.3); }
+
+/*
+    btnUl btnLi 底部按钮（显示当前是第几页或快速跳转到指定页）
+*/
+
+
+.btnUl {
+  position: absolute;
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  top: 95%;
+  height: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.btnUl .btnLi {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.btnUl .btnLi:first-child { background-color: rgba(255, 255, 255, 0.8); }
+
+.btnUl .btnLi-hover { background-color: rgba(255, 255, 255, 0.8); }

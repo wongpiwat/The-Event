@@ -1,3 +1,8 @@
+
+<?php //ใส่ทุกอัน
+    include 'header.php'
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,29 +16,13 @@
 </head>
 <body >
 
-<div class="navbar">
-        <ul>
-            <div class="dropdown">
-                <a class="dropbtn" onclick="myFunction()">⌄</a>
-                <div class="dropdown-content" id="myDropdown">
-                    <a href="#">Settings</a>
-                    <a href="#">Feedback</a>
-                    <a href="#">Help</a>
-                    <a href="#">Sign out</a>
-                </div>
-            </div> 
-            <li><a href="index.php"><span class="title-text">The Event</span></a></li>
-            <li style="float:right"><a onclick="document.getElementById('signUp').style.display='block'"  href="#"> Sign up</a></li>
-            <li style="float:right"><a onclick="document.getElementById('login').style.display='block'"  href="#">Sign in</a></li>
-            <li style="float:right"><a href="profile.php">Profile</a></li>
-            <li style="float:right"><a href="#">Create a Event</a></li>
-        </ul>
-    </div>
-    <div >
+
+
         <!-- profile -->
         <h2 style="text-align: left;">User Profile</h2>
         <div class="card">
-          <img src="IMG_0164.JPG" alt="John" style="width:100%">
+          <img src="theToys.JPG" alt="TheToys" style="width:100%">
+
           <h1>BankKy</h1>
           <p class="title">Student</p>
           <p>Kasetsart University</p>
