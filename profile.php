@@ -1,40 +1,40 @@
+
+<?php //ใส่ทุกอัน
+    include 'header.php'
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta charset="U+2304">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styleProfile.css">
     <title>The Event</title>
 </head>
-<body>
-<div class="navbar">
-        <ul>
-            <li><a href="index.php"><span class="title-text">The Event</span></a></li>
-            <li style="float:right"><a onclick="document.getElementById('signUp').style.display='block'"  href="#"> Sign up</a></li>
-            <li style="float:right"><a onclick="document.getElementById('login').style.display='block'"  href="#">Sign in</a></li>
-            <div class="dropdown">
-                <a class="dropbtn" onclick="myFunction()">Dropdown</a>
-                <div class="dropdown-content" id="myDropdown">
-                    <a href="#">Settings</a>
-                    <a href="#">Feedback</a>
-                    <a href="#">Help</a>
-                    <a href="#">Sign out</a>
-                </div>
-            </div> 
-            <li style="float:right"><a href="profile.php">Profile</a></li>
-            <li style="float:right"><a href="#">Create a Event</a></li>
-        </ul>
+<body >
+
+
+
+        <!-- profile -->
+        <h2 style="text-align: left;">User Profile</h2>
+        <div class="card">
+          <img src="theToys.JPG" alt="TheToys" style="width:100%">
+
+          <h1>BankKy</h1>
+          <p class="title">Student</p>
+          <p>Kasetsart University</p>
+          <p><button>Contact</button></p>
+        </div>
     </div>
 
-    <div>
-        <!-- code here -->
-    </div>
 
     <footer class="footer">
 
     <br>
-        <p><b>&copy; Designed by Kiticha Garden</b></p>
+        <p><b>&copy; Designed by Kittichai Garden</b></p>
         <br>
     </footer>
 
@@ -108,14 +108,14 @@
   </form>
 </div>
 
-<script>
 
+
+<script>
 /* When the user clicks on the button, 
 toggle between hiding and showing the dropdown content */
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
 }
-
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(e) {
   if (!e.target.matches('.dropbtn')) {
@@ -125,8 +125,6 @@ window.onclick = function(e) {
       }
   }
 }
-
-
 </script>
 
 
@@ -138,25 +136,7 @@ window.onclick = function(e) {
 </body>
 
 </html>
-<script>
 
-
-/* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(e) {
-  if (!e.target.matches('.dropbtn')) {
-    var myDropdown = document.getElementById("myDropdown");
-      if (myDropdown.classList.contains('show')) {
-        myDropdown.classList.remove('show');
-      }
-  }
-}
-</script>
 
 
 

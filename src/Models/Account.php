@@ -1,23 +1,23 @@
 <?php
-namespace KittichaiGarden;
-
+namespace KittichaiGarden\Models;
 
 class Account {
         private $username;
         private $password;
+        private $email;
         private $firstName;
         private $surName;
+        private $idNo;
         private $birthday;
         private $gender;
-        private $email;
-        private $phone;
-        private $idCard;
         private $address;
+        private $phone;
         private $typeAccount;
+        private $image;
         private $status;
 
         //constructor
-        function __construct($username,$password,$firstname,$surname,$birthday,$gender,$birthday,$gender,$email,$phone,$idCard,$address,$typeAccount,$status){
+        function __construct($username,$password,$email,$firstname,$surname,$id_No,$birthday,$gender,$address,$phone,$typeAccount,$image,$status){
             $this->username = $username;
             $this->password = $password;
             $this->firstName = $firstname;
@@ -26,10 +26,11 @@ class Account {
             $this->gender = $gender;
             $this->email = $email;
             $this->phone = $phone;
-            $this->idCard = $idCard;
+            $this->idNo = $id_No;
             $this->address = $address;
-            $this->typeAccoutn = $typeAccount;
+            $this->typeAccount = $typeAccount;
             $this->status = $status;
+            $this->image = $image;
         }
 
 
@@ -65,9 +66,8 @@ class Account {
         function getPhone(){
             return $this->phone;
         }
-
-        function getIdCard(){
-            return $this->IdCard;
+        function getIdNo(){
+            return $this->idNo;
         }
 
         function getAddress(){
@@ -81,7 +81,9 @@ class Account {
         function getStatus(){
             return $this->status;
         }
-
+        function getImage(){
+            return $this->image;
+        }
         //setter
         function setPassword($password){
             $this->password = $password;
@@ -111,8 +113,8 @@ class Account {
             $this->phone = $p;
         }
 
-        function setIdCard($c){
-            $this->idCard = $c;
+        function setIdNo($c){
+            $this->idNo = $c;
         }
 
         function setTypeAccount($t){
@@ -121,6 +123,9 @@ class Account {
 
         function setStatus($s){
             $this->status = $s;
+        }
+        function setImage($m){
+            $this->image = $m;
         }
 }
 
