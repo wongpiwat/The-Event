@@ -11,13 +11,13 @@ $login = false;
 $username = null;
 $userImage = null;
 $user = null;
-$controller = null;
+$controller = new Controller();
 
 if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
     $username = $_SESSION["username"];
     $userImage = $_SESSION["userImage"];
     // echo "$username<br>$userImage<br>";
-    $controller = new Controller();
+    
 
     $user = $controller->checkType($username);
 
