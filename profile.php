@@ -1,6 +1,6 @@
 
 <?php //ใส่ทุกอัน
-    include 'header.php'
+    include 'header.php';
 ?>
 
 <!DOCTYPE html>
