@@ -3,8 +3,6 @@ namespace KittichaiGarden\Database;
 use KittichaiGarden\Models\Account;
 use PDO;
 
-
-
 class Database {
 
     //ตัวแปรเอาไว้ติดต่อกับ Database
@@ -46,15 +44,29 @@ class Database {
         }
     }
     //สร้าง User ลงในดาต้าเบส
+
+    //ตรวจสอบว่ามี event อยู่ในดาต้าเบสหรือเปล่า
+    function checkEvent($eventName) {
+        $statement = $this->connect->prepare('SELECT eventName FROM event WHERE eventName=:eventName');
+        $statement->execute([':eventName' => $eventName]);
+        $result = $statement->fetch(PDO::FETCH_BOTH);
+        if($result["eventName"] == ""){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    //สร้างevent
+    function createEvent($eventName,$location,$date,$size,$Category,$type,$price,$detail,$organizerName,$contactName,$email,$phone) {
+        $statement = $this->connect->exec('INSERT INTO event (`nameEvent`, `password`, `email`, `firstName`, `lastName`, `ID_No`, `birthday`, `gender`, `address`, `phone`, `type_Account`, `status`) 
+        VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$id_No."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
+         $phone."'".','."'".$type."'".','."'".$status."'".')');
+    }
+
     function createAccount($username,$password,$email,$firstName,$lastName,$idNo,$birthday,$gender,$address,$phone,$type,$status){
         $statement = $this->connect->exec('INSERT INTO account (`username`, `password`, `email`, `firstName`, `lastName`, `idNo`, `birthday`, `gender`, `address`, `phone`, `typeAccount`, `status`) 
         VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$idNo."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
          $phone."'".','."'".$type."'".','."'".$status."'".')');
-        // echo "<br>";
-        // var_dump($statement);
-        // echo 'INSERT INTO account (`username`, `password`, `email`, `firstName`, `lastName`, `ID_No`, `birthday`, `gender`, `address`, `phone`, `type_Account`, `status`) 
-        // VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$id_No."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
-        //  $phone."'".','."'".$type."'".','."'".$status."'".')';
     }
 
     //เมื่อผู้ใช้อยู่ในระบบอยู่แล้ว
@@ -92,17 +104,12 @@ class Database {
 
     }
 
-
-
-
     function getConnect(){
         return $this->connect;
     }
 
     function setConnect($port,$databaseName,$username,$password){
-
         $this->connect = null;
-
         $this->connect = new PDO(
             "mysql:host=localhost:".$port.";dbname=".$databaseName.";charset=utf8mb4",
             $username,$password
@@ -117,6 +124,4 @@ class Database {
 
 
 }
-
-
 ?>
