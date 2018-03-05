@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/styles.css">
     <title>The Event</title>
+
     <link rel="stylesheet" href="css/jq-carousel-plugin.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script>
     <script src="js/jq-csrousel-plugin.js"></script><!--JS image slice -->
@@ -266,6 +267,7 @@
 
     </div>
 </div> <!--End Block Recommended Events,Upcoming Events,Nearby Events -->
+
 
         <div class="categories">
             <p class="body-text">Categories</p>
@@ -535,6 +537,8 @@
 
 
 
+
+
       // $.ajax({
       //     url: 'src/indexPHP.php',
       //     method : 'POST',
@@ -550,3 +554,4 @@
 </body>
 
 </html>
+

@@ -16,10 +16,12 @@ class Database {
     }
 
     //อ่าน User จากดาต้าเบส
+
     function signIn($username,$password){
         $statement = $this->connect->query('SELECT * FROM account WHERE username='."'".$username."'".' and password='."'".$password."'");
         $result = $statement->fetch(PDO::FETCH_BOTH);
         return $result;
+
     }
     //ตรวจสอบว่ามี Username Email บัตรปชช.โทรศัพท์ อยู่ในดาต้าเบสหรือยัง ?
     function checkAccount($username,$email,$id_No,$phone){
@@ -54,6 +56,7 @@ class Database {
         // VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$id_No."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
         //  $phone."'".','."'".$type."'".','."'".$status."'".')';
     }
+
     //เมื่อผู้ใช้อยู่ในระบบอยู่แล้ว
     function autoSignIn($username){
         $statement = $this->connect->prepare('SELECT * FROM account WHERE username=:username');
@@ -97,7 +100,9 @@ class Database {
     }
 
     function setConnect($port,$databaseName,$username,$password){
+
         $this->connect = null;
+
         $this->connect = new PDO(
             "mysql:host=localhost:".$port.";dbname=".$databaseName.";charset=utf8mb4",
             $username,$password
