@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/upload-styles.css">
+    <link rel="stylesheet" href="css/blueimp-gallery.min.css">
     <title>The Event</title>
 </head>
 <body>
@@ -189,8 +191,115 @@
 
             <label for="details"><b>Details</b></label>
             <input  type="text" placeholder="" name="message" required>
-
-
+            
+            <!-- image upload -->
+                <form id="fileupload" method="POST" enctype="multipart/form-data" data-url="upload-files/">
+                    <div>
+                        <div>
+                            <span>
+                                <span>Add files...</span>
+                                <input type="file" name="files[]" multiple>
+                            </span>
+                        </div>
+                    </div>
+                    <table class="table table-striped"><tbody class="files"></tbody></table>
+                </form>
+            <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
+                <div class="slides"></div>
+                <h3 class="title"></h3>
+                <a class="prev">‹</a>
+                <a class="next">›</a>
+                <a class="close">×</a>
+                <a class="play-pause"></a>
+                <ol class="indicator"></ol>
+            </div>
+            <script id="template-upload" type="text/x-tmpl">
+            {% for (var i=0, file; file=o.files[i]; i++) { %}
+                <tr class="template-upload fade">
+                    <td>
+                        <span class="preview"></span>
+                    </td>
+                    <td>
+                        <p class="name">{%=file.name%}</p>
+                        <strong class="error text-danger"></strong>
+                    </td>
+                    <td>
+                        <p class="size">Processing...</p>
+                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+                    </td>
+                    <td>
+                        {% if (!i && !o.options.autoUpload) { %}
+                            <button class="btn btn-primary start" disabled>
+                                <i class="glyphicon glyphicon-upload"></i>
+                                <span>Start</span>
+                            </button>
+                        {% } %}
+                        {% if (!i) { %}
+                            <button class="btn btn-warning cancel">
+                                <i class="glyphicon glyphicon-ban-circle"></i>
+                                <span>Cancel</span>
+                            </button>
+                        {% } %}
+                    </td>
+                </tr>
+            {% } %}
+            </script>
+            <script id="template-download" type="text/x-tmpl">
+            {% for (var i=0, file; file=o.files[i]; i++) { %}
+                <tr class="template-download fade">
+                    <td>
+                        <span class="preview">
+                            {% if (file.thumbnailUrl) { %}
+                                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                            {% } %}
+                        </span>
+                    </td>
+                    <td>
+                        <p class="name">
+                            {% if (file.url) { %}
+                                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                            {% } else { %}
+                                <span>{%=file.name%}</span>
+                            {% } %}
+                        </p>
+                        {% if (file.error) { %}
+                            <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+                        {% } %}
+                    </td>
+                    <td>
+                        <span class="size">{%=o.formatFileSize(file.size)%}</span>
+                    </td>
+                    <td>
+                        {% if (file.deleteUrl) { %}
+                            <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                                <i class="glyphicon glyphicon-trash"></i>
+                                <span>Delete</span>
+                            </button>
+                        {% } else { %}
+                            <button class="btn btn-warning cancel">
+                                <i class="glyphicon glyphicon-ban-circle"></i>
+                                <span>Cancel</span>
+                            </button>
+                        {% } %}
+                    </td>
+                </tr>
+            {% } %}
+            </script>
+            <script src="js/jquery-3.3.1.min.js"></script>
+            <script src="js/vendor/jquery.ui.widget.js"></script>
+            <script src="js/tmpl.min.js"></script>
+            <script src="js/load-image.all.min.js"></script>
+            <script src="js/canvas-to-blob.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <script src="js/jquery.blueimp-gallery.min.js"></script>
+            <script src="js/jquery.iframe-transport.js"></script>
+            <script src="js/jquery.fileupload.js"></script>
+            <script src="js/jquery.fileupload-process.js"></script>
+            <script src="js/jquery.fileupload-image.js"></script>
+            <script src="js/jquery.fileupload-validate.js"></script>
+            <script src="js/jquery.fileupload-ui.js"></script>
+            <script src="js/main.js"></script>
+            <!-- image upload -->
             <label for="organizerName"><b>Organizer Name</b></label>
             <input type="text" name="organizerName" required="">
 
@@ -241,8 +350,7 @@ window.onclick = function(e){
 
 
 </script>
-
-<script src="js/jquery-3.3.1.min.js" charset="utf-8"></script>
+<!-- <script src="js/jquery-3.3.1.min.js" charset="utf-8"></script>
 <script type="text/javascript">
     
     function signUp(){
@@ -272,14 +380,7 @@ window.onclick = function(e){
         // });
     }
 
-</script>
-
-
-
-
-
-
-
+</script> -->
 </body>
 
 </html>
