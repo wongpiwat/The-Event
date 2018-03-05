@@ -67,9 +67,7 @@ class Database {
         $statement = $this->connect->exec('INSERT INTO account (`username`, `password`, `email`, `firstName`, `lastName`, `idNo`, `birthday`, `gender`, `address`, `phone`, `typeAccount`, `status`) 
         VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$idNo."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
          $phone."'".','."'".$type."'".','."'".$status."'".')');
-
          echo "1";
-
     }
 
     //เมื่อผู้ใช้อยู่ในระบบอยู่แล้ว
@@ -89,8 +87,8 @@ class Database {
         $statement = $this->connect->query('SELECT * FROM account');
         while($row = $statement->fetch(PDO::FETCH_BOTH)){
         $output .= '
-            <tr>
-                <td>'.$row["0"].'</td>
+            <tr onclick="sun()">
+                <td >'.$row["0"].'</td>
                 <td>'.$row["1"].'</td>
                 <td>'.$row["2"].'</td>
                 <td>'.$row["3"].'</td>
@@ -110,7 +108,6 @@ class Database {
 
     }
     
-
 
     function readEventRec(){
         $date = date("Y-m-d");
@@ -165,7 +162,6 @@ class Database {
         return $this->returnEvent($statement);
 
     }
-
 
     function getConnect(){
         return $this->connect;
