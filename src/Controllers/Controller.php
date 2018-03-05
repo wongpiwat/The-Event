@@ -21,11 +21,11 @@ class Controller{
     function changeRole(){
       if($this->user->getTypeAccount() == "admin"){
         $this->database->setConnect("3306","kittichai_garden","admin","password");
-        echo "admin";
+        //echo "admin";
       }else if( $this->user->getTypeAccount() == "user"){
         if( $this->user->getStatus() == "activate"){ //สร้าง user ใน database ด้วย
           $this->database->setConnect("3306","kittichai_garden","user","user");
-          echo "user";
+          //echo "user";
         }
       }
     }
