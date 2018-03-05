@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <link rel="stylesheet" href="css/upload-styles.css">
     <link rel="stylesheet" href="css/blueimp-gallery.min.css">
     <title>The Event</title>
@@ -85,7 +86,9 @@
         <?php echo $controller->getDatabase()->readEventUp();?>
     </div>
 
+
     <!-- <div class="nearby" >
+
         <div class="text">Nearby Events</div>
         <div class="events-block-subheading">
             <div class="text-center">
@@ -204,7 +207,9 @@
       <form class="signUp-content animate"  id="signUpForm" method="POST" action="src/indexPHP.php">
       <div class="container">
           <label for="uname"><b>Username</b></label>
+
           <input type="text" placeholder="Enter Username" name="uname" id="usrn" required>
+
           <label for="psw"><b>Password</b></label>
           <input type="password" placeholder="Enter Password" name="psw"  id="psw" required>
 
@@ -217,6 +222,7 @@
           <label for="Fname"><b>FirstName</b></label>
           <input type="text" placeholder="FirstName" name="uFname" id="firstName" required>
           <label for="Lname"><b>LastName</b></label>
+
           <input type="text" placeholder="LastName" name="uLname" id="lastName" required>
           <label for="id"><b>Id No.</b></label>
           <input type="text" placeholder="Enter Id No." name="uid" id="idNo" required>
@@ -231,6 +237,7 @@
 
         <label for="phone"><b>Phone Number</b></label>
         <input type="text" onKeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Enter Phone Number" name="uphone" id="phone" required>
+
           <!-- 20,40 -->
           <button style="width: 20%; height: 7%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtnSignup">Cancel</button>
           <button id="signupbtn" type="button" style="width: 60%; height: 7%;float: right;" name="SignUp" onclick="signUp()" >SignUp</button>
