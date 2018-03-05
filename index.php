@@ -20,8 +20,8 @@
         }
         #box{
             position: relative;
-            width: 100%;
-            height: 60%;
+            width: 95%;
+            height: 70%;
             overflow: hidden;
             /* display: flex;
             justify-content: center;         */
