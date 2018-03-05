@@ -35,9 +35,10 @@ class Controller{
         }
     }
 
-    function createEvent() {
-      if ($this->database->checkEvent($nameEvent)) {
+    function createNewEvent($eventName,$location,$date,$size,$Category,$type,$price,$detail,$organizerName,$contactName,$email,$phone) {
+      if ($this->database->checkEvent($eventName)) {
         echo "Event is Available";
+        $this->database->createEvent($eventName,$location,$date,$size,$Category,$type,$price,$detail,$organizerName,$contactName,$email,$phone);
       } else {
         echo "Event is Already Use!!!";
       }

@@ -4,38 +4,41 @@ namespace KittichaiGarden;
 class Event {
     private $id;
     private $username;
-    private $nameEvent;
-    private $detail;
-    private $image;
-    private $teaserVDO;
+    private $eventName;
+    private $location;
     private $date;
     private $time;
-    private $location;
-    private $capacity;
+    private $size;
+    private $category;
+    private $type;
+    private $price;
+    private $detail;
+    private $teaserVDO;
     private $precondition;
     private $postcondition;
-    private $price;
-    private $type;
-    private $categories;
-    private $company;
+    private $organizerName;
+    private $contactName;
+    private $email;
+    private $phone;
 
-    function __construct($id, $username, $nameEvent, $detail, $image, $teaserVDO, $date, $time, $location, $capacity, $precondition, $postcondition, $price, $type, $categories, $company) {
+    function __construct($id, $username, $eventName, $detail, $teaserVDO, $date, $time, $location, $size, $precondition, $postcondition, $price, $type, $category, $organizerName, $email, $phone) {
         $this->id = $id;
         $this->username = $username;
-        $this->nameEvent = $nameEvent;
+        $this->eventName = $eventName;
         $this->detail = $detail;
-        $this->image = $image;
         $this->teaserVDO = $teaserVDO;
         $this->date = $date;
         $this->time = $time;
         $this->location = $location;
-        $this->capacity = $capacity;
+        $this->size = $size;
         $this->recondition = $precondition;
         $this->postcondition = $postcondition;
         $this->price = $price;
         $this->type = $type;
-        $this->categories = $categories;
-        $this->company = $company;
+        $this->category = $category;
+        $this->organizerName = $organizerName;
+        $this->email = email;
+        $this->phone = phone;
     }
 
     function getID() {
@@ -46,16 +49,12 @@ class Event {
         return $this->username;
     }
 
-    function getNameEvent() {
-        return $this->nameEvent;
+    function getEventName() {
+        return $this->eventName;
     }
 
     function getDetail() {
         return $this->detail;
-    }
-
-    function getImage() {
-        return $this->image;
     }
 
     function getTeaserVDO() {
@@ -74,8 +73,8 @@ class Event {
         return $this->location;
     }
 
-    function getCapacity() {
-        return $this->capacity;
+    function getSize() {
+        return $this->size;
     }
 
     function getPreCondition() {
@@ -94,12 +93,20 @@ class Event {
         return $this->type;
     }
 
-    function getCategories() {
-        return $this->categories;
+    function getCategory() {
+        return $this->category;
     }
 
-    function getCompany() {
-        return $this->company;
+    function getOrganizerName() {
+        return $this->organizerName;
+    }
+
+    function getEmail() {
+        return $this->email;
+    }
+
+    function getPhone() {
+        return $this->phone;
     }
 
     function setID($id) {
@@ -110,16 +117,12 @@ class Event {
         $this->username = $username;
     }
 
-    function setNameEvent($nameEvent) {
-        $this->nameEvent = $nameEvent;
+    function setEventName($eventName) {
+        $this->eventName = $eventName;
     }
 
     function setDetail($detail) {
         $this->detail = $detail;
-    }
-
-    function setImage($image) {
-        $this->image = $image;
     }
 
     function setTeaserVDO($teaserVDO) {
@@ -138,8 +141,8 @@ class Event {
         $this->location = $location;
     }
 
-    function setCapacity($capacity) {
-        $this->capacity = $capacity;
+    function setSize($size) {
+        $this->size = $size;
     }
 
     function setPreCondition($precondition) {
@@ -158,11 +161,19 @@ class Event {
         $this->type = $type;
     }
 
-    function setCategories($categories) {
-        $this->categories = $categories;
+    function setCategory($category) {
+        $this->category = $category;
     }
 
-    function setCompany($company) {
-        $this->company = $company;
+    function setOrganizerName($organizerName) {
+        $this->organizerName = $organizerName;
+    }
+
+    function setEmail($email) {
+        $this->email = $email;
+    }
+
+    function setPhone($phone) {
+        $this->phone = $phone;
     }
 }

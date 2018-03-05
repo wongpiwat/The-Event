@@ -144,6 +144,7 @@
   </form>
 </div>
 
+<!-- สร้าง event -->
 <div id="create" class="create">
     <form class="create-content animate" action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
         <center><h1>Create a Event</h1></center>
@@ -155,10 +156,10 @@
             <input type="text" name="location" required="">
 
             <label for="birth"><b>Date of Event</b></label>
-            <input type="date" name="dateOfEvent">
+            <input type="date" name="date">
             <br>
             <label for="size"><b>Size of Event</b></label>
-            <select>
+            <select name="size">
                 <option value="one">1 - 50 People</option>
                 <option value="fifty">51 - 100 People</option>
                 <option value="one-hundred-one">101 - 500 People</option>
@@ -168,7 +169,7 @@
             </select>
             <br>
             <label for="eventCategory"><b>Event Category</b></label>
-            <select>
+            <select name="category">
                 <option value="business">Business</option>
                 <option value="education">Education</option>
                 <option value="family">Family</option>
@@ -190,7 +191,7 @@
             <input type="text" name="price" required><br>
 
             <label for="details"><b>Details</b></label>
-            <input  type="text" placeholder="" name="message" required>
+            <input  type="text" placeholder="" name="details" required>
             
             <!-- image upload -->
                 <form id="fileupload" method="POST" enctype="multipart/form-data" data-url="upload-files/">
@@ -307,7 +308,7 @@
             <input type="text" name="contactName" required><br>
 
             <label for="email"><b>Email</b></label>
-            <input type="text" name="mail" required>
+            <input type="text" name="email" required>
 
             <label for="phone" ><b>Phone</b></label>
             <input maxlength="10" onKeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" name="phone" required>
@@ -404,7 +405,8 @@ window.onclick = function(e){
         }
         if (isset($_POST["CreateEvent"])) { //เมื่อมีการกดปุ่ม Create Event
             echo "CreateEvent";
-            $controller->createEvent($_POST["orname"],$_POST["cname"],$_POST["mail"],$_POST[""],$_POST[""],$_POST[""],$_POST[""],$_POST[""],$_POST[""],$_POST[""]);
+            $controller->createNewEvent($_POST["eventName"],$_POST["location"],$_POST["date"],$_POST["size"],$_POST["category"],$_POST["type"],$_POST["price"],$_POST["details"],$_POST["organizerName"],$_POST["contactName"],$_POST["email"],$_POST["phone"]);
+            echo $_POST["eventName"].$_POST["location"].$_POST["date"].$_POST["size"].$_POST["category"].$_POST["type"].$_POST["price"].$_POST["details"].$_POST["organizerName"].$_POST["contactName"].$_POST["email"].$_POST["phone"];
         }
 
 

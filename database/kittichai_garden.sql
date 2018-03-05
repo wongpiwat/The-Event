@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 01, 2018 at 08:35 AM
--- Server version: 10.1.30-MariaDB
--- PHP Version: 7.2.2
+-- Generation Time: Mar 05, 2018 at 06:30 AM
+-- Server version: 10.1.29-MariaDB
+-- PHP Version: 7.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -31,15 +31,16 @@ SET time_zone = "+00:00";
 CREATE TABLE `account` (
   `username` varchar(15) NOT NULL,
   `password` varchar(20) NOT NULL,
-  `firstname` varchar(30) NOT NULL,
-  `surname` varchar(30) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `firstName` varchar(30) NOT NULL,
+  `lastName` varchar(30) NOT NULL,
+  `ID_No` varchar(15) NOT NULL,
   `birthday` date NOT NULL,
   `gender` varchar(10) NOT NULL,
-  `email` varchar(30) NOT NULL,
-  `phone` int(20) NOT NULL,
-  `ID_card` varchar(15) NOT NULL,
   `address` text NOT NULL,
+  `phone` varchar(20) NOT NULL,
   `type_Account` varchar(15) NOT NULL,
+  `Image` text NOT NULL,
   `status` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -47,9 +48,10 @@ CREATE TABLE `account` (
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`username`, `password`, `firstname`, `surname`, `birthday`, `gender`, `email`, `phone`, `ID_card`, `address`, `type_Account`, `status`) VALUES
-('sun_vsp', '1234', 'Vasupol', 'Chongsathidkiet', '1997-08-30', 'male', 'vasupol.ch@ku.th', 852224434, '1234567891111', 'bangkok', 'user', 'activate'),
-('toon', '1234', 'kanokpon', 'tonabut', '1997-04-21', 'male', 'kanokpon.th@ku.th', 878102159, '1145211789654', 'bangkok', 'user', 'activate');
+INSERT INTO `account` (`username`, `password`, `email`, `firstName`, `lastName`, `ID_No`, `birthday`, `gender`, `address`, `phone`, `type_Account`, `Image`, `status`) VALUES
+('adminSun', '1234', '-', '-', '-', '-', '0000-00-00', 'male', '-', '-', 'admin', '-', 'activate'),
+('sun_vsp', '1234', 'vasupol.ch@ku.th', 'Vasupol', 'Chongsathidkiet', '1234567891111', '1997-08-30', 'male', 'bangkok', '852224434', 'user', '', 'activate'),
+('toon', '1234', 'kanokpon.th@ku.th', 'kanokpon', 'tonabut', '1145211789654', '1997-04-21', 'male', 'bangkok', '878102159', 'user', '', 'activate');
 
 -- --------------------------------------------------------
 
