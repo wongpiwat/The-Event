@@ -12,6 +12,7 @@ class Controller{
 
     private $database = null;
     private $user = null;
+
     //constructor
     function __construct(){
       $this->database = new Database("3306","kittichai_garden","guest","");
@@ -40,6 +41,7 @@ class Controller{
       return null;
     }
 
+
     //SingIn ของผู้ใช้
     function signIn($username,$password){
       // echo "$username<br>$password";
@@ -67,11 +69,19 @@ class Controller{
           }else if($check == 0){
             $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"admin","activate");
           }
+
         }else{
           echo "Username is Already Use!!!";
         }
     }
 
+
+    function signOut(){
+
+      $this->user = null;
+      session_unset();
+      session_destroy();
+    }
 
     function createNewEvent($eventName,$location,$date,$size,$Category,$type,$price,$detail,$organizerName,$contactName,$email,$phone) {
       if ($this->database->checkEvent($eventName)) {
@@ -80,16 +90,7 @@ class Controller{
       } else {
         echo "Event is Already Use!!!";
       }
-
-
-    function signOut(){
-
-      $this->user = null;
-      session_unset();
-      session_destroy();
-
     }
-
 
 
     function getDatabase(){
@@ -99,6 +100,11 @@ class Controller{
     function setDatabase($d){
         $this->database = $d;
     }
+
+    
+
+
+
 
     // //test function นะครับ
     // public function test () {
