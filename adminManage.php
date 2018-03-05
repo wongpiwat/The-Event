@@ -1,8 +1,5 @@
 <?php //ใส่ทุกอัน
     include 'header.php';
-   
-
-
 ?>
 
 <!DOCTYPE html>
@@ -10,48 +7,70 @@
     <head>
         <meta charset="utf-8">
         <title>Exporting to files</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-        
     </head>
     <body>
-        <br /><br />
-          <div class="container" style="width:100%;">
-               <h3 align="center">Export HTML Table data to PDF using TCPDF in PHP</h3><br />
-         <div class="table-responsive">
-        <table  class="table table-bordered">
+        
+        <div class="container" style="width:100%;">
+               
 
-        <tr>
-            <th width="7%">Username</th>
-            <th width="7%">Password</th>
-            <th width="7%">E-Mail</th>
-            <th width="7%">Firstname</th>
-            <th width="7%">Lastname</th>
-            <th width="8%">ID NO.</th>
-            <th width="10%">Birthday</th>
-            <th width="7%">Gender</th>
-            <th width="7%">Address</th>
-            <th width="7%">Phone</th>
-            <th width="7%">Type Account</th>
-            <th width="7%">Image</th>
-            <th width="7%">Status</th>
-            
-        </tr>
+        <h3 align="center">Export HTML Table data to PDF using TCPDF in PHP</h3><br />
+        <div id="head">
+            <!-- <input type="button"value="Create Account" class="btn btn-warning ">
+            <input type="button"value="Create Account" class="btn btn-info ">
+            <input type="button"value="Create Account" class="btn btn-success ">
+            <input type="button"value="Create Account" class="btn btn-defualt ">
+            <input type="button"value="Create Account" class="btn btn-primary "> -->
 
-        <?php
-            echo $controller->getDatabase()->readAccount();
-        ?>
+            <input type="button"value="Create Account" class="btn btn-success" onclick="document.getElementById('signUp').style.display='block'">
+            <input type="button"value="Edit Account" class="btn btn-info">
+            <input type="button"value="Delete Account" class="btn btn-danger">
+        </div> 
 
+        
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                    <th>Username</th>
+                    <th >Password</th>
+                    <th>E-Mail</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>ID NO.</th>
+                    <th>Birthday</th>
+                    <th>Gender</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Type Account</th>
+                    <th>Image</th>
+                    <th>Status</th>
+                    </tr>
+                </thead>
+                
+                    <?php
+                        echo $controller->getDatabase()->readAccount();
+                    ?>
+                
+            </table>
+            <br/>
 
-    </table>
+            <form  method="post">
+                <input type="submit" name="create_pdf" class="btn btn-danger" value="Create PDF">
 
-    <br/>
-
-    <form  method="post">
-        <input type="submit" name="create_pdf" class="btn btn-danger" value="Create PDF">
-
-    </form>
+            </form>
         </div>
-    </div>
+        </div>
+
+
+
+
+
+    <script type="text/javascript">
+        
+        function sun(){
+            document.getElementById('signUp').style.display='block'
+        }
+    </script>
     </body>
 </html>
 

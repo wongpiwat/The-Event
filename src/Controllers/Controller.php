@@ -37,7 +37,6 @@ class Controller{
       if($result != null){
         $this->user = new Account($result[0],$result[1],$result[2],$result[3],$result[4],$result[5],$result[6],$result[7],$result[8],$result[9],$result[10],$result[11],$result[12]);
         $this->changeRole();
-        echo "1";
         return $this->user;
       }
       return null;
@@ -57,7 +56,7 @@ class Controller{
       
         $_SESSION['username'] = $this->user->getUsername();
         $_SESSION['userImage'] = $this->user->getImage();
-        
+        echo "1";
 
       }
     }
