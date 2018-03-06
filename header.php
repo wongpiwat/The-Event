@@ -45,9 +45,11 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
 <head>
 <link rel="stylesheet" href="css/styles.css">
 <!-- <link rel="stylesheet" href="css/styleProfile.css"> -->
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
 </head>
 
 <!--header first page-->
@@ -69,7 +71,7 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
     if(login == true){ // อยู่ในระบบ Create Event Profile
         
         $("#header").html(`
-        <nav class="navbar navbar-inverse navbar-fixed-top" >
+        <nav class="navbar navbar-default navbar-fixed-top" >
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -112,7 +114,7 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
 
     }else{ // signIn
         $("#header").html(`
-        <nav class="navbar navbar-inverse navbar-fixed-top">
+        <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
