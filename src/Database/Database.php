@@ -84,35 +84,44 @@ class Database {
     //อ่านผู้ใช้งานจากระบบ
     function readAccount(){
         $output ="";
+        $count = 1;
         $statement = $this->connect->query('SELECT * FROM account');
         while($row = $statement->fetch(PDO::FETCH_BOTH)){
+        $username = $row["username"];
+        $edit  = sprintf('onclick="createAccount(\'%s\')"',$username);
+        $delete = sprintf('onclick="deleteAccount(\'%s\')"',$username);
         $output .= '
-            <tr onclick="sun()">
-                <td >'.$row["0"].'</td>
-                <td>'.$row["1"].'</td>
-                <td>'.$row["2"].'</td>
-                <td>'.$row["3"].'</td>
-                <td>'.$row["4"].'</td>
-                <td>'.$row["5"].'</td>
-                <td>'.$row["6"].'</td>
-                <td>'.$row["7"].'</td>
-                <td>'.$row["8"].'</td>
-                <td>'.$row["9"].'</td>
-                <td>'.$row["10"].'</td>
-                <td>'.$row["11"].'</td>
-                <td>'.$row["12"].'</td> 
+            <tr >
+                <td>'.$count.'</td>
+                <td>'.$row["username"].'</td>
+                <td>'.$row["email"].'</td>
+                <td>'.$row["firstName"].'</td>
+                <td>'.$row["lastName"].'</td>
+                <td>'.$row["typeAccount"].'</td>
+                <td>'.$row["status"].'</td>
+                <td> <button type="button" class="btn btn-success"'.$edit.'><span class="glyphicon glyphicon-cog" ></span> Edit</button> </td>
+                <td> <button type="button" class="btn btn-danger"'.$delete.'><span class="glyphicon glyphicon-trash" ></span> Delete</button> </td>
             </tr>
         ';
+        $count+=1;
         }
     return $output;
-
+    
     }
     
+    function deleteAccount($username){
+        // $statement = $this->connect->exec('DELETE FROM account WHERE username="1"');
+        if($this->connect->exec('DELETE FROM account WHERE username='.'"'.$username.'"'.' ') == true){
+            echo "1";
+        }else{
+            echo "-1";
+        }
+    }
 
     function readEventRec(){
         $date = date("Y-m-d");
         $time = date("h:i:s");
-        $statement = $this->connect->prepare('SELECT * FROM event WHERE date>=:date and time>=:time');
+        $statement = $this->connect->prepare('SELECT * FROM event WHERE (date>=:date and time>=:time) or date>=:date');
         $statement->execute([ ':date' => $date , ':time' => $time]);
         return $this->returnEvent($statement);
 
@@ -122,7 +131,7 @@ class Database {
         $result = '';
         $count = 0;
         while($row = $statement->fetch(PDO::FETCH_BOTH)){
-            if($count == 3){
+            if($count == 4){
                 break;
             }
             $s =  $this->connect->prepare('SELECT image FROM image_event WHERE idEvent=:e');
@@ -157,7 +166,7 @@ class Database {
        
         $date = date("Y-m-d");
         $time = date("h:i:s");
-        $statement = $this->connect->prepare('SELECT * FROM event WHERE date>=:date and time>=:time ORDER BY date,time');
+        $statement = $this->connect->prepare('SELECT * FROM event WHERE (date>=:date and time>=:time) or date>=:date ORDER BY date,time');
         $statement->execute([ ':date' => $date , ':time' => $time]);
         return $this->returnEvent($statement);
 
