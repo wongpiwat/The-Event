@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="css/upload-styles.css">
     <link rel="stylesheet" href="css/blueimp-gallery.min.css">
     <title>The Event</title>
-
     <link rel="stylesheet" href="css/jq-carousel-plugin.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script> -->
     <script src="js/jq-csrousel-plugin.js"></script><!--JS image slice -->
+    
     <style rel="stylesheet" type="text/css">
         html,body{
             width: 100%;
