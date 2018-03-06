@@ -59,6 +59,9 @@ class Controller{
         echo "1";
 
       }
+      else{
+        echo "-1";
+      }
     }
 
     //SignUp ของผู้ใช้ และ Admin

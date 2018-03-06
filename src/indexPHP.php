@@ -4,7 +4,37 @@
     use KittichaiGarden\Controllers\Controller;
 
     session_start();
+    $type_Account = "guest";
+    $status = null;
+    $login = false;
+    $username = null;
+    $userImage = null;
+    $user = null;
     $controller = new Controller();
+    
+    if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
+        $username = $_SESSION["username"];
+        $userImage = $_SESSION["userImage"];
+        // echo "$username<br>$userImage<br>";
+      
+    
+        $user = $controller->checkType($username);
+    
+        // echo "<pre>";
+        // var_dump($detialUser);
+        // echo "</pre>";
+        // echo "online";
+        // //เขียน HTML ตรงนี้  User
+        // echo "<br>".$detialUser["type_Account"];
+        // echo "<br>".$detialUser["status"];
+    
+        if($user != null){
+            $type_Account = $user->getTypeAccount();
+            $status = $user->getStatus();
+            $login = true;
+        }
+    
+    }
 
     // $_SESSION['control'] = $controller;
     if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -22,6 +52,10 @@
         }else if(isset($_POST["signOut"])){
             $controller->signOut();
 
+        }else if(isset($_POST["deleteAccount"])){
+            $controller->getDatabase()->deleteAccount($_POST["username"]);
+        }else if(isset($_POST["readAccount"])){
+            echo $controller->getDatabase()->readAccount();
         }
     }
 ?>

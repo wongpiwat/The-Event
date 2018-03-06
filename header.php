@@ -4,7 +4,6 @@ use KittichaiGarden\Controllers\Controller;
 //echo "header<br>";
 
 session_start();
-$sun = "helloWorld";
 $type_Account = "guest";
 $status = null;
 $login = false;
@@ -71,7 +70,7 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
     if(login == true){ // อยู่ในระบบ Create Event Profile
         
         $("#header").html(`
-        <nav class="navbar navbar-default navbar-fixed-top" >
+        <nav class="navbar navbar-inverse navbar-fixed-top" >
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -136,8 +135,8 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
           </div>
         </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" onclick="document.getElementById('signUp').style.display='block'" ><span class="glyphicon glyphicon-user" ></span> Sign Up</a></li>
-        <li><a href="#" onclick="document.getElementById('login').style.display='block'" ><span class="glyphicon glyphicon-log-in" ></span> Login</a></li>
+        <li><a href="#"  onclick="document.getElementById('signUp').style.display='block'" ><span class="glyphicon glyphicon-user" ></span> Sign Up</a></li>
+        <li><a href="#"  onclick="document.getElementById('login').style.display='block'"><span class="glyphicon glyphicon-log-in" ></span> Login</a></li>
       </ul>
     </div>
   </div>
@@ -149,21 +148,21 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
     }
     
 
-            /* When the user clicks on the button, 
-    toggle between hiding and showing the dropdown content */
-    function myFunction() {
-        // console.log("hello");
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
-    // Close the dropdown if the user clicks outside of it
-    window.onclick = function(e) {
-    if (!e.target.matches('.dropbtn')) {
-        var myDropdown = document.getElementById("myDropdown");
-        if (myDropdown.classList.contains('show')) {
-            myDropdown.classList.remove('show');
-        }
-    }
-    }
+    //         /* When the user clicks on the button, 
+    // toggle between hiding and showing the dropdown content */
+    // function myFunction() {
+    //     // console.log("hello");
+    //     document.getElementById("myDropdown").classList.toggle("show");
+    // }
+    // // Close the dropdown if the user clicks outside of it
+    // window.onclick = function(e) {
+    // if (!e.target.matches('.dropbtn')) {
+    //     var myDropdown = document.getElementById("myDropdown");
+    //     if (myDropdown.classList.contains('show')) {
+    //         myDropdown.classList.remove('show');
+    //     }
+    // }
+    // }
 
 </script>
 
@@ -227,6 +226,11 @@ width: 100%;">Login</button>
 
     <label for="phone"><b>Phone Number</b></label>
     <input type="text" onKeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Enter Phone Number" name="uphone" id="phone" required>
+    <div id="typeA" style="display:none">
+        <label for="type"><b>Type Account</b></label><br>
+        <input type="radio" name="type" value="male" id="type" checked> Admin
+        <input type="radio" name="type" value="female"  > User<br>
+    </div>
       <!-- 20,40 -->
       <button style="width: 20%; height: 7%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtn">Cancel</button>
       <button id="signupbtn"  type="button" name="SignUp" onclick="signUp()" style="width: 60%; height: 7%;float: right;background-color: #4CAF50;
@@ -426,6 +430,13 @@ cursor: pointer;
 
 <script type="text/javascript">
 
+var login = document.getElementById('login');
+window.onclick = function(e){
+    if (event.target == login){
+        login.style.display = "none";    }
+
+}
+
 document.getElementById('login').addEventListener("keyup", function(event) {
     event.preventDefault();
     if (event.keyCode === 13) {
@@ -447,6 +458,8 @@ function signIn(){
      if(data == 1){// login ได้
         location.reload();
         console.log("Sun");
+     }else if(data == "-1"){
+         alert("username or password wrong!!!");
      }
     });
 
@@ -512,13 +525,34 @@ function signUp(){
         alert("Input Birthday.");
     }
 }
+    function sun(){
+        console.log("Sun");
+    }
 
 </script>
 
-
+o
 </div>
 
  
 </body>
 </html>
 
+
+<?php   
+    //-----------ส่วนของ PHP-----------
+    // require 'vendor/autoload.php';
+    // use KittichaiGarden\Controllers\Controller;
+    // $controller = new Controller();
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        // echo "POST";
+
+        if (isset($_POST["CreateEvent"])) { //เมื่อมีการกดปุ่ม Create Event
+            echo "CreateEvent";
+            $controller->createNewEvent($_POST["eventName"],$_POST["location"],$_POST["date"],$_POST["size"],$_POST["category"],$_POST["type"],$_POST["price"],$_POST["details"],$_POST["organizerName"],$_POST["contactName"],$_POST["email"],$_POST["phone"]);
+            echo $_POST["eventName"].$_POST["location"].$_POST["date"].$_POST["size"].$_POST["category"].$_POST["type"].$_POST["price"].$_POST["details"].$_POST["organizerName"].$_POST["contactName"].$_POST["email"].$_POST["phone"];
+        }
+
+
+    }
+?>

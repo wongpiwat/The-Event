@@ -1,5 +1,6 @@
 <?php //ใส่ทุกอัน
     include 'header.php';
+    // echo date("h:i:s");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,8 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/upload-styles.css">
-    <link rel="stylesheet" href="css/blueimp-gallery.min.css">
+    <!-- <link rel="stylesheet" href="css/upload-styles.css">
+    <link rel="stylesheet" href="css/blueimp-gallery.min.css"> -->
     <title>The Event</title>
     <link rel="stylesheet" href="css/jq-carousel-plugin.css">
     <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script> -->
@@ -131,21 +132,5 @@
 
 
 
-<?php   
-    //-----------ส่วนของ PHP-----------
-    require 'vendor/autoload.php';
-    use KittichaiGarden\Controllers\Controller;
-    $controller = new Controller();
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-        echo "POST";
 
-        if (isset($_POST["CreateEvent"])) { //เมื่อมีการกดปุ่ม Create Event
-            echo "CreateEvent";
-            $controller->createNewEvent($_POST["eventName"],$_POST["location"],$_POST["date"],$_POST["size"],$_POST["category"],$_POST["type"],$_POST["price"],$_POST["details"],$_POST["organizerName"],$_POST["contactName"],$_POST["email"],$_POST["phone"]);
-            echo $_POST["eventName"].$_POST["location"].$_POST["date"].$_POST["size"].$_POST["category"].$_POST["type"].$_POST["price"].$_POST["details"].$_POST["organizerName"].$_POST["contactName"].$_POST["email"].$_POST["phone"];
-        }
-
-
-    }
-?>
 
