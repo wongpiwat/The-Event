@@ -294,8 +294,8 @@ cursor: pointer;
         <br>
         <form>
             <label for="eventType"><b>Event Type</b></label> 
-            <input type="typePaid" name="type" value="paid" checked>Paid</input>
-            <input type="typeFree" name="type" value="free">Free</input>
+            <input id="typePaid" type="radio" name="type" value="paid" checked>Paid</input>
+            <input id="typeFree" type="radio" name="type" value="free">Free</input>
         </form>
         <br>
         <label for="price"><b>Ticket Price (Thai Baht)</b></label>
@@ -316,15 +316,6 @@ cursor: pointer;
                 </div>
                 <table class="table table-striped"><tbody class="files"></tbody></table>
             </form>
-        <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
-            <div class="slides"></div>
-            <h3 class="title"></h3>
-            <a class="prev">‹</a>
-            <a class="next">›</a>
-            <a class="close">×</a>
-            <a class="play-pause"></a>
-            <ol class="indicator"></ol>
-        </div>
         <script id="template-upload" type="text/x-tmpl">
         {% for (var i=0, file; file=o.files[i]; i++) { %}
             <tr class="template-upload fade">
@@ -368,7 +359,7 @@ cursor: pointer;
                 </td>
                 <td>
                     <p class="name">
-                        {% if (file.url) { %}
+                        {% if (file.url) {sendImagePath(file.name); %}
                             <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
                         {% } else { %}
                             <span>{%=file.name%}</span>
@@ -402,8 +393,6 @@ cursor: pointer;
         <script src="js/tmpl.min.js"></script>
         <script src="js/load-image.all.min.js"></script>
         <script src="js/canvas-to-blob.min.js"></script>
-        <!-- <script src="js/bootstrap.min.js"></script> -->
-        <script src="js/jquery.blueimp-gallery.min.js"></script>
         <script src="js/jquery.iframe-transport.js"></script>
         <script src="js/jquery.fileupload.js"></script>
         <script src="js/jquery.fileupload-process.js"></script>
@@ -421,17 +410,14 @@ cursor: pointer;
         <label for="email"><b>Email</b></label>
         <input id="email" type="text" name="email" required>
 
-        <label for="phone" ><b>Phone</b></label>
-        <input id="phone" maxlength="10" onKeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" name="phone" required>
+        <label for="ePhone" ><b>Phone</b></label>
+        <input id="ePhone" maxlength="10" onKeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" name="phone" required>
 
-        <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('create').style.display='none'" class="cancelbtn">Cancel</button>
-        <button id="creataevent" type="submit" name="CreateEvent" style="width: 60%; height: 7%;float: right;background-color: #4CAF50;
-color: white;
-padding: 10px 18px;
-margin: 8px 0;
-border: none;
-cursor: pointer;
-">Create a event</button>
+            <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('create').style.display='none';reload_js()" class="cancelbtnSignup">Cancel</button>
+            <button id="createNew" type="button" style="width: 60%; height: 40%;float: right;" name="CreateEvent" onClick="createNewEvent()">Create a event</button>
+
+        <!-- <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('create').style.display='none';reload_js()" class="cancelbtn">Cancel</button>
+        <button id="creataevent" type="submit" name="CreateEvent" >Create a event</button> -->
         
        
     </div>
@@ -439,7 +425,7 @@ cursor: pointer;
 
 
 <script type="text/javascript">
-
+var imagesPath =[];
 console.log(window.location.pathname);
 // /ProjectWebtech_1/adminManage.php
 var login = document.getElementById('login');
@@ -500,7 +486,7 @@ function signUp(){
     var idNo = document.getElementById('idNo').value;
     var gender = "male";
     var address = document.getElementById('address').value;
-    var phone = document.getElementById('phone').value;
+    var phone = document.getElementById('ePhone').value;
     var bday = document.getElementById('bday').value;
     var type = 1;
     var status = null;
@@ -603,7 +589,7 @@ function signUp(){
         var organizerName = document.getElementById('organizerName').value;
         var contactName = document.getElementById('contactName').value;
         var email = document.getElementById('email').value;
-        var phone = document.getElementById('phone').value;
+        var phone = document.getElementById('ePhone').value;
         document.getElementById('createNew').type = "submit";
         // document.getElementById('createNew').trigger("click");
         $.post('src/indexPHP.php',{createEvent:"true",eventName:eventName,location:location,date:date,size:size,category:category,type:type,price:price,details:details,organizerName:organizerName,contactName:contactName,email:email,phone:phone,imagesPath:imagesPath});     
@@ -619,22 +605,3 @@ o
  
 </body>
 </html>
-
-
-<?php   
-    //-----------ส่วนของ PHP-----------
-    // require 'vendor/autoload.php';
-    // use KittichaiGarden\Controllers\Controller;
-    // $controller = new Controller();
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-        // echo "POST";
-
-        if (isset($_POST["CreateEvent"])) { //เมื่อมีการกดปุ่ม Create Event
-            echo "CreateEvent";
-            $controller->createNewEvent($_POST["eventName"],$_POST["location"],$_POST["date"],$_POST["size"],$_POST["category"],$_POST["type"],$_POST["price"],$_POST["details"],$_POST["organizerName"],$_POST["contactName"],$_POST["email"],$_POST["phone"]);
-            echo $_POST["eventName"].$_POST["location"].$_POST["date"].$_POST["size"].$_POST["category"].$_POST["type"].$_POST["price"].$_POST["details"].$_POST["organizerName"].$_POST["contactName"].$_POST["email"].$_POST["phone"];
-        }
-
-
-    }
-?>
