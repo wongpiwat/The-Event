@@ -45,24 +45,6 @@ class Database {
     }
     //สร้าง User ลงในดาต้าเบส
 
-    //ตรวจสอบว่ามี event อยู่ในดาต้าเบสหรือเปล่า
-    function checkEvent($eventName) {
-        $statement = $this->connect->prepare('SELECT eventName FROM event WHERE eventName=:eventName');
-        $statement->execute([':eventName' => $eventName]);
-        $result = $statement->fetch(PDO::FETCH_BOTH);
-        if($result["eventName"] == ""){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    //สร้างevent
-    function createEvent($eventName,$location,$date,$size,$Category,$type,$price,$detail,$organizerName,$contactName,$email,$phone) {
-        $statement = $this->connect->exec('INSERT INTO event (`nameEvent`, `password`, `email`, `firstName`, `lastName`, `ID_No`, `birthday`, `gender`, `address`, `phone`, `type_Account`, `status`) 
-        VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$id_No."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
-         $phone."'".','."'".$type."'".','."'".$status."'".')');
-    }
-
     function createAccount($username,$password,$email,$firstName,$lastName,$idNo,$birthday,$gender,$address,$phone,$type,$status){
         $statement = $this->connect->exec('INSERT INTO account (`username`, `password`, `email`, `firstName`, `lastName`, `idNo`, `birthday`, `gender`, `address`, `phone`, `typeAccount`, `status`) 
         VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$idNo."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
@@ -88,10 +70,11 @@ class Database {
         $statement = $this->connect->query('SELECT * FROM account');
         while($row = $statement->fetch(PDO::FETCH_BOTH)){
         $username = $row["username"];
-        $edit  = sprintf('onclick="createAccount(\'%s\')"',$username);
-        $delete = sprintf('onclick="deleteAccount(\'%s\')"',$username);
+        $edit  = sprintf('onclick="editAccount(\'%s\',\'edit\')"',$username);
+        $read  = sprintf('onclick="editAccount(\'%s\',\'read\')"',$username);
+        $delete = sprintf('onclick="editAccount(\'%s\',\'del\');deleteAccount(\'%s\')"',$username,$username);
         $output .= '
-            <tr >
+            <tr '.$read.'>
                 <td>'.$count.'</td>
                 <td>'.$row["username"].'</td>
                 <td>'.$row["email"].'</td>
@@ -108,14 +91,20 @@ class Database {
     return $output;
     
     }
+
+    function updateAccount($username,$password,$email,$firstName,$lastName,$idNo,$birthday,$gender,$address,$phone,$type,$status){
+        $statement = $this->connect->exec('UPDATE account SET `password`='.'"'.$password.'"'.', `email`='.'"'.$email.'"'.', `firstName`='.'"'.$firstName.'"'.'
+    , `lastName`='.'"'.$lastName.'"'.', `idNo`="'.$idNo.'", `birthday`="'.$birthday.'", `gender`="'.$gender.'", 
+    `address`="'.$address.'", `phone`="'.$phone.'", `typeAccount`="'.$type.'", `status`="'.$status.'" WHERE `username`="'.$username.'"');
+         echo $statement;
+    }
     
     function deleteAccount($username){
         // $statement = $this->connect->exec('DELETE FROM account WHERE username="1"');
-        if($this->connect->exec('DELETE FROM account WHERE username='.'"'.$username.'"'.' ') == true){
-            echo "1";
-        }else{
-            echo "-1";
-        }
+        $statement = $this->connect->exec('DELETE FROM account WHERE username='.'"'.$username.'"'.' ');
+        
+        echo "1";
+
     }
 
     function readEventRec(){
@@ -169,6 +158,38 @@ class Database {
         $statement = $this->connect->prepare('SELECT * FROM event WHERE (date>=:date and time>=:time) or date>=:date ORDER BY date,time');
         $statement->execute([ ':date' => $date , ':time' => $time]);
         return $this->returnEvent($statement);
+
+    }
+        //ตรวจสอบว่ามี event อยู่ในดาต้าเบสหรือเปล่า
+        function checkEvent($eventName) {
+            $statement = $this->connect->prepare('SELECT eventName FROM event WHERE eventName=:eventName');
+            $statement->execute([':eventName' => $eventName]);
+            $result = $statement->fetch(PDO::FETCH_BOTH);
+            if($result['eventName'] == ""){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+     //สร้างevent
+     function createEvent($eventName,$location,$date,$size,$Category,$type,$price,$details,$organizerName,$contactName,$email,$phone) {
+        $query = $this->connect->prepare('SELECT max(idEvent) FROM event');
+        $query->execute();
+        $result = $query->fetch(PDO::FETCH_BOTH);
+        $this->maxID = $result['max(idEvent)']+1;
+        $statement = $this->connect->exec('INSERT INTO event (`idEvent`,`eventName`, `location`, `date`, `size`, `Category`, `type`, `price`, `details`, `organizerName`, `contactName`, `email`, `phone`) VALUES
+         ('."'".$this->maxID."'".','."'".$eventName."'".','."'".$location."'".','."'".$date."'".','."'".$size."'".','."'".$Category."'".','."'".$type."'".','."'".$price."'".','."'".$details."'".','."'".$organizerName."'".','."'".$contactName."'".','."'".$email."'".','."'".$phone."'".')');
+        //  echo "INSERT INTO event (`eventName`, `location`, `date`, `size`, `Category`, `type`, `price`, `details`, `organizerName`, `contactName`, `email`, `phone`) VALUES ('$eventName,$location,$date,$size,$Category,$type,$price,$details,$organizerName,$contactName,$email,$phone)";
+    }
+
+    function addPath($imagePath) {
+        echo "addPath";
+        // $query = $this->connect->prepare('SELECT max(idEvent) FROM event');
+        // $query->execute();
+        // $result = $query->fetch(PDO::FETCH_BOTH);
+        // $maxID = $result['max(idEvent)']-1;
+        $statement = $this->connect->exec('INSERT INTO imageEvent (`idEvent`, `imagePath`) VALUES ('."'".$this->maxID."'".','."'".$imagePath."'".')');
 
     }
 

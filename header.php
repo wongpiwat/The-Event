@@ -12,6 +12,7 @@ $userImage = null;
 $user = null;
 $controller = new Controller();
 
+
 if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
     $username = $_SESSION["username"];
     $userImage = $_SESSION["userImage"];
@@ -92,12 +93,14 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
           </div>
         </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" onclick="document.getElementById('create').style.display='block'"><span class="glyphicon glyphicon-th-large"></span> Create Event</a></li>
+      <li><a href="#" onclick="document.getElementById('create').style.display='block'"><span class="glyphicon glyphicon-th-large"></span> Create Event</a></li>
+      <li><a href="index.php" onclick="document.getElementById('create').style.display='block'"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Profile <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="profile.php">Profile</a></li>
-            <li><a href="#">Settings</a></li>
+            <li><a href="setting.php">Settings</a></li>
             <li><a href="#">Feedback</a></li>
             <li><a href="#">Help</a></li>
             <li><a href="#" onclick="signOut()"><span class="glyphicon glyphicon-log-out" ></span> Sign out</a></li>
@@ -113,7 +116,7 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
 
     }else{ // signIn
         $("#header").html(`
-        <nav class="navbar navbar-default navbar-fixed-top">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -197,13 +200,13 @@ width: 100%;">Login</button>
 
 <div id="signUp" class="signUp">
   <form class="signUp-content animate"  id="signUpForm" method="POST" action="src/indexPHP.php">
-  <div style="padding: 16px;">
-      <label for="uname"><b>Username</b></label>
+  <div style="padding: 16px;" id="b">
+      <label for="uname" id="nameu"><b>Username</b></label>
       <input type="text" placeholder="Enter Username" name="uname" id="usrn" required>
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="psw"  id="psw" required>
 
-      <label for="psw"><b>Confirm Your Password</b></label>
+      <label for="psw" id="conP"><b>Confirm Your Password</b></label>
       <input type="password" placeholder="Enter Password Again" name="cPsw" id="cPsw" required>
 
       <label for="email"><b>Email</b></label>
@@ -219,20 +222,26 @@ width: 100%;">Login</button>
       <input type="date" name="bday" id="bday" require><br>
       <label for="gen"><b>Gender</b></label><br>
       <input type="radio" name="gender" value="male" id="male" checked> Male
-      <input type="radio" name="gender" value="female"  > Female<br>
+      <input type="radio" name="gender" value="female" id="female" > Female<br>
       
     <label for="address"><b>Address</b></label>
     <input type="text" placeholder="Enter Address" name="uaddress" id="address" required>
 
     <label for="phone"><b>Phone Number</b></label>
     <input type="text" onKeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Enter Phone Number" name="uphone" id="phone" required>
-    <div id="typeA" style="display:none">
-        <label for="type"><b>Type Account</b></label><br>
-        <input type="radio" name="type" value="male" id="type" checked> Admin
-        <input type="radio" name="type" value="female"  > User<br>
+    <div id="type" style="display:none;">
+        <label for="type"><b>Type Account: </b></label>
+        <input type="radio" name="type" value="male" id="typeA" checked> Admin
+        <input type="radio" name="type" value="female" id="typeU" > User<br>
+    </div>
+    <div id="status" style="display:none;margin-bottom:15px;">
+        <label for="type"><b>Status Account: </b></label>
+        <input type="radio" name="status" value="Activate" id="statusA" checked> Activate
+        <input type="radio" name="status" value="unActivate" id="statusU" > unActivate
+        <input type="radio" name="status" value="Block" id="statusB" > Block<br>
     </div>
       <!-- 20,40 -->
-      <button style="width: 20%; height: 7%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtn">Cancel</button>
+      <button id="signupCan" style="width: 20%; height: 7%;" type="button" onclick="document.getElementById('signUp').style.display='none';document.getElementById('signUpForm').reset(); setEdit();undisableInput()" class="cancelbtn">Cancel</button>
       <button id="signupbtn"  type="button" name="SignUp" onclick="signUp()" style="width: 60%; height: 7%;float: right;background-color: #4CAF50;
 color: white;
 padding: 10px 18px;
@@ -248,20 +257,20 @@ cursor: pointer;
 
 <!-- สร้าง event -->
 <div id="create" class="create">
-<form class="create-content animate" action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
+<form class="create-content animate"  method="POST">
     <center><h1>Create a Event</h1></center>
     <div class="con">
         <label for="eventName"><b>Event Name</b></label>
-        <input type="text" name="eventName" required="">
+        <input id="eventName" type="text" name="eventName" required="">
 
         <label for="location"><b>Location</b></label>
-        <input type="text" name="location" required="">
+        <input id="location" type="text" name="location" required="">
 
         <label for="birth"><b>Date of Event</b></label>
-        <input type="date" name="date">
+        <input id="date" type="date" name="date">
         <br>
         <label for="size"><b>Size of Event</b></label>
-        <select name="size">
+        <select id="size" name="size">
             <option value="one">1 - 50 People</option>
             <option value="fifty">51 - 100 People</option>
             <option value="one-hundred-one">101 - 500 People</option>
@@ -271,7 +280,7 @@ cursor: pointer;
         </select>
         <br>
         <label for="eventCategory"><b>Event Category</b></label>
-        <select name="category">
+        <select id="category" name="category">
             <option value="business">Business</option>
             <option value="education">Education</option>
             <option value="family">Family</option>
@@ -285,15 +294,15 @@ cursor: pointer;
         <br>
         <form>
             <label for="eventType"><b>Event Type</b></label> 
-            <input type="radio" name="type" value="paid" checked>Paid</input>
-            <input type="radio" name="type" value="free">Free</input>
+            <input type="typePaid" name="type" value="paid" checked>Paid</input>
+            <input type="typeFree" name="type" value="free">Free</input>
         </form>
         <br>
         <label for="price"><b>Ticket Price (Thai Baht)</b></label>
-        <input type="text" name="price" required><br>
+        <input id="price" type="text" name="price" required><br>
 
         <label for="details"><b>Details</b></label>
-        <input  type="text" placeholder="" name="details" required>
+        <input id="details" type="text" placeholder="" name="details" required>
         
         <!-- image upload -->
             <form id="fileupload" method="POST" enctype="multipart/form-data" data-url="upload-files/">
@@ -404,16 +413,16 @@ cursor: pointer;
         <script src="js/main.js"></script>
         <!-- image upload -->
         <label for="organizerName"><b>Organizer Name</b></label>
-        <input type="text" name="organizerName" required="">
+        <input id="organizerName" type="text" name="organizerName" required="">
 
         <label for="contactName"><b>Contact Name</b></label>
-        <input type="text" name="contactName" required><br>
+        <input id="contactName" type="text" name="contactName" required><br>
 
         <label for="email"><b>Email</b></label>
-        <input type="text" name="email" required>
+        <input id="email" type="text" name="email" required>
 
         <label for="phone" ><b>Phone</b></label>
-        <input maxlength="10" onKeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" name="phone" required>
+        <input id="phone" maxlength="10" onKeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" name="phone" required>
 
         <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('create').style.display='none'" class="cancelbtn">Cancel</button>
         <button id="creataevent" type="submit" name="CreateEvent" style="width: 60%; height: 7%;float: right;background-color: #4CAF50;
@@ -428,8 +437,11 @@ cursor: pointer;
     </div>
 </form>
 
+
 <script type="text/javascript">
 
+console.log(window.location.pathname);
+// /ProjectWebtech_1/adminManage.php
 var login = document.getElementById('login');
 window.onclick = function(e){
     if (event.target == login){
@@ -478,6 +490,7 @@ function signOut(){
 
 
 function signUp(){
+
     var username = document.getElementById('usrn').value;
     var psw = document.getElementById('psw').value;
     var cPsw = document.getElementById('cPsw').value;
@@ -489,29 +502,51 @@ function signUp(){
     var address = document.getElementById('address').value;
     var phone = document.getElementById('phone').value;
     var bday = document.getElementById('bday').value;
+    var type = 1;
+    var status = null;
     if(document.getElementById('male').checked == false){
       gender = "female";
     }
-    console.log(psw);
-    console.log(cPsw);
-    console.log(bday);
-    if(psw == cPsw && bday != ""){
+    console.log(document.getElementById('typeA').style.display);
+    //console.log(document.getElementById('type').checked);
+    if(document.getElementById('signupbtn').textContent == "Edit Account"){
+        console.log("Edit!!!");
+        cPsw = psw;
+        status = $('input[name=status]:checked').val();
+        console.log(status);
+    }
+    if(document.getElementById('type').style.display == "block" && document.getElementById('typeA').checked == true){
+        type = 0;
+    }
+    // console.log(psw);
+    // console.log(cPsw);
+    // console.log(bday);
+
+    if(psw == cPsw && bday != "" && document.getElementById('signupbtn').textContent != "Edit Account" ){
         console.log("Same");
+        
         $.post('src/indexPHP.php',{signUp:"true",uname:username,psw:psw,umail:email,uFname:firstName,
-        uLname:lastName,uid:idNo,bday:bday,gender:gender,uaddress:address,uphone:phone},
+        uLname:lastName,uid:idNo,bday:bday,gender:gender,uaddress:address,uphone:phone,type:type},
     function(data){
         console.log(data);
 
-     if(data == 1){
-          console.log("SignUp Successful.");
-          alert("SignUp Successful.");
-          location.reload();
-     }else if(data == -1){
-          alert("Username is already use!!!.")
-          document.getElementById('usrn').value = "";
-          document.getElementById('psw').value = "";
-          document.getElementById('cPsw').value = "";
-     }
+        if(data == 1){
+            if(window.location.pathname == "/ProjectWebtech_1/setting.php"){
+                successTell(" Add User => Username: "+username+" into Database.");
+                readAccount();
+                document.getElementById('signUp').style.display='none';
+                document.getElementById('signUpForm').reset();
+            }else{
+            console.log("SignUp Successful.");
+            alert("SignUp Successful.");
+            location.reload();
+            }
+        }else if(data == -1){
+            alert("Username is already use!!!.")
+            document.getElementById('usrn').value = "";
+            document.getElementById('psw').value = "";
+            document.getElementById('cPsw').value = "";
+        }
     });
 
     }else if(psw != cPsw){
@@ -523,11 +558,58 @@ function signUp(){
         //ฝากทำให้ช่องพาสเวิสเป็นสีแดงด้วยครับ ^^
     }else if(bday == ""){
         alert("Input Birthday.");
+    }else if(psw == cPsw && bday != "" && document.getElementById('signupbtn').textContent == "Edit Account" ){
+        $.post('src/indexPHP.php',{Edit:"true",uname:username,psw:psw,umail:email,uFname:firstName,
+        uLname:lastName,uid:idNo,bday:bday,gender:gender,uaddress:address,uphone:phone,type:type,status:status},
+    function(data){
+        console.log(data);
+
+     if(data == 1){
+         if(window.location.pathname == "/ProjectWebtech_1/setting.php"){
+            successTell(" Edit User => Username: "+username+" into Database.");
+            readAccount();
+            setEdit();
+            document.getElementById('signUp').style.display='none';
+            document.getElementById('signUpForm').reset();
+         }
+     }
+     }
+     );
     }
 }
-    function sun(){
-        console.log("Sun");
-    }
+
+    function sendImagePath(path) {
+            imagesPath.push(path);
+        };
+
+
+      function reload_js(){
+          location.reload();
+      }
+      function createNewEvent(){
+        var type = null;
+        var eventName = document.getElementById('eventName').value;
+        var location = document.getElementById('location').value;
+        var date = document.getElementById('date').value;
+        var size = document.getElementById('size').value;
+        var category = document.getElementById('category').value;
+        if (document.getElementById('typePaid').checked) {
+            type = document.getElementById('typePaid').value;
+        } else if (document.getElementById('typeFree').checked) {
+            type = document.getElementById('typeFree').value;
+        }
+        var price = document.getElementById('price').value;
+        var details = document.getElementById('details').value;
+        var organizerName = document.getElementById('organizerName').value;
+        var contactName = document.getElementById('contactName').value;
+        var email = document.getElementById('email').value;
+        var phone = document.getElementById('phone').value;
+        document.getElementById('createNew').type = "submit";
+        // document.getElementById('createNew').trigger("click");
+        $.post('src/indexPHP.php',{createEvent:"true",eventName:eventName,location:location,date:date,size:size,category:category,type:type,price:price,details:details,organizerName:organizerName,contactName:contactName,email:email,phone:phone,imagesPath:imagesPath});     
+      }
+     
+
 
 </script>
 

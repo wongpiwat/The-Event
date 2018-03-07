@@ -86,14 +86,19 @@ class Controller{
       session_destroy();
     }
 
-    function createNewEvent($eventName,$location,$date,$size,$Category,$type,$price,$detail,$organizerName,$contactName,$email,$phone) {
+    function createNewEvent($eventName,$location,$date,$size,$Category,$type,$price,$detail,$organizerName,$contactName,$email,$phone,$imagePath) {
       if ($this->database->checkEvent($eventName)) {
         echo "Event is Available";
         $this->database->createEvent($eventName,$location,$date,$size,$Category,$type,$price,$detail,$organizerName,$contactName,$email,$phone);
+        foreach ($imagePath as $value) {
+          $this->database->addPath($value);
+          echo "$value <br>";
+        }
       } else {
         echo "Event is Already Use!!!";
       }
     }
+
 
 
     function getDatabase(){
