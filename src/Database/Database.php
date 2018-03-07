@@ -88,10 +88,11 @@ class Database {
         $statement = $this->connect->query('SELECT * FROM account');
         while($row = $statement->fetch(PDO::FETCH_BOTH)){
         $username = $row["username"];
-        $edit  = sprintf('onclick="createAccount(\'%s\')"',$username);
+        $edit  = sprintf('onclick="editAccount(\'%s\',\'edit\')"',$username);
+        $read  = sprintf('onclick="editAccount(\'%s\',\'read\')"',$username);
         $delete = sprintf('onclick="deleteAccount(\'%s\')"',$username);
         $output .= '
-            <tr >
+            <tr '.$read.'>
                 <td>'.$count.'</td>
                 <td>'.$row["username"].'</td>
                 <td>'.$row["email"].'</td>
@@ -107,6 +108,13 @@ class Database {
         }
     return $output;
     
+    }
+
+    function updateAccount($username,$password,$email,$firstName,$lastName,$idNo,$birthday,$gender,$address,$phone,$type,$status){
+        $statement = $this->connect->exec('UPDATE account SET `password`='.'"'.$password.'"'.', `email`='.'"'.$email.'"'.', `firstName`='.'"'.$firstName.'"'.'
+    , `lastName`='.'"'.$lastName.'"'.', `idNo`="'.$idNo.'", `birthday`="'.$birthday.'", `gender`="'.$gender.'", 
+    `address`="'.$address.'", `phone`="'.$phone.'", `typeAccount`="'.$type.'", `status`="'.$status.'" WHERE `username`="'.$username.'"');
+         echo $statement;
     }
     
     function deleteAccount($username){

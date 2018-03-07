@@ -1,3 +1,4 @@
+
 <?php   
     //-----------ส่วนของ PHP-----------
     require '../vendor/autoload.php';
@@ -47,7 +48,7 @@
         else if(isset($_POST["signUp"])){ //เมื่อมีการกดปุ่ม SignUp
             
            // echo "<br>---Sign up---<br>";
-            $controller->SignUp($_POST["uname"],$_POST["psw"],$_POST["umail"],$_POST["uFname"],$_POST["uLname"],$_POST["uid"],$_POST["bday"],$_POST["gender"],$_POST["uaddress"],$_POST["uphone"],"1");
+            $controller->SignUp($_POST["uname"],$_POST["psw"],$_POST["umail"],$_POST["uFname"],$_POST["uLname"],$_POST["uid"],$_POST["bday"],$_POST["gender"],$_POST["uaddress"],$_POST["uphone"],$_POST["type"]);
         
         }else if(isset($_POST["signOut"])){
             $controller->signOut();
@@ -56,6 +57,11 @@
             $controller->getDatabase()->deleteAccount($_POST["username"]);
         }else if(isset($_POST["readAccount"])){
             echo $controller->getDatabase()->readAccount();
+        }else if(isset($_POST["editAccount"])){
+            $editUser =  $controller->getDatabase()->autoSignIn($_POST["username"]);
+            echo "$editUser[0],$editUser[1],$editUser[2],$editUser[3],$editUser[4],$editUser[5],$editUser[6],$editUser[7],$editUser[8],$editUser[9],$editUser[10],$editUser[11],$editUser[12]";
+        }else if(isset($_POST["Edit"])){
+            $controller->getDatabase()->updateAccount($_POST["uname"],$_POST["psw"],$_POST["umail"],$_POST["uFname"],$_POST["uLname"],$_POST["uid"],$_POST["bday"],$_POST["gender"],$_POST["uaddress"],$_POST["uphone"],$_POST["type"],$_POST["status"]);
         }
     }
 ?>

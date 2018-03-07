@@ -203,7 +203,7 @@ width: 100%;">Login</button>
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="psw"  id="psw" required>
 
-      <label for="psw"><b>Confirm Your Password</b></label>
+      <label for="psw" id="conP"><b>Confirm Your Password</b></label>
       <input type="password" placeholder="Enter Password Again" name="cPsw" id="cPsw" required>
 
       <label for="email"><b>Email</b></label>
@@ -219,20 +219,26 @@ width: 100%;">Login</button>
       <input type="date" name="bday" id="bday" require><br>
       <label for="gen"><b>Gender</b></label><br>
       <input type="radio" name="gender" value="male" id="male" checked> Male
-      <input type="radio" name="gender" value="female"  > Female<br>
+      <input type="radio" name="gender" value="female" id="female" > Female<br>
       
     <label for="address"><b>Address</b></label>
     <input type="text" placeholder="Enter Address" name="uaddress" id="address" required>
 
     <label for="phone"><b>Phone Number</b></label>
     <input type="text" onKeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Enter Phone Number" name="uphone" id="phone" required>
-    <div id="typeA" style="display:none">
+    <div id="type" style="display:none;">
         <label for="type"><b>Type Account</b></label><br>
-        <input type="radio" name="type" value="male" id="type" checked> Admin
-        <input type="radio" name="type" value="female"  > User<br>
+        <input type="radio" name="type" value="male" id="typeA" checked> Admin
+        <input type="radio" name="type" value="female" id="typeU" > User<br>
+    </div>
+    <div id="status" style="display:none;margin-bottom:15px;">
+        <label for="type"><b>Status Account</b></label><br>
+        <input type="radio" name="status" value="Activate" id="statusA" checked> Activate
+        <input type="radio" name="status" value="unActivate" id="statusU" > unActivate
+        <input type="radio" name="status" value="Block" id="statusB" > Block<br>
     </div>
       <!-- 20,40 -->
-      <button style="width: 20%; height: 7%;" type="button" onclick="document.getElementById('signUp').style.display='none'" class="cancelbtn">Cancel</button>
+      <button id="signupCan" style="width: 20%; height: 7%;" type="button" onclick="document.getElementById('signUp').style.display='none';document.getElementById('signUpForm').reset(); setEdit();undisableInput()" class="cancelbtn">Cancel</button>
       <button id="signupbtn"  type="button" name="SignUp" onclick="signUp()" style="width: 60%; height: 7%;float: right;background-color: #4CAF50;
 color: white;
 padding: 10px 18px;
@@ -430,6 +436,8 @@ cursor: pointer;
 
 <script type="text/javascript">
 
+console.log(window.location.pathname);
+// /ProjectWebtech_1/adminManage.php
 var login = document.getElementById('login');
 window.onclick = function(e){
     if (event.target == login){
@@ -478,6 +486,7 @@ function signOut(){
 
 
 function signUp(){
+
     var username = document.getElementById('usrn').value;
     var psw = document.getElementById('psw').value;
     var cPsw = document.getElementById('cPsw').value;
@@ -489,29 +498,51 @@ function signUp(){
     var address = document.getElementById('address').value;
     var phone = document.getElementById('phone').value;
     var bday = document.getElementById('bday').value;
+    var type = 1;
+    var status = null;
     if(document.getElementById('male').checked == false){
       gender = "female";
     }
-    console.log(psw);
-    console.log(cPsw);
-    console.log(bday);
-    if(psw == cPsw && bday != ""){
+    console.log(document.getElementById('typeA').style.display);
+    //console.log(document.getElementById('type').checked);
+    if(document.getElementById('signupbtn').textContent == "Edit Account"){
+        console.log("Edit!!!");
+        cPsw = psw;
+        status = $('input[name=status]:checked').val();
+        console.log(status);
+    }
+    if(document.getElementById('type').style.display == "block" && document.getElementById('typeA').checked == true){
+        type = 0;
+    }
+    // console.log(psw);
+    // console.log(cPsw);
+    // console.log(bday);
+
+    if(psw == cPsw && bday != "" && document.getElementById('signupbtn').textContent != "Edit Account" ){
         console.log("Same");
+        
         $.post('src/indexPHP.php',{signUp:"true",uname:username,psw:psw,umail:email,uFname:firstName,
-        uLname:lastName,uid:idNo,bday:bday,gender:gender,uaddress:address,uphone:phone},
+        uLname:lastName,uid:idNo,bday:bday,gender:gender,uaddress:address,uphone:phone,type:type},
     function(data){
         console.log(data);
 
-     if(data == 1){
-          console.log("SignUp Successful.");
-          alert("SignUp Successful.");
-          location.reload();
-     }else if(data == -1){
-          alert("Username is already use!!!.")
-          document.getElementById('usrn').value = "";
-          document.getElementById('psw').value = "";
-          document.getElementById('cPsw').value = "";
-     }
+        if(data == 1){
+            if(window.location.pathname == "/ProjectWebtech_1/adminManage.php"){
+                successTell(" Add User => Username: "+username+" into Database.");
+                readAccount();
+                document.getElementById('signUp').style.display='none';
+                document.getElementById('signUpForm').reset();
+            }else{
+            console.log("SignUp Successful.");
+            alert("SignUp Successful.");
+            location.reload();
+            }
+        }else if(data == -1){
+            alert("Username is already use!!!.")
+            document.getElementById('usrn').value = "";
+            document.getElementById('psw').value = "";
+            document.getElementById('cPsw').value = "";
+        }
     });
 
     }else if(psw != cPsw){
@@ -523,11 +554,26 @@ function signUp(){
         //ฝากทำให้ช่องพาสเวิสเป็นสีแดงด้วยครับ ^^
     }else if(bday == ""){
         alert("Input Birthday.");
+    }else if(psw == cPsw && bday != "" && document.getElementById('signupbtn').textContent == "Edit Account" ){
+        $.post('src/indexPHP.php',{Edit:"true",uname:username,psw:psw,umail:email,uFname:firstName,
+        uLname:lastName,uid:idNo,bday:bday,gender:gender,uaddress:address,uphone:phone,type:type,status:status},
+    function(data){
+        console.log(data);
+
+     if(data == 1){
+         if(window.location.pathname == "/ProjectWebtech_1/adminManage.php"){
+            successTell(" Edit User => Username: "+username+" into Database.");
+            readAccount();
+            setEdit();
+            document.getElementById('signUp').style.display='none';
+            document.getElementById('signUpForm').reset();
+         }
+     }
+     }
+     );
     }
 }
-    function sun(){
-        console.log("Sun");
-    }
+
 
 </script>
 
