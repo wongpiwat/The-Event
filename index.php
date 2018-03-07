@@ -23,7 +23,7 @@
         #box{
             position: relative;
             width: 100%;
-            height: 65%;
+            height: 70%;
             overflow: hidden;
             /* display: flex;
             justify-content: center;         */
@@ -74,8 +74,8 @@
   })();
 
 </script><!--End image slice -->
-
-    
+    <div class="nav navbar-inverse" style="height:2%;"><div>
+    <center>
     <div class="Recommended" >
         <div class="text">Recommended Events</div>
         <?php echo $controller->getDatabase()->readEventRec();?>
@@ -86,11 +86,14 @@
         <div class="text">Upcoming Events</div>
         <?php echo $controller->getDatabase()->readEventUp();?>
     </div>
-
+  
+    
     <div class="nearby" >
-        <div class="text">NearBy Events</div>
+        <div class="text">Nearby Events</div>
+
         <?php echo $controller->getDatabase()->readEventRec();?>
     </div>
+    </center>  
 <!--   End Block Recommended Events,Upcoming Events,Nearby Events -->
 
 
@@ -120,6 +123,14 @@
         <p><b>&copy; Designed by Kiticha Garden</b></p>
         <br>
     </footer>
+
+    <script>
+        function showEventContent(idEvent){
+            console.log(idEvent);
+            
+        }
+
+    </script>
 
 
 

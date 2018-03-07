@@ -60,9 +60,7 @@
                     </tr>
                 </thead>
                     
-                    <?php
-                        echo $controller->getDatabase()->readAccount();
-                    ?>
+
                     
                 
             </table>
@@ -100,22 +98,25 @@
                         <p id="tellUser"></p>
                         
                         <div style="float:right;margin-top:10px;">
-                            <button type="button" class="btn btn-danger" style="margin-right:5px;" onclick="deleteA()"><span class="glyphicon glyphicon-trash" ></span> Delete</button>
-                            <button type="button" class="btn btn-success" onclick="document.getElementById('deleteAccount').style.display='none'"><span class="glyphicon glyphicon-share-alt" ></span> Cancel</button>
+                            <button type="button" class="btn btn-danger" style="margin-right:5px;" onclick="deleteA();setDel();"><span class="glyphicon glyphicon-trash" ></span> Delete</button>
+                            <button type="button" class="btn btn-success" onclick="document.getElementById('deleteAccount').style.display='none';setDel()"><span class="glyphicon glyphicon-share-alt" ></span> Cancel</button>
                         </div>
                         <br><br>
                  </div>
             </div>
         </div>
 
+        <div id="rA"></div>
  
 
         
 
             
     <script >
+        readAccount();
         var deleteUser = null;
         var edit = false;
+        var del = false;
         function createAccount(name){
 
             console.log(name);
@@ -137,30 +138,34 @@
 
 
         function editAccount(name,type){
-            console.log("Type:  "+type);
-            if(type == "edit"){
-                // undisableInput();
-                // document.getElementById('psw').disabled= false;
-                edit = true;
-            }
-            
-            console.log("Edit:  "+edit);
-            $.ajax({  
-                 type: "POST",  
-                 url: "src/indexPHP.php", 
-                data: { editAccount:"true", username:name },
-                success: function(response) {
-                    console.log("Sun");
-                    console.log(response);
-                    var array = response.split(",");
-                    
-                    setValueEdit(array);
-                    if(type == "read" && edit == false){
-                        disableInput();
-                    }
- 
+            if(type == "del" ||del == true){
+
+                del = true;
+            }else{
+                console.log("Type:  "+type);
+                if(type == "edit"){
+                    // undisableInput();
+                    // document.getElementById('psw').disabled= false;
+                    edit = true;
                 }
-            });
+
+                $.ajax({  
+                    type: "POST",  
+                    url: "src/indexPHP.php", 
+                    data: { editAccount:"true", username:name },
+                    success: function(response) {
+                        console.log("Sun");
+                        console.log(response);
+                        var array = response.split(",");
+                        
+                        setValueEdit(array);
+                        if(type == "read" && edit == false){
+                            disableInput();
+                        }
+    
+                    }
+                });
+            }
         }
 
         function disableInput(){
@@ -206,6 +211,9 @@
             document.getElementById('signupbtn').style.display= "block";
             document.getElementById('signupCan').innerHTML= 'Cancel';
             document.getElementById('signupbtn').innerHTML= 'SignUp';
+            document.getElementById('conP').style.display= "block";
+            document.getElementById('cPsw').style.display= "block";
+            document.getElementById('conP').innerHTML = "Confirm Your Password";
             
 
         }
@@ -246,6 +254,9 @@
         function setEdit(){
             edit = false;
         }
+        function setDel(){
+            del = false;
+        }
         
         function deleteA(){
             $.post('src/indexPHP.php',{deleteAccount:"true",username:deleteUser},
@@ -268,32 +279,32 @@
         }
 
         function readAccount(){
+            
             $.ajax({  
                  type: "POST",  
                  url: "src/indexPHP.php", 
                 data: { readAccount:"true" },
                 success: function(response) {
-                    $("#readAccount").html(`
-                            <div class="table-responsive"  id="readAccount">
-            <table class="table table-hover table-bordered" style="margin-top:10px;text-align:center;">
-                <thead>
-                    <tr>
-                    <th>No.</th>
-                    <th>Username</th>
-                    <th>E-Mail</th>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Type Account</th>
-                    <th>Status</th>
-                    <th>Edit Account</td>
-                    <th>Delete Account</th>
-                    </tr>
-                </thead>`+
-                 
-                  response +`
-                   </table>
-                   </div>
-                   `);
+                    $("#readAccount").html(
+                    '<div class="table-responsive"  id="readAccount">'+
+                    '<table class="table table-hover table-bordered" style="margin-top:10px;text-align:center;">'+
+                    '<thead>'+
+                        '<tr>'+
+                        '<th>No.</th>'+
+                        '<th>Username</th>'+
+                        '<th>E-Mail</th>'+
+                        '<th>Firstname</th>'+
+                        '<th>Lastname</th>'+
+                        '<th>Type Account</th>'+
+                        '<th>Status</th>'+
+                        '<th>Edit Account</td>'+
+                        '<th>Delete Account</th>'+
+                        '</tr>'+
+                    '</thead>'+
+                    
+                    response +
+                    '</table>'+
+                    '</div>');
 
                 
                 }

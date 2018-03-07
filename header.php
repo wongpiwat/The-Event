@@ -12,6 +12,7 @@ $userImage = null;
 $user = null;
 $controller = new Controller();
 
+
 if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
     $username = $_SESSION["username"];
     $userImage = $_SESSION["userImage"];
@@ -48,7 +49,7 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 </head>
 
 <!--header first page-->
@@ -92,12 +93,14 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
           </div>
         </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" onclick="document.getElementById('create').style.display='block'"><span class="glyphicon glyphicon-th-large"></span> Create Event</a></li>
+      <li><a href="#" onclick="document.getElementById('create').style.display='block'"><span class="glyphicon glyphicon-th-large"></span> Create Event</a></li>
+      <li><a href="index.php" onclick="document.getElementById('create').style.display='block'"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Profile <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="profile.php">Profile</a></li>
-            <li><a href="#">Settings</a></li>
+            <li><a href="setting.php">Settings</a></li>
             <li><a href="#">Feedback</a></li>
             <li><a href="#">Help</a></li>
             <li><a href="#" onclick="signOut()"><span class="glyphicon glyphicon-log-out" ></span> Sign out</a></li>
@@ -113,7 +116,7 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
 
     }else{ // signIn
         $("#header").html(`
-        <nav class="navbar navbar-default navbar-fixed-top">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -254,20 +257,20 @@ cursor: pointer;
 
 <!-- สร้าง event -->
 <div id="create" class="create">
-<form class="create-content animate" action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
+<form class="create-content animate"  method="POST">
     <center><h1>Create a Event</h1></center>
     <div class="con">
         <label for="eventName"><b>Event Name</b></label>
-        <input type="text" name="eventName" required="">
+        <input id="eventName" type="text" name="eventName" required="">
 
         <label for="location"><b>Location</b></label>
-        <input type="text" name="location" required="">
+        <input id="location" type="text" name="location" required="">
 
         <label for="birth"><b>Date of Event</b></label>
-        <input type="date" name="date">
+        <input id="date" type="date" name="date">
         <br>
         <label for="size"><b>Size of Event</b></label>
-        <select name="size">
+        <select id="size" name="size">
             <option value="one">1 - 50 People</option>
             <option value="fifty">51 - 100 People</option>
             <option value="one-hundred-one">101 - 500 People</option>
@@ -277,7 +280,7 @@ cursor: pointer;
         </select>
         <br>
         <label for="eventCategory"><b>Event Category</b></label>
-        <select name="category">
+        <select id="category" name="category">
             <option value="business">Business</option>
             <option value="education">Education</option>
             <option value="family">Family</option>
@@ -291,15 +294,15 @@ cursor: pointer;
         <br>
         <form>
             <label for="eventType"><b>Event Type</b></label> 
-            <input type="radio" name="type" value="paid" checked>Paid</input>
-            <input type="radio" name="type" value="free">Free</input>
+            <input id="typePaid" type="radio" name="type" value="paid" checked>Paid</input>
+            <input id="typeFree" type="radio" name="type" value="free">Free</input>
         </form>
         <br>
         <label for="price"><b>Ticket Price (Thai Baht)</b></label>
-        <input type="text" name="price" required><br>
+        <input id="price" type="text" name="price" required><br>
 
         <label for="details"><b>Details</b></label>
-        <input  type="text" placeholder="" name="details" required>
+        <input id="details" type="text" placeholder="" name="details" required>
         
         <!-- image upload -->
             <form id="fileupload" method="POST" enctype="multipart/form-data" data-url="upload-files/">
@@ -410,16 +413,16 @@ cursor: pointer;
         <script src="js/main.js"></script>
         <!-- image upload -->
         <label for="organizerName"><b>Organizer Name</b></label>
-        <input type="text" name="organizerName" required="">
+        <input id="organizerName" type="text" name="organizerName" required="">
 
         <label for="contactName"><b>Contact Name</b></label>
-        <input type="text" name="contactName" required><br>
+        <input id="contactName" type="text" name="contactName" required><br>
 
         <label for="email"><b>Email</b></label>
-        <input type="text" name="email" required>
+        <input id="email" type="text" name="email" required>
 
         <label for="phone" ><b>Phone</b></label>
-        <input maxlength="10" onKeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" name="phone" required>
+        <input id="ePhone" maxlength="10" onKeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" name="phone" required>
 
         <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('create').style.display='none'" class="cancelbtn">Cancel</button>
         <button id="creataevent" type="submit" name="CreateEvent" style="width: 60%; height: 7%;float: right;background-color: #4CAF50;
@@ -433,6 +436,7 @@ cursor: pointer;
        
     </div>
 </form>
+
 
 <script type="text/javascript">
 
@@ -453,6 +457,7 @@ document.getElementById('login').addEventListener("keyup", function(event) {
 });
 
 function signIn(){
+
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
     console.log(username);
@@ -480,7 +485,8 @@ function signIn(){
 function signOut(){
     $.post('src/indexPHP.php',{signOut:"true"},function(data){
         //console.log(data);
-        location.reload();
+        window.location.href = "index.php";
+        // location.reload();
     });
 }
 
@@ -527,7 +533,7 @@ function signUp(){
         console.log(data);
 
         if(data == 1){
-            if(window.location.pathname == "/ProjectWebtech_1/adminManage.php"){
+            if(window.location.pathname == "/ProjectWebtech_1/setting.php"){
                 successTell(" Add User => Username: "+username+" into Database.");
                 readAccount();
                 document.getElementById('signUp').style.display='none';
@@ -561,7 +567,7 @@ function signUp(){
         console.log(data);
 
      if(data == 1){
-         if(window.location.pathname == "/ProjectWebtech_1/adminManage.php"){
+         if(window.location.pathname == "/ProjectWebtech_1/setting.php"){
             successTell(" Edit User => Username: "+username+" into Database.");
             readAccount();
             setEdit();
@@ -574,6 +580,38 @@ function signUp(){
     }
 }
 
+    function sendImagePath(path) {
+            imagesPath.push(path);
+        };
+
+
+      function reload_js(){
+          location.reload();
+      }
+      function createNewEvent(){
+        var type = null;
+        var eventName = document.getElementById('eventName').value;
+        var location = document.getElementById('location').value;
+        var date = document.getElementById('date').value;
+        var size = document.getElementById('size').value;
+        var category = document.getElementById('category').value;
+        if (document.getElementById('typePaid').checked) {
+            type = document.getElementById('typePaid').value;
+        } else if (document.getElementById('typeFree').checked) {
+            type = document.getElementById('typeFree').value;
+        }
+        var price = document.getElementById('price').value;
+        var details = document.getElementById('details').value;
+        var organizerName = document.getElementById('organizerName').value;
+        var contactName = document.getElementById('contactName').value;
+        var email = document.getElementById('email').value;
+        var phone = document.getElementById('ePhone').value;
+        document.getElementById('createNew').type = "submit";
+        // document.getElementById('createNew').trigger("click");
+        $.post('src/indexPHP.php',{createEvent:"true",eventName:eventName,location:location,date:date,size:size,category:category,type:type,price:price,details:details,organizerName:organizerName,contactName:contactName,email:email,phone:phone,imagesPath:imagesPath});     
+      }
+     
+
 
 </script>
 
@@ -585,20 +623,3 @@ o
 </html>
 
 
-<?php   
-    //-----------ส่วนของ PHP-----------
-    // require 'vendor/autoload.php';
-    // use KittichaiGarden\Controllers\Controller;
-    // $controller = new Controller();
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-        // echo "POST";
-
-        if (isset($_POST["CreateEvent"])) { //เมื่อมีการกดปุ่ม Create Event
-            echo "CreateEvent";
-            $controller->createNewEvent($_POST["eventName"],$_POST["location"],$_POST["date"],$_POST["size"],$_POST["category"],$_POST["type"],$_POST["price"],$_POST["details"],$_POST["organizerName"],$_POST["contactName"],$_POST["email"],$_POST["phone"]);
-            echo $_POST["eventName"].$_POST["location"].$_POST["date"].$_POST["size"].$_POST["category"].$_POST["type"].$_POST["price"].$_POST["details"].$_POST["organizerName"].$_POST["contactName"].$_POST["email"].$_POST["phone"];
-        }
-
-
-    }
-?>

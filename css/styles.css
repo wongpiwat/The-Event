@@ -4,11 +4,7 @@
     
 }
 
-body {
-    margin-top: 0;
-    margin-left: 5%;
-    margin-right: 5%;
-}
+
 
 ul {
     list-style-type: none;
@@ -206,6 +202,8 @@ span.psw {
     color: red;
     cursor: pointer;
 }
+
+
 /* 
 .dropdown {
     float: right;
@@ -311,22 +309,43 @@ input[type="text"]:focus{
     box-shadow: 0 0 15px #9ecaed;
 } 
 
-.media-left, .media-right, .media-body {/*Block Recommended,upcoming,nearby*/
+
+
+
+.eventLeft, .eventBody {/*Block Recommended,upcoming,nearby*/
     display: table-cell;
     vertical-align: top;
 }
-.media-body {/*Block Recommended,upcoming,nearby*/
-    width: 10000px;
-    text-align: center;
+.eventBody{/*Block Recommended,upcoming,nearby*/
+    width: 100%;
+    margin-left:5%;
 }
-.media, .media-body {/*Block Recommended,upcoming,nearby*/
+.eventContent, .v {/*Block Recommended,upcoming,nearby*/
     zoom: 1;
     overflow: hidden;
+    
 }
-.media{/*event */
-    margin-top: 10px;
+
+.eventContent{/*event */
+    /* margin-top: 10px; */
+    
+    margin:0.5%;
+    padding: 0.5%;
+    border: 0.5px solid #A3E7D8;
+}
+.eventDetail{
+    font-size: 12px;
+    text-align: left;
+    margin-left:1%;
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 1%;
+}
+.eventTitle{
+    text-align: left;
     font-size: 15px;
-    color: green;
+    margin-Top: 1%;
+    /* padding-left: 0.25%; */
 }
 .btn-secondary {/*bottom event */
     background-color: white;
@@ -363,22 +382,79 @@ input[type="text"]:focus{
 
 
 .text{
+    
     text-align: center;
-    font-size: 40px;
-    background-color: DodgerBlue; 
+    font-size: 35px;
+    background-color: #63d297; 
+    color:white;
 }
 .Recommended,.upcoming,.nearby {/*Block Recommended,upcoming,nearby*/
     display: inline-block;
-    width: 430px;
-    height: 500px;
-    margin-right: 0px;
-    margin: 5px;
-    
-    margin-top: 0px;
-    border: 1px solid While;
+    width: 400px;
+    height: 505px;
+    margin: 1%;
+    background-color: #f8f8f8;
+    /* box-shadow: 0px 0px 10px 7px #CCCCCC; */
     font-size: 15px; 
-    margin-top: 30px;
-
+    margin-top: 40px;
+    -webkit-box-shadow: 4px 11px 19px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 11px 19px -2px rgba(0,0,0,0.75);
+    box-shadow: 4px 11px 19px -2px rgba(0,0,0,0.75);
+    
 }
 
+body {
+    background-color: #f8f8f8;
+}
+
+.eventContent
+{
+    display:inline-block;
+    border:0;
+    /* width:196px;
+    height:210px; */
+    position: relative;
+    -webkit-transition: all 200ms ease-in;
+    -webkit-transform: scale(1); 
+    -ms-transition: all 200ms ease-in;
+    -ms-transform: scale(1); 
+    -moz-transition: all 200ms ease-in;
+    -moz-transform: scale(1);
+    transition: all 200ms ease-in;
+    transform: scale(1);   
+
+}
+.eventContent:hover
+{
+    box-shadow: 0px 0px 100px 5px #000000;
+    z-index: 1;
+    -webkit-transition: all 200ms ease-in;
+    -webkit-transform: scale(1.075);
+    -ms-transition: all 200ms ease-in;
+    -ms-transform: scale(1.075);   
+    -moz-transition: all 200ms ease-in;
+    -moz-transform: scale(1.075);
+    transition: all 200ms ease-in;
+    transform: scale(1.075);
+}
+.buttonTickets{
+    float:right;
+    margin-right:0.5%;
+    margin-top:3%;
+    background-color: #FFDB58;
+    color: white;
+    
+}
+
+.buttonTickets:hover{
+    float:right;
+    margin-right:0.5%;
+    margin-top:3%;
+    color: white;
+    -webkit-text-fill-color: white;
+    background-color: #63d297;
+    
+    /* border: 2px solid #fff176; */
+    
+}
 
