@@ -117,9 +117,13 @@
         var deleteUser = null;
         var edit = false;
         function createAccount(name){
+
             console.log(name);
-            document.getElementById('typeA').style.display='block';
+            document.getElementById('type').style.display='block';
+            document.getElementById('status').style.display='block';
+            // document.getElementById('typeA').style.display='block';
             document.getElementById('signUp').style.display='block';
+ 
         }
 
 
@@ -139,6 +143,7 @@
                 // document.getElementById('psw').disabled= false;
                 edit = true;
             }
+            
             console.log("Edit:  "+edit);
             $.ajax({  
                  type: "POST",  
@@ -200,6 +205,7 @@
             document.getElementById('female').disabled= false;
             document.getElementById('signupbtn').style.display= "block";
             document.getElementById('signupCan').innerHTML= 'Cancel';
+            document.getElementById('signupbtn').innerHTML= 'SignUp';
             
 
         }
@@ -227,7 +233,7 @@
                 document.getElementById('statusB').checked= true;
             }
             document.getElementById('phone').value= array[9];
-            document.getElementById('typeA').style.display= 'block';
+            document.getElementById('type').style.display= 'block';
             document.getElementById('signUp').style.display= 'block';
             document.getElementById('signupbtn').innerHTML= 'Edit Account';
             document.getElementById('cPsw').style.display= 'none';

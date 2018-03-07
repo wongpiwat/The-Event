@@ -197,8 +197,8 @@ width: 100%;">Login</button>
 
 <div id="signUp" class="signUp">
   <form class="signUp-content animate"  id="signUpForm" method="POST" action="src/indexPHP.php">
-  <div style="padding: 16px;">
-      <label for="uname"><b>Username</b></label>
+  <div style="padding: 16px;" id="b">
+      <label for="uname" id="nameu"><b>Username</b></label>
       <input type="text" placeholder="Enter Username" name="uname" id="usrn" required>
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="psw"  id="psw" required>
@@ -227,12 +227,12 @@ width: 100%;">Login</button>
     <label for="phone"><b>Phone Number</b></label>
     <input type="text" onKeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Enter Phone Number" name="uphone" id="phone" required>
     <div id="type" style="display:none;">
-        <label for="type"><b>Type Account</b></label><br>
+        <label for="type"><b>Type Account: </b></label>
         <input type="radio" name="type" value="male" id="typeA" checked> Admin
         <input type="radio" name="type" value="female" id="typeU" > User<br>
     </div>
     <div id="status" style="display:none;margin-bottom:15px;">
-        <label for="type"><b>Status Account</b></label><br>
+        <label for="type"><b>Status Account: </b></label>
         <input type="radio" name="status" value="Activate" id="statusA" checked> Activate
         <input type="radio" name="status" value="unActivate" id="statusU" > unActivate
         <input type="radio" name="status" value="Block" id="statusB" > Block<br>
