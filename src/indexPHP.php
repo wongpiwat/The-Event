@@ -87,6 +87,15 @@
             $controller->getDatabase()->createWebboard($_POST['idEvent'],$_POST['username'],$_POST['ques'],$_POST['detail']);
         }else if(isset($_POST['readWebboard'])){
             echo $controller->getDatabase()->readWebboard($_POST['idEvent']);
+        }else if(isset($_POST['comment'])){
+            echo $controller->getDatabase()->writeComment($_POST['idWebboard'],$_POST['username'],$_POST['comment']);
+        }else if(isset($_POST['readComment'])){
+            // echo "readComment";
+            echo $controller->getDatabase()->readCommentW($_POST['idWebboard']);
+        }else if(isset($_POST['readWebCom'])){
+            // echo "readComment";
+            $cc =  $controller->getDatabase()->readWebCom($_POST['idWebboard']);
+            echo "$cc[3]๏$cc[4]";
         }
     }
     if(isset($_GET["idEvent"])){

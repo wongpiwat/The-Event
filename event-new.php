@@ -236,7 +236,7 @@ header {
                 document.getElementById('mUser').className='active';
                 document.getElementById('mEvent').className='';document.getElementById('buyTicket').style.display='block';setTicketV()"><span class="glyphicon glyphicon-tags" ></span>&nbsp;<span id="ByT"> Buy Tickets</span></a></li>
 
-                <li id="mEvent" ><a  id="webBoard" onclick="document.getElementById('mGeneral').className='';
+                <li id="mEvent" ><a  href="#" id="webBoard" onclick="document.getElementById('mGeneral').className='';
                 document.getElementById('mUser').className='';
                 document.getElementById('mEvent').className='active';webBoard();" ><span class="glyphicon glyphicon-comment" ></span>&nbsp;Webboard</a></li>
             </ul>
@@ -393,6 +393,7 @@ $(document).ready(function() {
                         console.log(arrayE);
                         setElement(arrayE);
                         setDetailEvent(arrayE);
+                    
                     }
                 });
         
@@ -413,12 +414,12 @@ $(document).ready(function() {
             document.getElementById("categoryE").innerHTML =array[7];
             document.getElementById("typeE").innerHTML =array[8];
        
-            document.getElementById("preConE").innerHTML =array[12];
-            document.getElementById("postConE").innerHTML =array[13];
-            document.getElementById("organE").innerHTML =array[14];
-            document.getElementById("contactE").innerHTML =array[15];
-            document.getElementById("eMailE").innerHTML =array[16];
-            document.getElementById("phoneE").innerHTML =array[17];
+            document.getElementById("preConE").innerHTML =array[13];
+            document.getElementById("postConE").innerHTML =array[14];
+            document.getElementById("organE").innerHTML =array[15];
+            document.getElementById("contactE").innerHTML =array[16];
+            document.getElementById("eMailE").innerHTML =array[17];
+            document.getElementById("phoneE").innerHTML =array[18];
             if(array[11] != ""){
                 console.log(array["11"]);
                 console.log("Sunnnnn");

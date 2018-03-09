@@ -87,6 +87,7 @@
         createWebboard.style.display = "none";    
     }
     }
+    setTitle();
     readWebboard();
     function createWebB(){
         var ques = document.getElementById('quesW').value;
@@ -132,6 +133,21 @@
         
         });
     }
+
+    function setTitle(){
+        $.get("src/indexPHP.php",{idEvent:idE},
+        function(data){
+            // console.log(data);
+            var array = data.split('๏');
+            // console.log(array[2]);
+            document.getElementById('tNameEvent').innerHTML = " "+array[2];
+        })
+    }
+
+    function comment(idWebboard){
+            // alert("showWebboard.php?idWebboard="+idWebboard);
+            window.location = "showWebboard.php?idWebboard="+idWebboard;
+        }
 
 </script>
 

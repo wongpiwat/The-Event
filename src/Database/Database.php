@@ -285,12 +285,12 @@ class Database {
     function readWebboard($idEvent){
         $output ="";
         $count = 1;
-        $statement = $this->connect->query('SELECT * FROM webboard ORDER  BY time DESC');
+        $statement = $this->connect->query('SELECT * FROM webboard WHERE idEvent='.$idEvent.' ORDER  BY date,time DESC');
         while($row = $statement->fetch(PDO::FETCH_BOTH)){
             $output .= '
             <tr>
             <td>'.$count.'</td>
-            <td width="40%" ><a href="#" ><span class="glyphicon glyphicon-envelope" ></span> '.$row["question"].'</a></td>
+            <td width="40%" ><a href="#" onclick="comment('.$row[0].')" ><span class="glyphicon glyphicon-envelope"  ></span> '.$row["question"].'</a></td>
             <td>'.$row["username"].'</td>
             <td>'.$row["date"].'</td>
             <td>'.$row["time"].'</td>
@@ -325,6 +325,35 @@ class Database {
             $result = $statement->fetch(PDO::FETCH_BOTH);
             $reply = $result["reply"]+1;
             $this->connect->exec('UPDATE webboard SET `reply`="'.$reply.'"');
+    }
+
+    function readCommentW($idWebboard){
+        $output="";
+        $count = 1;
+        $statement = $this->connect->query('SELECT * FROM comwebboard WHERE idWebboard='.$idWebboard.' ORDER  BY date,time DESC');
+        while($row = $statement->fetch(PDO::FETCH_BOTH)){
+            $output .='
+            <div class="comment" style="padding-left: 5%;padding-right:5%;">
+            <h4>comment '.$count.'</h4>
+            <p class="comment-story">'
+                .$row[2].
+            '</p>
+        </div>';
+        $count += 1;
+        }
+        return $output;
+    }
+
+    function writeComment($idWebboard,$username,$comment){
+        $date = date("Y-m-d");
+        $time = date("h:i:s");
+        $statement = $this->connect->exec('INSERT INTO `comwebboard` VALUES ('.$idWebboard.' , "'.$username.'","'.$comment.'" , "'.$date.'" ,"'.$time.'")' );
+    }
+
+    function readWebCom($idWebboard){
+        $statement = $this->connect->query('SELECT * FROM webboard WHERE idWebboard='.$idWebboard);
+        $result = $statement->fetch(PDO::FETCH_BOTH);
+        return $result;
     }
 
     

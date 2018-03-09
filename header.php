@@ -530,6 +530,8 @@ function signUp(){
         console.log(data);
 
         if(data == 1){
+            //function
+            sendEmail(email,firstName);
             if(window.location.pathname == "/ProjectWebtech_1/setting.php"){
                 successTell(" Add User => Username: "+username+" into Database.");
                 readAccount();
@@ -540,6 +542,7 @@ function signUp(){
             alert("SignUp Successful.");
             location.reload();
             }
+
         }else if(data == -1){
             alert("Username is already use!!!.")
             document.getElementById('usrn').value = "";
@@ -609,10 +612,14 @@ function signUp(){
       }
      
 
+     function sendEmail(email,fname){
+
+     }
+
 
 </script>
 
-o
+
 </div>
 
  
