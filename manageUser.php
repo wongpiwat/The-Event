@@ -144,7 +144,7 @@ if(type == "del" ||del == true){
         success: function(response) {
             console.log("Sun");
             console.log(response);
-            var array = response.split(",");
+            var array = response.split("๏");
             
             setValueEdit(array);
             if(type == "read" && edit == false){

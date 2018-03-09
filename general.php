@@ -47,7 +47,7 @@
   </div>
     <!-- 20,40 -->
     <!-- <button id="signupCan" style="width: 20%; height: 7%;" type="button" onclick="document.getElementById('signUp').style.display='none';document.getElementById('signUpForm').reset(); setEdit();undisableInput()" class="cancelbtn">Cancel</button> -->
-    <button id="gsignupbtn"  type="button" name="SignUp" onclick="document.getElementById('deleteAccount').style.display='block'" class="btn btn-success" style="float:right">Edit</button>
+    <button id="gsignupbtn"  type="button" name="SignUp" onclick="document.getElementById('deleteAccount').style.display='block'" class="btn btn-success" style="float:right"><span class="glyphicon glyphicon-cog" ></span> Edit</button>
     
     </div>
 
@@ -66,7 +66,7 @@
             <p id="tellUser"></p>
             
             <div style="float:right;margin-top:10px;">
-            <button type="button" class="btn btn-danger" style="margin-right:5px;" onclick="editPersonal()"><span class="glyphicon glyphicon-trash" ></span> Edit</button>
+            <button type="button" class="btn btn-danger" style="margin-right:5px;" onclick="editPersonal()"><span class="glyphicon glyphicon-cog" ></span> Edit</button>
             <button type="button" class="btn btn-success" onclick="document.getElementById('deleteAccount').style.display='none';"><span class="glyphicon glyphicon-share-alt" ></span> Cancel</button>
             </div>
             <br><br>
@@ -82,7 +82,7 @@
                     data: { editAccount:"true", username:username },
                     success: function(response) {
                         console.log(response);
-                        var array = response.split(",");
+                        var array = response.split("๏");
                         
                         setValueEdit(array);
 

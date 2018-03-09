@@ -30,15 +30,25 @@
                 document.getElementById('mGeneral').className='active';
                 document.getElementById('mUser').className='';
                 document.getElementById('mEvent').className='';
+                document.getElementById('mLogs').className='';
                 "><span class="glyphicon glyphicon-globe" ></span> &nbsp;General</a></li>
 
                 <li id="mUser" ><a href="#section2"  onclick="manageUser();document.getElementById('mGeneral').className='';
                 document.getElementById('mUser').className='active';
-                document.getElementById('mEvent').className='';"><span class="glyphicon glyphicon-user" ></span> Manage User</a></li>
+                document.getElementById('mEvent').className='';
+                document.getElementById('mLogs').className='';"><span class="glyphicon glyphicon-user" ></span> Manage User</a></li>
 
                 <li id="mEvent" ><a href="#section3"  onclick="manageEvent();document.getElementById('mGeneral').className='';
                 document.getElementById('mUser').className='';
-                document.getElementById('mEvent').className='active';" ><span class="glyphicon glyphicon-th-large" ></span> Manage Event</a></li>
+                document.getElementById('mEvent').className='active';
+                document.getElementById('mLogs').className='';" ><span class="glyphicon glyphicon-th-large" ></span> Manage Event</a></li>
+                
+                
+                <li id="mLogs" ><a href="#section4"  onclick="manageLogs();
+                document.getElementById('mGeneral').className='';
+                document.getElementById('mUser').className='';
+                document.getElementById('mEvent').className='';
+                document.getElementById('mLogs').className='active';" ><span class="glyphicon glyphicon-tasks" ></span> Manage Logs</a></li>
             </ul>
             </nav>
             <div class="col-sm-9" id="sett">
@@ -73,6 +83,15 @@
    $("#sett").html(`
             <div class="col-sm-9" id="sett">
             <?php echo file_get_contents("general.php");?>
+            `);
+            
+        }
+
+        function manageLogs(){
+            
+            $("#sett").html(`
+            <div class="col-sm-9" id="log">
+            <?php echo file_get_contents("manageLogs.php");?>
             `);
             
         }

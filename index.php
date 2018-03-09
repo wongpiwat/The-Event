@@ -1,5 +1,6 @@
 <?php //ใส่ทุกอัน
     include 'header.php';
+    // echo  date("Y-m-d");
     // echo date("h:i:s");
 ?>
 <!DOCTYPE html>
@@ -23,7 +24,7 @@
         #box{
             position: relative;
             width: 100%;
-            height: 70%;
+            height: 69%;
             overflow: hidden;
             /* display: flex;
             justify-content: center;         */
@@ -74,31 +75,91 @@
   })();
 
 </script><!--End image slice -->
-    <div class="nav navbar-inverse" style="height:2%;"><div>
+    <div class="nav navbar-inverse" style="height:3%;"><div>
     <center>
-    <div class="Recommended" >
-        <div class="text">Recommended Events</div>
+    <div class="Recommended" style="margin-bottom:50px;" >
+        <div class="text1">Recommended Events</div>
         <?php echo $controller->getDatabase()->readEventRec();?>
     </div>
 
 
     <div class="upcoming" >
-        <div class="text">Upcoming Events</div>
+        <div class="text1">Upcoming Events</div>
         <?php echo $controller->getDatabase()->readEventUp();?>
     </div>
   
     
-    <div class="nearby" >
-        <div class="text">Nearby Events</div>
-
-        <?php echo $controller->getDatabase()->readEventRec();?>
-    </div>
+   
     </center>  
 <!--   End Block Recommended Events,Upcoming Events,Nearby Events -->
 
 
-        <div class="categories">
-            <p class="body-text">Categories</p>
+    <div sytle="width:100%;background-color:black;margin-top:20px;">
+    <h1 ><b><span sytle="margin-left:10%;"> &nbsp;&nbsp;&nbsp;&nbsp;Categories</span></b></h1>
+    </div>
+    
+    <center>
+    
+    <!-- business -->
+    <div class="nearby" >
+        <div class="text">Business</div>
+        <?php echo $controller->getDatabase()->readbyCategory("Business");?>
+    </div>
+
+    <!-- Education -->
+    <div class="nearby" >
+        <div class="text">Education</div>
+        <?php echo $controller->getDatabase()->readbyCategory("Education");?>
+    </div>
+
+       <!-- Family -->
+       <div class="nearby" >
+        <div class="text">Family</div>
+        <?php echo $controller->getDatabase()->readbyCategory("Family");?>
+    </div>
+
+    <!-- Health -->
+    <div class="nearby" >
+        <div class="text">Health</div>
+        <?php echo $controller->getDatabase()->readbyCategory("Health");?>
+    </div>
+
+       <!-- Hobbies -->
+       <div class="nearby" >
+        <div class="text">Hobbies</div>
+        <?php echo $controller->getDatabase()->readbyCategory("Hobbies");?>
+    </div>
+
+    <!-- Technology -->
+    <div class="nearby" >
+        <div class="text">Technology</div>
+        <?php echo $controller->getDatabase()->readbyCategory("Technology");?>
+    </div>
+
+       <!-- Travel -->
+       <div class="nearby" >
+        <div class="text">Travel</div>
+        <?php echo $controller->getDatabase()->readbyCategory("Travel");?>
+    </div>
+
+    <!-- Sports -->
+    <div class="nearby" >
+        <div class="text">Sports</div>
+        <?php echo $controller->getDatabase()->readbyCategory("Sports");?>
+    </div>
+
+        <!-- Food -->
+        <div class="nearby" >
+        <div class="text">Food</div>
+        <?php echo $controller->getDatabase()->readbyCategory("Food");?>
+    </div>
+
+
+
+    </center>
+
+        <!-- <div class="categories">
+            <p class="body-text"><h2><b>Categories</b></h2></p>
         <div class="row">
             <div class="col-4">
                 <a href="#">Business</a><br>
@@ -116,9 +177,9 @@
                 <a href="#">Food</a><br>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <footer class="footer">
+    <footer class="footer navbar-inverse" style="color:white;margin-top:70px;">
         <br>
         <p><b>&copy; Designed by Kiticha Garden</b></p>
         <br>

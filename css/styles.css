@@ -343,8 +343,9 @@ input[type="text"]:focus{
 }
 .eventTitle{
     text-align: left;
-    font-size: 15px;
+    /* font-size: 15px; */
     margin-Top: 1%;
+    margin-left: 7px;
     /* padding-left: 0.25%; */
 }
 .btn-secondary {/*bottom event */
@@ -380,22 +381,42 @@ input[type="text"]:focus{
     float: right;
 }
 
-
-.text{
+.text1{
     
     text-align: center;
     font-size: 35px;
     background-color: #63d297; 
     color:white;
 }
+.text{
+    
+    text-align: center;
+    font-size: 28.5px;
+    background-color: #63d297; 
+    color:white;
+}
 .Recommended,.upcoming,.nearby {/*Block Recommended,upcoming,nearby*/
     display: inline-block;
-    width: 400px;
-    height: 505px;
+    width: 600px;
+    height: 517px;
     margin: 1%;
     background-color: #f8f8f8;
     /* box-shadow: 0px 0px 10px 7px #CCCCCC; */
     font-size: 15px; 
+    margin-top: 40px;
+    -webkit-box-shadow: 4px 11px 19px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 11px 19px -2px rgba(0,0,0,0.75);
+    box-shadow: 4px 11px 19px -2px rgba(0,0,0,0.75);
+    
+}
+.nearby {/*Block Recommended,upcoming,nearby*/
+    display: inline-block;
+    width: 430px;
+    height: 505px;
+    margin: 0.5%;
+    background-color: #f8f8f8;
+    /* box-shadow: 0px 0px 10px 7px #CCCCCC; */
+    font-size: 12px; 
     margin-top: 40px;
     -webkit-box-shadow: 4px 11px 19px -2px rgba(0,0,0,0.75);
     -moz-box-shadow: 4px 11px 19px -2px rgba(0,0,0,0.75);
@@ -426,20 +447,20 @@ body {
 }
 .eventContent:hover
 {
-    box-shadow: 0px 0px 100px 5px #000000;
+    box-shadow: 0px 0px 30px  #1a1a1a;
     z-index: 1;
     -webkit-transition: all 200ms ease-in;
-    -webkit-transform: scale(1.075);
+    -webkit-transform: scale(1.05);
     -ms-transition: all 200ms ease-in;
-    -ms-transform: scale(1.075);   
+    -ms-transform: scale(1.05);   
     -moz-transition: all 200ms ease-in;
-    -moz-transform: scale(1.075);
+    -moz-transform: scale(1.05);
     transition: all 200ms ease-in;
-    transform: scale(1.075);
+    transform: scale(1.05);
 }
 .buttonTickets{
     float:right;
-    margin-right:0.5%;
+    margin-right:3%;
     margin-top:3%;
     background-color: #FFDB58;
     color: white;
@@ -448,7 +469,7 @@ body {
 
 .buttonTickets:hover{
     float:right;
-    margin-right:0.5%;
+    margin-right:3%;
     margin-top:3%;
     color: white;
     -webkit-text-fill-color: white;
@@ -457,4 +478,5 @@ body {
     /* border: 2px solid #fff176; */
     
 }
+
 

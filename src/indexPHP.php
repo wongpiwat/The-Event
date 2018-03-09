@@ -72,7 +72,7 @@
             echo $controller->getDatabase()->readAccount();
         }else if(isset($_POST["editAccount"])){
             $editUser =  $controller->getDatabase()->autoSignIn($_POST["username"]);
-            echo "$editUser[0],$editUser[1],$editUser[2],$editUser[3],$editUser[4],$editUser[5],$editUser[6],$editUser[7],$editUser[8],$editUser[9],$editUser[10],$editUser[11],$editUser[12]";
+            echo "$editUser[0]๏$editUser[1]๏$editUser[2]๏$editUser[3]๏$editUser[4]๏$editUser[5]๏$editUser[6]๏$editUser[7]๏$editUser[8]๏$editUser[9]๏$editUser[10]๏$editUser[11]๏$editUser[12]";
         }else if(isset($_POST["Edit"])){
             $controller->getDatabase()->updateAccount($_POST["uname"],$_POST["psw"],$_POST["umail"],$_POST["uFname"],$_POST["uLname"],$_POST["uid"],$_POST["bday"],$_POST["gender"],$_POST["uaddress"],$_POST["uphone"],$_POST["type"],$_POST["status"]);
         }else if (isset($_POST["createEvent"])) { //เมื่อมีการกดปุ่ม Create Event
@@ -80,6 +80,23 @@
             // print_r($imagesPath);
             $controller->createNewEvent($_POST["eventName"],$_POST["location"],$_POST["date"],$_POST["size"],$_POST["category"],$_POST["type"],$_POST["price"],$_POST["details"],$_POST["organizerName"],$_POST["contactName"],$_POST["email"],$_POST["phone"],$_POST["imagesPath"]);
             // $controller->addImagesPath($imagesPath);
+        }else if(isset($_POST['attendant'])){
+            echo "attendant";
+            $controller->getDatabase()->attendant($_POST['idEvent'],$_POST['username'],$_POST['amount']);
+        }else if(isset($_POST['createWebboard'])){
+            $controller->getDatabase()->createWebboard($_POST['idEvent'],$_POST['username'],$_POST['ques'],$_POST['detail']);
+        }else if(isset($_POST['readWebboard'])){
+            echo $controller->getDatabase()->readWebboard($_POST['idEvent']);
         }
+    }
+    if(isset($_GET["idEvent"])){
+        
+        $e = $controller->getDatabase()->rEventTop($_GET["idEvent"]);
+        $result="";
+        for($i = 0;$i <18 ;$i++){
+            $result .= "$e[$i]๏";
+        }
+        $result .= "$e[19]";
+        echo $result;
     }
 ?>

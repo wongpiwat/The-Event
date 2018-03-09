@@ -2,6 +2,7 @@
 namespace KittichaiGarden\Database;
 use KittichaiGarden\Models\Account;
 use PDO;
+date_default_timezone_set("Asia/Bangkok");
 
 class Database {
 
@@ -117,8 +118,16 @@ class Database {
         $time = date("h:i:s");
         $statement = $this->connect->prepare('SELECT * FROM event WHERE (date>=:date and time>=:time) or date>=:date');
         $statement->execute([ ':date' => $date , ':time' => $time]);
+        
         return $this->returnEvent($statement);
 
+    }
+
+    function rEventTop($id){
+        $statement = $this->connect->prepare('SELECT * FROM event WHERE idEvent=:id');
+        $statement->execute([ ':id' => $id]);
+        $result = $statement->fetch(PDO::FETCH_BOTH);
+        return $result;
     }
 
     function returnEvent($statement){
@@ -137,19 +146,19 @@ class Database {
              $b = "Buy Tickets";
             }
             $onClick  = sprintf('onclick="showEventContent(\'%s\')"',$row["idEvent"]);
-           $url = sprintf('index-event.php?idEvent=%s"',$row["idEvent"]);
+           $url = sprintf('event-new.php?idEvent=%s"',$row["idEvent"]);
             
 
                 $result .= '
                 <a href="'.$url.'">
-                <form action="index-event.php">
+                <form action="event-new.php">
                 <div class="eventContent" '.$onClick.'>
                     <div class="eventLeft">
                         <div class="eventPic" ><img  src="'.$img[0].'" style="width:140px;height:140px;">
                         </div>
                     </div>
                     <div class="eventBody">
-                        <div class="eventTitle"><b>&nbsp;'.$row["eventName"].'</b></div><br>
+                        <div class="eventTitle"><b>'.$row["eventName"].'</b></div><br>
                         <button name="idEvent" type="submit" class="btn btn-defualt buttonTickets" value="'.$row["idEvent"].'" >'.$b.'</button><br>
                         <div class="eventDetail">
                         <i class="fa fa-clock-o fa-fw"></i>'.$row["date"].' | '.$row["time"].'<br>
@@ -168,14 +177,25 @@ class Database {
     }
 
     function readEventUp(){
-       
+        // or date>=:date ORDER
+        // SELECT * FROM event WHERE date>="2018-03-09" and time>="08:52:03" ORDER BY date,time
         $date = date("Y-m-d");
         $time = date("h:i:s");
-        $statement = $this->connect->prepare('SELECT * FROM event WHERE (date>=:date and time>=:time) or date>=:date ORDER BY date,time');
+        $statement = $this->connect->prepare('SELECT * FROM event WHERE ( (date>=:date and time>=:time) or date>:date)  ORDER BY date,time');
         $statement->execute([ ':date' => $date , ':time' => $time]);
         return $this->returnEvent($statement);
 
     }
+
+    function readbyCategory($category){
+        $date = date("Y-m-d");
+        $time = date("h:i:s");
+        $statement = $this->connect->prepare('SELECT * FROM event WHERE category=:category and ( (date>=:date and time>=:time) or date>:date)    ORDER BY date,time');
+        $statement->execute([ ':date' => $date , ":time" => $time , ":category" => $category]);
+        return $this->returnEvent($statement);
+    }
+
+
         //ตรวจสอบว่ามี event อยู่ในดาต้าเบสหรือเปล่า
         function checkEvent($eventName) {
             $statement = $this->connect->prepare('SELECT eventName FROM event WHERE eventName=:eventName');
@@ -199,6 +219,13 @@ class Database {
         //  echo "INSERT INTO event (`eventName`, `location`, `date`, `size`, `Category`, `type`, `price`, `details`, `organizerName`, `contactName`, `email`, `phone`) VALUES ('$eventName,$location,$date,$size,$Category,$type,$price,$details,$organizerName,$contactName,$email,$phone)";
     }
 
+    function getLinkYoutube($idEvent){
+        $statement = $this->connect->prepare('SELECT teaserVDO FROM event WHERE idEvent=:idEvent');
+        $statement->execute([':idEvent' => $idEvent]);
+        $result = $statement->fetch(PDO::FETCH_BOTH);
+        return $result["teaserVDO"];
+    }
+
     function addPath($imagePath) {
         echo "addPath";
         // $query = $this->connect->prepare('SELECT max(idEvent) FROM event');
@@ -219,6 +246,85 @@ class Database {
             "mysql:host=localhost:".$port.";dbname=".$databaseName.";charset=utf8mb4",
             $username,$password
         );
+    }
+
+    function attendant($idEvent,$username,$amount){
+        $date = date("Y-m-d");
+        $time = date("h:i:s");
+        $statement = $this->connect->exec('INSERT INTO attendents VALUES ('.$idEvent.', "'.$username.'","'.$amount.'","'.$date.'" , "'.$time.'")' );
+        //echo 'INSERT INTO users VALUES ('.$idEvent.', "'.$username.'","'.$amount.'","'.$date.'" , "'.$time.'")';
+    }
+
+    function readLogs(){
+        $output ="";
+        $count = 1;
+        $statement = $this->connect->query('SELECT * FROM account');
+        while($row = $statement->fetch(PDO::FETCH_BOTH)){
+        $username = $row["username"];
+        $edit  = sprintf('onclick="editAccount(\'%s\',\'edit\')"',$username);
+        $read  = sprintf('onclick="editAccount(\'%s\',\'read\')"',$username);
+        $delete = sprintf('onclick="editAccount(\'%s\',\'del\');deleteAccount(\'%s\')"',$username,$username);
+        $output .= '
+            <tr '.$read.'>
+                <td>'.$count.'</td>
+                <td>'.$row["username"].'</td>
+                <td>'.$row["email"].'</td>
+                <td>'.$row["firstName"].'</td>
+                <td>'.$row["lastName"].'</td>
+                <td>'.$row["typeAccount"].'</td>
+                <td>'.$row["status"].'</td>
+                <td> <button type="button" class="btn btn-success"'.$edit.'><span class="glyphicon glyphicon-cog" ></span> Edit</button> </td>
+                <td> <button type="button" class="btn btn-danger"'.$delete.'><span class="glyphicon glyphicon-trash" ></span> Delete</button> </td>
+            </tr>
+        ';
+        $count+=1;
+        }
+    return $output;
+    }
+
+    function readWebboard($idEvent){
+        $output ="";
+        $count = 1;
+        $statement = $this->connect->query('SELECT * FROM webboard ORDER  BY time DESC');
+        while($row = $statement->fetch(PDO::FETCH_BOTH)){
+            $output .= '
+            <tr>
+            <td>'.$count.'</td>
+            <td width="40%" ><a href="#" ><span class="glyphicon glyphicon-envelope" ></span> '.$row["question"].'</a></td>
+            <td>'.$row["username"].'</td>
+            <td>'.$row["date"].'</td>
+            <td>'.$row["time"].'</td>
+            <td>'.$row["view"].'</td>
+            <td>'.$row["reply"].'</td>
+          </tr>';
+        $count+=1;
+        }
+        return $output;
+    }
+
+    function createWebboard($idEvent,$username,$question,$detail){
+        $date = date("Y-m-d");
+        $time = date("h:i:s");
+        $query = $this->connect->query('SELECT max(idWebboard) FROM webboard');
+        $result = $query->fetch(PDO::FETCH_BOTH);
+        $idWebboard = $result['0']+1;
+        $statement = $this->connect->exec('INSERT INTO webboard VALUES ('.$idWebboard.' , '.$idEvent.', "'.$username.'","'.$question.'","'.$detail.'" , "'.$date.'" ,"'.$time.'" , 0 , 0 )' );
+        // echo 'INSERT INTO webboard VALUES ('.$result['0'].' , '.$idEvent.', "'.$username.'","'.$question.'","'.$detail.'" , "'.$date.'" ,"'.$time.'" , 0 , 0 )';
+
+    }
+
+    function updateView($idEvent){
+        $statement = $this->connect->query('SELECT view FROM webboard idEvent='.$idEvent);
+        $result = $statement->fetch(PDO::FETCH_BOTH);
+        $view = $result["view"]+1;
+        $this->connect->exec('UPDATE webboard SET `view`="'.$view.'"');
+    }
+
+    function updateReply($idEvent){
+            $statement = $this->connect->query('SELECT reply FROM webboard idEvent='.$idEvent);
+            $result = $statement->fetch(PDO::FETCH_BOTH);
+            $reply = $result["reply"]+1;
+            $this->connect->exec('UPDATE webboard SET `reply`="'.$reply.'"');
     }
 
     

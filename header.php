@@ -4,6 +4,7 @@ use KittichaiGarden\Controllers\Controller;
 //echo "header<br>";
 
 session_start();
+date_default_timezone_set("Asia/Bangkok");
 $type_Account = "guest";
 $status = null;
 $login = false;
@@ -49,7 +50,7 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 </head>
 
 <!--header first page-->
@@ -139,7 +140,7 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
         </form>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"  onclick="document.getElementById('signUp').style.display='block'" ><span class="glyphicon glyphicon-user" ></span> Sign Up</a></li>
-        <li><a href="#"  onclick="document.getElementById('login').style.display='block'"><span class="glyphicon glyphicon-log-in" ></span> Login</a></li>
+        <li><a href="#"  onclick="document.getElementById('login').style.display='block'"><span class="glyphicon glyphicon-log-in" ></span> Sign In</a></li>
       </ul>
     </div>
   </div>
@@ -185,7 +186,7 @@ padding: 10px 18px;
 margin: 8px 0;
 border: none;
 cursor: pointer;
-width: 100%;">Login</button>
+width: 100%;">Sign In</button>
     <label>
       <input type="checkbox" checked="checked" name="remember"> Remember me
     </label>
@@ -258,73 +259,90 @@ cursor: pointer;
 <!-- สร้าง event -->
 <div id="create" class="create">
 <form class="create-content animate"  method="POST">
-    <center><h1>Create a Event</h1></center>
-    <div class="con">
-        <label for="eventName"><b>Event Name</b></label>
-        <input id="eventName" type="text" name="eventName" required="">
+    <center><h1>Create Event</h1></center>
+    <div style="padding: 16px;">
+        <label for="eventName"><b>Event Name</b></label><br>
+        <input id="eventName" type="text" name="eventName" required=""><br><br>
 
-        <label for="location"><b>Location</b></label>
-        <input id="location" type="text" name="location" required="">
+        <label for="location"><b>Location</b></label><br>
+        <input id="location" type="text" name="location" required=""><br><br>
 
-        <label for="birth"><b>Date of Event</b></label>
-        <input id="date" type="date" name="date">
-        <br>
-        <label for="size"><b>Size of Event</b></label>
-        <select id="size" name="size">
-            <option value="one">1 - 50 People</option>
-            <option value="fifty">51 - 100 People</option>
-            <option value="one-hundred-one">101 - 500 People</option>
-            <option value="five-hundred-one">501 - 1000 People</option>
-            <option value="one-thoudsand-one">1001 - 5000 People</option>
-            <option value="over">More than 5000 people</option>
+        <label for="date"><b>Date</b></label>
+        <input id="date" type="date" name="date" style="margin-right:10%;margin-left:1%;">
+
+        <label for="eventCategory"><b>Category</b></label>
+        <select id="category" name="category" style="margin-right:10%;margin-left:1%;">
+            <option value="Business">Business</option>
+            <option value="Education">Education</option>
+            <option value="Family">Family</option>
+            <option value="Health">Health</option>
+            <option value="Hobbies">Hobbies</option>
+            <option value="Technology">Technology</option>
+            <option value="Travel">Travel</option>
+            <option value="Sport">Sport</option>
+            <option value="Food">Food</option>
         </select>
-        <br>
-        <label for="eventCategory"><b>Event Category</b></label>
-        <select id="category" name="category">
-            <option value="business">Business</option>
-            <option value="education">Education</option>
-            <option value="family">Family</option>
-            <option value="health">Health</option>
-            <option value="hobbies">Hobbies</option>
-            <option value="technology">Technology</option>
-            <option value="travel">Travel</option>
-            <option value="sport">Sport</option>
-            <option value="food">Food</option>
-        </select>
-        <br>
         <form>
-            <label for="eventType"><b>Event Type</b></label> 
-            <input id="typePaid" type="radio" name="type" value="paid" checked>Paid</input>
-            <input id="typeFree" type="radio" name="type" value="free">Free</input>
-        </form>
-        <br>
+            <label for="eventType"><b>Type</b></label> 
+            <input id="typePaid" type="radio" name="type" value="Paid" checked style="margin-right:.5%;margin-left:.5%;">Paid</input>
+            <input id="typeFree" type="radio" name="type" value="Free" style="margin-right:.5%;margin-left:3%;">Free</input>
+        </form><br><br>
+        
+        <label for="size"><b>Size</b></label><br>
+        <input id="size" type="text" name="size"><br><br>
+
         <label for="price"><b>Ticket Price (Thai Baht)</b></label>
-        <input id="price" type="text" name="price" required><br>
+        <input id="price" type="text" name="price" required><br><br>
 
         <label for="details"><b>Details</b></label>
-        <input id="details" type="text" placeholder="" name="details" required>
+        <input id="details" type="text" placeholder="" name="details" required><br><br>
         
-        <!-- image upload -->
+        <label for="preCondition"><b>Pre Condition</b></label>
+        <input id="preCondition" type="text" placeholder="" name="preCondition" required><br><br>
+
+        <label for="postCondition"><b>Post Condition</b></label>
+        <input id="postCondition" type="text" placeholder="" name="postCondition" required><br><br>
+
+        <label for="organizerName"><b>Organizer Name</b></label>
+        <input id="organizerName" type="text" name="organizerName" required=""><br><br>
+
+        <label for="contactName"><b>Contact Name</b></label>
+        <input id="contactName" type="text" name="contactName" required><br><br>
+
+        <label for="email"><b>Email</b></label>
+        <input id="email" type="text" name="email" required><br><br>
+
+        <label for="ePhone" ><b>Phone</b></label>
+        <input id="ePhone" maxlength="10" onKeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" name="phone" required><br><br>
+        
+        <label for="youtube" ><b>Youtube Video Link (Optional)</b></label>
+        <input id="youtube" type="text"><br><br>
+
+        <!-- google map -->
+        <!-- <div id="map"></div>
+        <script>
+        function initMap() {
+            var uluru = {lat: -25.363, lng: 131.044};
+            var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4,
+            center: uluru
+            });
+            var marker = new google.maps.Marker({
+            position: uluru,
+            map: map
+            });
+        }
+        </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC18bWr7foVxKW45n29XTfqOSryrlVBKfM&callback=initMap"></script>
+         -->
+        <!-- end google map -->
+
+        <!-- start image upload -->
             <form id="fileupload" method="POST" enctype="multipart/form-data" data-url="upload-files/">
-                <div>
-                    <div>
-                        <span>
-                            <span>Add files...</span>
-                            <input type="file" name="files[]" multiple>
-                        </span>
-                    </div>
-                </div>
+                <label for="Add files"><b>Add Images</b></label>
+                <input type="file" name="files[]" multiple>
                 <table class="table table-striped"><tbody class="files"></tbody></table>
             </form>
-        <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
-            <div class="slides"></div>
-            <h3 class="title"></h3>
-            <a class="prev">‹</a>
-            <a class="next">›</a>
-            <a class="close">×</a>
-            <a class="play-pause"></a>
-            <ol class="indicator"></ol>
-        </div>
         <script id="template-upload" type="text/x-tmpl">
         {% for (var i=0, file; file=o.files[i]; i++) { %}
             <tr class="template-upload fade">
@@ -368,7 +386,7 @@ cursor: pointer;
                 </td>
                 <td>
                     <p class="name">
-                        {% if (file.url) { %}
+                        {% if (file.url) {sendImagePath(file.name); %}
                             <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
                         {% } else { %}
                             <span>{%=file.name%}</span>
@@ -402,8 +420,6 @@ cursor: pointer;
         <script src="js/tmpl.min.js"></script>
         <script src="js/load-image.all.min.js"></script>
         <script src="js/canvas-to-blob.min.js"></script>
-        <!-- <script src="js/bootstrap.min.js"></script> -->
-        <script src="js/jquery.blueimp-gallery.min.js"></script>
         <script src="js/jquery.iframe-transport.js"></script>
         <script src="js/jquery.fileupload.js"></script>
         <script src="js/jquery.fileupload-process.js"></script>
@@ -411,35 +427,17 @@ cursor: pointer;
         <script src="js/jquery.fileupload-validate.js"></script>
         <script src="js/jquery.fileupload-ui.js"></script>
         <script src="js/main.js"></script>
-        <!-- image upload -->
-        <label for="organizerName"><b>Organizer Name</b></label>
-        <input id="organizerName" type="text" name="organizerName" required="">
+        <!-- end image upload -->
 
-        <label for="contactName"><b>Contact Name</b></label>
-        <input id="contactName" type="text" name="contactName" required><br>
-
-        <label for="email"><b>Email</b></label>
-        <input id="email" type="text" name="email" required>
-
-        <label for="phone" ><b>Phone</b></label>
-        <input id="ePhone" maxlength="10" onKeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" name="phone" required>
-
-        <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('create').style.display='none'" class="cancelbtn">Cancel</button>
-        <button id="creataevent" type="submit" name="CreateEvent" style="width: 60%; height: 7%;float: right;background-color: #4CAF50;
-color: white;
-padding: 10px 18px;
-margin: 8px 0;
-border: none;
-cursor: pointer;
-">Create a event</button>
-        
-       
+        <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('create').style.display='none';reload_js()" class="cancelbtnSignup">Cancel</button>
+        <button id="createNew" type="button" style="width: 60%; height: 40%;float: right;" name="CreateEvent" onClick="createNewEvent()">Create event</button>
     </div>
 </form>
 
 
-<script type="text/javascript">
 
+<script type="text/javascript">
+var imagesPath =[];
 console.log(window.location.pathname);
 // /ProjectWebtech_1/adminManage.php
 var login = document.getElementById('login');
@@ -457,7 +455,6 @@ document.getElementById('login').addEventListener("keyup", function(event) {
 });
 
 function signIn(){
-
     var username = document.getElementById('username').value;
     var password = document.getElementById('password').value;
     console.log(username);
