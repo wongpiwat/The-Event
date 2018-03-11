@@ -10,9 +10,8 @@
  * https://opensource.org/licenses/MIT
  */
 
-class UploadHandler
-{
-
+class UploadHandler {
+    private $username;
     protected $options;
 
     // PHP File Upload error message codes:
@@ -39,13 +38,14 @@ class UploadHandler
     );
 
     protected $image_objects = array();
+    
 
     public function __construct($options = null, $initialize = true, $error_messages = null) {
         $this->response = array();
         $this->options = array(
             'script_url' => $this->get_full_url().'/'.$this->basename($this->get_server_var('SCRIPT_NAME')),
-            'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/',
-            'upload_url' => $this->get_full_url().'/files/',
+            'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/'.$this->username.'/',
+            'upload_url' => $this->get_full_url().'/files/'.$this->username.'/',
             'input_stream' => 'php://input',
             'user_dirs' => false,
             'mkdir_mode' => 0755,
@@ -1407,5 +1407,13 @@ class UploadHandler
     protected function basename($filepath, $suffix = null) {
         $splited = preg_split('/\//', rtrim ($filepath, '/ '));
         return substr(basename('X'.$splited[count($splited)-1], $suffix), 1);
+    }
+
+    public function getUsername() {
+        return $this->username;
+    }
+
+    public function setUsername($username) {
+        $this->username = $username;
     }
 }

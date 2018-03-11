@@ -2,11 +2,13 @@
 namespace KittichaiGarden\Database;
 use KittichaiGarden\Models\Account;
 use PDO;
+date_default_timezone_set("Asia/Bangkok");
 
 class Database {
 
     //ตัวแปรเอาไว้ติดต่อกับ Database
-    private $connect;
+    private $connect = null;
+    public $lengthE = 0;
 
     function __construct($port, $databaseName, $username, $password){
 
@@ -45,28 +47,11 @@ class Database {
     }
     //สร้าง User ลงในดาต้าเบส
 
-    //ตรวจสอบว่ามี event อยู่ในดาต้าเบสหรือเปล่า
-    function checkEvent($eventName) {
-        $statement = $this->connect->prepare('SELECT eventName FROM event WHERE eventName=:eventName');
-        $statement->execute([':eventName' => $eventName]);
-        $result = $statement->fetch(PDO::FETCH_BOTH);
-        if($result["eventName"] == ""){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    //สร้างevent
-    function createEvent($eventName,$location,$date,$size,$Category,$type,$price,$detail,$organizerName,$contactName,$email,$phone) {
-        $statement = $this->connect->exec('INSERT INTO event (`nameEvent`, `password`, `email`, `firstName`, `lastName`, `ID_No`, `birthday`, `gender`, `address`, `phone`, `type_Account`, `status`) 
-        VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$id_No."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
-         $phone."'".','."'".$type."'".','."'".$status."'".')');
-    }
-
     function createAccount($username,$password,$email,$firstName,$lastName,$idNo,$birthday,$gender,$address,$phone,$type,$status){
         $statement = $this->connect->exec('INSERT INTO account (`username`, `password`, `email`, `firstName`, `lastName`, `idNo`, `birthday`, `gender`, `address`, `phone`, `typeAccount`, `status`) 
         VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$idNo."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
          $phone."'".','."'".$type."'".','."'".$status."'".')');
+         echo "1";
     }
 
     //เมื่อผู้ใช้อยู่ในระบบอยู่แล้ว
@@ -80,28 +65,184 @@ class Database {
         return null;
     }
 
+    //อ่านผู้ใช้งานจากระบบ
     function readAccount(){
-        $statement = $connect->query('SELECT * FROM account');
+        $output ="";
+        $count = 1;
+        $statement = $this->connect->query('SELECT * FROM account');
         while($row = $statement->fetch(PDO::FETCH_BOTH)){
+        $username = $row["username"];
+        $edit  = sprintf('onclick="editAccount(\'%s\',\'edit\')"',$username);
+        $read  = sprintf('onclick="editAccount(\'%s\',\'read\')"',$username);
+        $delete = sprintf('onclick="editAccount(\'%s\',\'del\');deleteAccount(\'%s\')"',$username,$username);
         $output .= '
-            <tr>
-                <td>'.$row["0"].'</td>
-                <td>'.$row["1"].'</td>
-                <td>'.$row["2"].'</td>
-                <td>'.$row["4"].'</td>
-                <td>'.$row["5"].'</td>
-                <td>'.$row["6"].'</td>
-                <td>'.$row["7"].'</td>
-                <td>'.$row["8"].'</td>
-                <td>'.$row["9"].'</td>
-                <td>'.$row["10"].'</td>
-                <td>'.$row["11"].'</td>
-                <td>'.$row["12"].'</td>
+            <tr '.$read.'>
+                <td>'.$count.'</td>
+                <td>'.$row["username"].'</td>
+                <td>'.$row["email"].'</td>
+                <td>'.$row["firstName"].'</td>
+                <td>'.$row["lastName"].'</td>
+                <td>'.$row["typeAccount"].'</td>
+                <td>'.$row["status"].'</td>
+                <td> <button type="button" class="btn btn-success"'.$edit.'><span class="glyphicon glyphicon-cog" ></span> Edit</button> </td>
+                <td> <button type="button" class="btn btn-danger"'.$delete.'><span class="glyphicon glyphicon-trash" ></span> Delete</button> </td>
             </tr>
         ';
+        $count+=1;
         }
     return $output;
+    
+    }
 
+    function updateAccount($username,$password,$email,$firstName,$lastName,$idNo,$birthday,$gender,$address,$phone,$type,$status){
+        $statement = $this->connect->exec('UPDATE account SET `password`='.'"'.$password.'"'.', `email`='.'"'.$email.'"'.', `firstName`='.'"'.$firstName.'"'.'
+    , `lastName`='.'"'.$lastName.'"'.', `idNo`="'.$idNo.'", `birthday`="'.$birthday.'", `gender`="'.$gender.'", 
+    `address`="'.$address.'", `phone`="'.$phone.'", `typeAccount`="'.$type.'", `status`="'.$status.'" WHERE `username`="'.$username.'"');
+         echo $statement;
+    }
+    
+
+    function deleteAccounts($username){
+        // 'DELETE FROM account WHERE `username=`'.'"'.$username.'"'
+            $statement = $this->connect->prepare('DELETE FROM account WHERE username=:username');
+            $statement->bindValue('username',$username);
+            $statement->execute();
+            echo "1";
+    }
+
+    
+
+    function readEventRec(){
+        $date = date("Y-m-d");
+        $time = date("h:i:s");
+        $statement = $this->connect->prepare('SELECT * FROM event WHERE (date>=:date and startTime>=:time) or date>=:date ORDER BY attendView DESC');
+        $statement->execute([ ':date' => $date , ':time' => $time]);
+        
+        return $this->returnEvent($statement,3,140,140);
+
+    }
+
+    function rEventTop($id){
+        $statement = $this->connect->prepare('SELECT * FROM event WHERE idEvent=:id');
+        $statement->execute([ ':id' => $id]);
+        $result = $statement->fetch(PDO::FETCH_BOTH);
+    
+        return $result;
+    }
+
+    function returnEvent($statement,$break,$width,$height){
+        $result = '';
+        $count = 0;
+        // echo "Hellooooo";
+        while($row = $statement->fetch(PDO::FETCH_BOTH)){
+            // echo "Hellooooo";
+            if($count == $break){
+                break;
+            }
+
+            if($row["type"] == "free"){
+             $b = "Get Tickets";
+            }else{
+             $b = "Buy Tickets";
+            }
+            $onClick  = sprintf('onclick="showEventContent(\'%s\')"',$row["idEvent"]);
+           $url = sprintf('event-new.php?idEvent=%s"',$row["idEvent"]);
+            
+
+                $result .= '
+                <a href="'.$url.'" >
+                <form action="event-new.php">
+                <div class="borderE">
+                <div class="eventContent" '.$onClick.'>
+                    <div class="eventLeft">
+                        <div class="eventPic" ><img src="'.$row["imageCover"].'" style="width:'.$width.'px;height:'.$height.'px;">
+                        </div>
+                    </div>
+                    <div class="eventBody">
+                        <div class="eventTitle"><b>'.$row["eventName"].'</b></div><br>
+                        <button name="idEvent" type="submit" class="btn btn-defualt buttonTickets" value="'.$row["idEvent"].'" >'.$b.'</button><br>
+                        <div class="eventDetail">
+                        <i class="fa fa-clock-o fa-fw"></i>'.$row["date"].' | '.$row["startTime"].'<br>
+                        <i class="fa fa-map-marker fa-fw"></i>'.$row["location"].'
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </form>
+                </a>
+
+                ';
+            
+            $count += 1;
+        }
+        $this->lengthE = $count;
+        return $result;
+    }
+
+    function readEventUp(){
+        // or date>=:date ORDER
+        // SELECT * FROM event WHERE date>="2018-03-09" and time>="08:52:03" ORDER BY date,time
+        $date = date("Y-m-d");
+        $time = date("h:i:s");
+        $statement = $this->connect->prepare('SELECT * FROM event WHERE ( (date>=:date and startTime>=:time) or date>:date)  ORDER BY date,startTime');
+        $statement->execute([ ':date' => $date , ':time' => $time]);
+        // echo "SELECT * FROM event WHERE ( (date>=$date and startTime>=$time) or date>$date)  ORDER BY date,time";
+        
+        return $this->returnEvent($statement,3,140,140);
+
+    }
+
+    function readbyCategory($category,$l,$w,$h){
+        $date = date("Y-m-d");
+        $time = date("h:i:s");
+        $statement = $this->connect->prepare('SELECT * FROM event WHERE category=:category and ( (date>=:date and startTime>=:time) or date>:date)    ORDER BY date,startTime');
+        $statement->execute([ ':date' => $date , ":time" => $time , ":category" => $category]);
+        return $this->returnEvent($statement,$l,$w,$h);
+    }
+
+
+        //ตรวจสอบว่ามี event อยู่ในดาต้าเบสหรือเปล่า
+        function checkEvent($eventName) {
+            $statement = $this->connect->prepare('SELECT eventName FROM event WHERE eventName=:eventName');
+            $statement->execute([':eventName' => $eventName]);
+            $result = $statement->fetch(PDO::FETCH_BOTH);
+            if($result['eventName'] == ""){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+     //สร้างevent
+     function createEvent($username,$eventName,$locationEvent,$date,$startTime,$endTime,$size,$category,$type,$price,$details,$teaserVDO,$preCondition,$postCondition,$organizerName,$contactName,$email,$phone,$latitude,$longitude,$imageCover,$attendView,$imageSlide) {
+        echo "createEvent in database";
+        $query = $this->connect->prepare('SELECT max(idEvent) FROM event');
+        $query->execute();
+        $result = $query->fetch(PDO::FETCH_BOTH);
+        $this->maxID = $result['max(idEvent)']+1;
+        $statement = $this->connect->exec('INSERT INTO event (`idEvent`,`username`,`eventName`, `location`, `date`,`startTime`,`endTime`, `size`, `category`, `type`, `price`, `details`,`teaserVDO`, `preCondition`, `postCondition`, `organizerName`, `contactName`, `email`, `phone`,`latitude`,`longitude`,`imageCover`,`attendView`,`imageSlide`) VALUES
+         ('."'".$this->maxID."'".','."'".$username."'".','."'".$eventName."'".','."'".$locationEvent."'".','."'".$date."'".','."'".$startTime."'".','."'".$endTime."'".','."'".$size."'".','."'".$category."'".','."'".$type."'".','."'".$price."'".','."'".$details."'".','."'".$teaserVDO."'".','."'".$preCondition."'".','."'".$postCondition."'".','."'".$organizerName."'".','."'".$contactName."'".','."'".$email."'".','."'".$phone."'".','."'".$latitude."'".','."'".$longitude."'".','."'".$imageCover."'".','."'".$attendView."'".','."'".$imageSlide."'".')');
+    }
+
+    function getEvent($idEvent) {
+        $statement = $this->connect->prepare('SELECT * FROM event WHERE idEvent=:eventID');
+        $statement->execute([ ':eventID' => $idEvent]);
+        $result = $statement->fetch(PDO::FETCH_BOTH);
+        if($result["eventName"] != "" ){
+            return $result;
+        }
+        return null;
+    }
+
+    function getLinkYoutube($idEvent){
+        $statement = $this->connect->prepare('SELECT teaserVDO FROM event WHERE idEvent=:idEvent');
+        $statement->execute([':idEvent' => $idEvent]);
+        $result = $statement->fetch(PDO::FETCH_BOTH);
+        return $result["teaserVDO"];
+    }
+
+    function addPath($imagePath) {
+        $statement = $this->connect->exec('INSERT INTO imageevent (`idEvent`, `imagePath`) VALUES ('."'".$this->maxID."'".','."'".$imagePath."'".')');
     }
 
     function getConnect(){
@@ -116,12 +257,309 @@ class Database {
         );
     }
 
+    function attendant($idEvent,$username,$amount){
+        $date = date("Y-m-d");
+        $time = date("h:i:s");
+        $statement = $this->connect->exec('INSERT INTO attendents VALUES ('.$idEvent.', "'.$username.'","'.$amount.'","'.$date.'" , "'.$time.'")' );
+        //echo 'INSERT INTO users VALUES ('.$idEvent.', "'.$username.'","'.$amount.'","'.$date.'" , "'.$time.'")';
+    }
+
+    function readLogs(){
+        $output ="";
+        $count = 1;
+        $statement = $this->connect->query('SELECT * FROM account');
+        while($row = $statement->fetch(PDO::FETCH_BOTH)){
+        $username = $row["username"];
+        $edit  = sprintf('onclick="editAccount(\'%s\',\'edit\')"',$username);
+        $read  = sprintf('onclick="editAccount(\'%s\',\'read\')"',$username);
+        $delete = sprintf('onclick="editAccount(\'%s\',\'del\');deleteAccount(\'%s\')"',$username,$username);
+        $output .= '
+            <tr '.$read.'>
+                <td>'.$count.'</td>
+                <td>'.$row["username"].'</td>
+                <td>'.$row["email"].'</td>
+                <td>'.$row["firstName"].'</td>
+                <td>'.$row["lastName"].'</td>
+                <td>'.$row["typeAccount"].'</td>
+                <td>'.$row["status"].'</td>
+                <td> <button type="button" class="btn btn-success"'.$edit.'><span class="glyphicon glyphicon-cog" ></span> Edit</button> </td>
+                <td> <button type="button" class="btn btn-danger"'.$delete.'><span class="glyphicon glyphicon-trash" ></span> Delete</button> </td>
+            </tr>
+        ';
+        $count+=1;
+        }
+    return $output;
+    }
+
+    function readWebboard($idEvent){
+        $output ="";
+        $count = 1;
+        $statement = $this->connect->query('SELECT * FROM webboard WHERE idEvent='.$idEvent.' ORDER  BY date,time DESC');
+        while($row = $statement->fetch(PDO::FETCH_BOTH)){
+            $output .= '
+            <tr>
+            <td>'.$count.'</td>
+            <td width="40%" ><a href="#" onclick="comment('.$row[0].')" ><span class="glyphicon glyphicon-envelope"  ></span> '.$row["question"].'</a></td>
+            <td>'.$row["username"].'</td>
+            <td>'.$row["date"].'</td>
+            <td>'.$row["time"].'</td>
+            <td>'.$row["view"].'</td>
+            <td>'.$row["reply"].'</td>
+          </tr>';
+        $count+=1;
+        }
+        return $output;
+    }
+
+    function createWebboard($idEvent,$username,$question,$detail){
+        $date = date("Y-m-d");
+        $time = date("h:i:s");
+        $query = $this->connect->query('SELECT max(idWebboard) FROM webboard');
+        $result = $query->fetch(PDO::FETCH_BOTH);
+        $idWebboard = $result['0']+1;
+        $statement = $this->connect->exec('INSERT INTO webboard VALUES ('.$idWebboard.' , '.$idEvent.', "'.$username.'","'.$question.'","'.$detail.'" , "'.$date.'" ,"'.$time.'" , 0 , 0 )' );
+        // echo 'INSERT INTO webboard VALUES ('.$result['0'].' , '.$idEvent.', "'.$username.'","'.$question.'","'.$detail.'" , "'.$date.'" ,"'.$time.'" , 0 , 0 )';
+
+    }
+
+    function updateView($idWebboard){
+        $statement = $this->connect->query('SELECT view FROM webboard where idWebboard='.$idWebboard);
+        $result = $statement->fetch(PDO::FETCH_BOTH);
+        $view = $result["view"]+1;
+        $s = $this->connect->prepare('UPDATE webboard SET `view`=:view Where idWebboard=:idWebboard');
+        $s->execute([ ':view' => $view , ':idWebboard' => $idWebboard]);
+  
+    }
+
+    function updateAttend($idEvent){
+        $statement = $this->connect->query('SELECT attendView FROM event where idEvent='.$idEvent);
+        $result = $statement->fetch(PDO::FETCH_BOTH);
+        $view = $result["attendView"]+1;
+        $s = $this->connect->prepare('UPDATE event SET `attendView`=:attendView Where idEvent=:idEvent');
+        $s->execute([ ':attendView' => $view , ':idEvent' => $idEvent]);
+  
+    }
+
+    function updateReply($idWebboard){
+        $statement = $this->connect->query('SELECT reply FROM webboard where idWebboard='.$idWebboard);
+        $result = $statement->fetch(PDO::FETCH_BOTH);
+            $reply = $result["reply"]+1;
+            $s = $this->connect->prepare('UPDATE webboard SET `reply`=:reply Where idWebboard=:idWebboard');
+            $s->execute([ ':reply' => $reply , ':idWebboard' => $idWebboard]);
+    }
+
+    function readCommentW($idWebboard){
+        $output="";
+        $count = 1;
+        $statement = $this->connect->query('SELECT * FROM comwebboard WHERE idWebboard='.$idWebboard.' ORDER  BY date,time ');
+        while($row = $statement->fetch(PDO::FETCH_BOTH)){
+            $s = $this->connect->query('SELECT username FROM webboard WHERE idWebboard='.$idWebboard.' ');
+            $r = $s->fetch(PDO::FETCH_BOTH);
+            $output .='
+            <div class="comment" style="padding-left: 5%;padding-right:5%;">
+            <p><span style="font-size:14px;color:#d3c92a;">comment '.$count.'</span></p>
+            <p class="comment-story" style="font-size:16px;">'
+                .$row[2].
+            '</p>
+            <hr style="    display: block;
+            height: 1px;
+            border: 0;
+            border-top: 0.5px solid #d3c92a;
+            margin-top:40px;
+            /* background-color: black;
+            color: black; */">
+            <div style="bottom: 0;width: 100%;margin-top:-40px;color:#ffc955;">
+            <br>
+            User: '.$r["username"].' &nbsp;&nbsp;&nbsp;&nbsp;Date: '.$row['date'].' &nbsp;&nbsp;&nbsp;&nbsp;Time: '.$row['time'].'
+            </div>
+        </div>';
+        $count += 1;
+        }
+        return $output;
+    }
+
+    function writeComment($idWebboard,$username,$comment){
+        $date = date("Y-m-d");
+        $time = date("h:i:s");
+        $statement = $this->connect->exec('INSERT INTO `comwebboard` VALUES ('.$idWebboard.' , "'.$username.'","'.$comment.'" , "'.$date.'" ,"'.$time.'")' );
+    }
+
+    function readWebCom($idWebboard){
+        $statement = $this->connect->query('SELECT * FROM webboard WHERE idWebboard='.$idWebboard);
+        $result = $statement->fetch(PDO::FETCH_BOTH);
+        return $result;
+    }
+
+
+    function searchEvent($nameEvent){
+        $statement = $this->connect->prepare('SELECT * FROM event WHERE locate(:nameEvent,eventName)>0 or locate(:nameEvent,location)>0 or locate(:nameEvent,organizerName)>0');
+        $statement->execute([ ':nameEvent' => $nameEvent]);
+        return $this->returnEvent($statement,-1,200,200);
+    }
     
     //test function นะครับ
     public function test () {
         echo __METHOD__, PHP_EOL;
     }
 
+    function imageEventCover($idEvent){
+        $result = '';
+        $dot = '';
+        $count = 0;
+
+
+        $s = $this->connect->prepare('SELECT imageSlide FROM event WHERE idEvent=:idEvent');
+        $s->execute([ ':idEvent' => $idEvent]);
+        $imgFirst = $s->fetch(PDO::FETCH_BOTH);
+        $dot .= '<li data-target="#myCarousel" data-slide-to="0" class="active"></li>';
+        $result .='<div class="item active">';
+        $result .='<img src="'.$imgFirst['imageSlide'].'" ></div>';
+
+
+
+        $statement = $this->connect->prepare('SELECT imagePath FROM imageevent WHERE idEvent=:idEvent');
+        $statement->execute([ ':idEvent' => $idEvent]);
+        while($row = $statement->fetch(PDO::FETCH_BOTH)){
+                if($count == 5){
+                    break;
+                }
+                    $dot .= '<li data-target="#myCarousel" data-slide-to="'.$count.'"></li>';
+                    $result .='<div class="item ">';
+                
+                        
+            $result .='<img src="'.$row['imagePath'].'" ></div>';
+
+            $count += 1;
+        }
+        $image = $dot.'</ol> <div class="carousel-inner">'.$result;
+        return $image;
+
+    }
+
+    function imageCoverMain(){
+        $result = '';
+        $count = 0;
+        // echo "Hellooooo";
+        $date = date("Y-m-d");
+        $time = date("h:i:s");
+        $statement = $this->connect->prepare('SELECT idEvent,imageSlide FROM event WHERE (date>=:date and startTime>=:time) or date>=:date ORDER BY attendView DESC');
+        $statement->execute([ ':date' => $date , ':time' => $time]);
+        while($row = $statement->fetch(PDO::FETCH_BOTH)){
+            // echo "Hellooooo";
+            $url = sprintf('event-new.php?idEvent=%s"',$row["idEvent"]);
+            if($count == 5){
+                break;
+            }
+            if($count == 0){
+                $result .='<div class="item active">';
+            }else{
+                $result .='<div class="item ">';
+            }
+            
+            $result .='
+                  <a href="'.$url.'">
+                <img src="'.$row['imageSlide'].'" >
+                 </a>
+              </div>';
+      
+            $count += 1;
+        }
+        
+        return $result;
+
+    }
+
+    function getSystemLogs() {
+        $output ="";
+        $count = 1;
+        $statement = $this->connect->query('SELECT * FROM systemLogs');
+        while($row = $statement->fetch(PDO::FETCH_BOTH)){
+            $output .= '
+                <tr>
+                    <td>'.$count.'</td>
+                    <td>'.$row["username"].'</td>
+                    <td>'.$row["date"].'</td>
+                    <td>'.$row["time"].'</td>
+                    <td>'.$row["event"].'</td>
+                    <td>'.$row["file"].'</td>
+                </tr>
+            ';
+            $count+=1;
+        }
+    return $output;
+    }
+
+    function saveSystemLog($username,$date,$time,$event) {
+
+    }
+
+    function getEvents() {
+        $output ="";
+        $count = 1;
+        $statement = $this->connect->query('SELECT * FROM event');
+        while($row = $statement->fetch(PDO::FETCH_BOTH)){
+            $username = $row["username"];
+            $idEvent = $row["idEvent"];
+            $eventName = $row["eventName"];
+            echo $idEvent;
+            $edit  = sprintf('onclick="editEvent(\'%s\',\'edit\')"',$idEvent);
+            $get  = sprintf('onclick="editEvent(\'%s\',\'get\')"',$idEvent);
+            $delete = sprintf('onclick="deleteEvent(\'%s\')"',$idEvent);
+            $output .= '
+                <tr>
+                    <td>'.$count.'</td>
+                    <td>'.$row["eventName"].'</td>
+                    <td>'.$row["date"].'</td>
+                    <td>'.$row["startTime"].'</td>
+                    <td>'.$row["endTime"].'</td>
+                    <td>'.$row["location"].'</td>
+                    <td>'.$row["category"].'</td>
+                    <td> <button type="button" class="btn btn-success"'.$edit.'><span class="glyphicon glyphicon-cog" ></span> Edit</button> </td>
+                    <td> <button type="button" class="btn btn-danger"'.$delete.'><span class="glyphicon glyphicon-trash" ></span> Delete</button> </td>
+                </tr>
+            ';
+            $count+=1;
+        }
+    return $output;
+    }
+
+    function editEvent($eventName,$location,$date,$size,$Category,$type,$price,$details,$organizerName,$contactName,$email,$phone) {
+        $statement = $this->connect->exec('UPDATE event SET `password`='.'"'.$password.'"'.', `email`='.'"'.$email.'"'.', `firstName`='.'"'.$firstName.'"'.', `lastName`='.'"'.$lastName.'"'.', `idNo`="'.$idNo.'", `birthday`="'.$birthday.'", `gender`="'.$gender.'", `address`="'.$address.'", `phone`="'.$phone.'", `typeAccount`="'.$type.'", `status`="'.$status.'" WHERE `username`="'.$username.'"');
+    }
+
+    function getActivityLogs() {
+        $output ="";
+        $count = 1;
+        $statement = $this->connect->query('SELECT * FROM activityLogs');
+        while($row = $statement->fetch(PDO::FETCH_BOTH)){
+            $output .= '
+                <tr>
+                    <td>'.$count.'</td>
+                    <td>'.$row["username"].'</td>
+                    <td>'.$row["date"].'</td>
+                    <td>'.$row["time"].'</td>
+                    <td>'.$row["event"].'</td>
+                </tr>
+            ';
+            $count+=1;
+        }
+    return $output;
+    }
+
+    function saveActivityLog($username,$date,$time,$event) {
+
+    }
+
+    function deleteEvent($eventID) {
+        $statement = $this->connect->prepare('DELETE FROM `event` WHERE idEvent=:eventID');
+        $statement->bindValue('eventID',$eventID);
+        $statement->execute();
+        echo 1;
+    }
+
+    public function getLenE(){
+        return $this->lengthE;
+    }
 
 }
 ?>

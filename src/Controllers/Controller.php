@@ -12,6 +12,7 @@ class Controller{
 
     private $database = null;
     private $user = null;
+
     //constructor
     function __construct(){
       $this->database = new Database("3306","kittichai_garden","guest","");
@@ -30,6 +31,7 @@ class Controller{
       }
     }
 
+
     function checkType($username){
       $result = $this->database->autoSignIn($username);
       if($result != null){
@@ -39,6 +41,7 @@ class Controller{
       }
       return null;
     }
+
 
     //SingIn ของผู้ใช้
     function signIn($username,$password){
@@ -53,33 +56,27 @@ class Controller{
       
         $_SESSION['username'] = $this->user->getUsername();
         $_SESSION['userImage'] = $this->user->getImage();
-        
+        echo "1";
 
+      }
+      else{
+        echo "-1";
       }
     }
 
     //SignUp ของผู้ใช้ และ Admin
     function  signUp($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,$check){
         if($this->database->checkAccount($username,$email,$id_No,$phone)){
-          echo "Username is Available";
           if($check == 1){
             $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"user","unActivate");
           }else if($check == 0){
             $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"admin","activate");
           }
+          
         }else{
-          echo "Username is Already Use!!!";
+          echo "-1";
         }
     }
-
-
-    function createNewEvent($eventName,$location,$date,$size,$Category,$type,$price,$detail,$organizerName,$contactName,$email,$phone) {
-      if ($this->database->checkEvent($eventName)) {
-        echo "Event is Available";
-        $this->database->createEvent($eventName,$location,$date,$size,$Category,$type,$price,$detail,$organizerName,$contactName,$email,$phone);
-      } else {
-        echo "Event is Already Use!!!";
-      }
 
 
     function signOut(){
@@ -87,7 +84,30 @@ class Controller{
       $this->user = null;
       session_unset();
       session_destroy();
+    }
 
+    function createNewEvent($eventName,$locationEvent,$date,$size,$startTime,$endTime,$category,$type,$price,$details,$organizerName,$contactName,$email,$phone,$imagesPath,$latitude,$longitude,$teaserVDO,$preCondition,$postCondition) {
+      echo "createNewEvent in controller";
+      if ($this->database->checkEvent($eventName)) {
+        if (sizeof($imagesPath) > 0) {
+          echo "omagee";
+          $this->database->createEvent($this->user->getUsername(),$eventName,$locationEvent,$date,$startTime,$endTime,$size,$category,$type,$price,$details,$teaserVDO,$preCondition,$postCondition,$organizerName,$contactName,$email,$phone,$latitude,$longitude,$imagesPath[0],0,$imagesPath[1]);
+          foreach ($imagesPath as $value) {
+            $this->database->addPath($eventName.$value);
+            rename("../upload-files/files/".$value, "../upload-files/files/upload/".$eventName.$value);
+          }
+        } else {
+          $this->database->createEvent($this->user->getUsername(),$eventName,$locationEvent,$date,$startTime,$endTime,$size,$category,$type,$price,$details,$teaserVDO,$preCondition,$postCondition,$organizerName,$contactName,$email,$phone,$latitude,$longitude,0);
+        }
+        $files = glob("../upload-files/files/thumbnail/*");
+        foreach ($files as $file) {
+            if (is_file($file)) {
+              unlink($file);
+            }
+        }
+      } else {
+        echo "Event is Already Use!!!";
+      }
     }
 
 
@@ -100,10 +120,15 @@ class Controller{
         $this->database = $d;
     }
 
-    // //test function นะครับ
-    // public function test () {
-    //     echo __METHOD__, PHP_EOL;
-    // }
+    
+
+
+
+
+    //test function นะครับ
+    public function test () {
+        echo __METHOD__, PHP_EOL;
+    }
 
 
     
