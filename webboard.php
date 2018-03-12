@@ -92,7 +92,7 @@
     }
 
     function readWebboard() {
-        $.post("src/indexPHP.php",{readWebboard:true,idEvent:idE},
+        $.post("src/indexPHP.php",{readWebboard:true,idEvent:idE,username:username,typeA:typeAccount},
         function(data){
             $('#rWebboard').html(
                 '<div class="table-responsive"  id="rWebboard">'+
@@ -136,9 +136,10 @@
         $.ajax({  
             type: "POST",
             url: "src/indexPHP.php", 
-            data: {deleteWebboard:"true",idWebboard},
+            data: {deleteWebboard:"true",idWebboard:idWebboard},
             success: function(response) {
                 console.log("R:"+response);
+                readWebboard()
             }
         });
     }

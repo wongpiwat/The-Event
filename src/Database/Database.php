@@ -345,13 +345,15 @@ class Database {
     // return $output;
     // }
 
-    function readWebboard($idEvent){
+    function readWebboard($idEvent,$username,$typeAccount){
         $output ="";
         $count = 1;
         $statement = $this->connect->query('SELECT * FROM webboard WHERE idEvent='.$idEvent.' ORDER  BY date,time DESC');
         while($row = $statement->fetch(PDO::FETCH_BOTH)){
             $idWebboard = $row["idWebboard"];
             $delete = sprintf('onclick="deleteWebboard(\'%s\')"',$idWebboard);
+          
+
             $output .= '
             <tr>
             <td>'.$count.'</td>
@@ -360,9 +362,14 @@ class Database {
             <td>'.$row["date"].'</td>
             <td>'.$row["time"].'</td>
             <td>'.$row["view"].'</td>
-            <td>'.$row["reply"].'</td>
-            <td><button type="button" class="btn btn-danger" '.$delete.' ><span class="glyphicon glyphicon-trash"></span> Delete</button> </td>
-          </tr>';
+            <td>'.$row["reply"].'</td>';
+            if($username != $row[2] && $typeAccount != "admin"){
+                $output .= '<td><button type="button" class="btn btn-danger" '.$delete.' disabled><span class="glyphicon glyphicon-trash"></span> Delete</button> </td>';
+            }else{
+                $output .= '<td><button type="button" class="btn btn-danger" '.$delete.' ><span class="glyphicon glyphicon-trash"></span> Delete</button> </td>';
+            }
+            
+          $output .= '</tr>';
         $count+=1;
         }
         return $output;
@@ -797,9 +804,9 @@ class Database {
     
     }
     function deleteWebboard($idWebboard) {
-        $statement = $this->connect->prepare('DELETE FROM webboard WHERE idWebboard=:idWebboard');
+        $statement = $this->connect->prepare('DELETE FROM `webboard` WHERE idWebboard=:idWebboard');
         $statement->execute(['idWebboard' => $idWebboard]);
-        echo "1";
+        echo "DELETE FROM `webboard` WHERE idWebboard=$idWebboard";
     }
 
     function getAttenEventProfile($username){

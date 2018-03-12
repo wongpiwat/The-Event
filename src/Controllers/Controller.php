@@ -25,7 +25,7 @@ class Controller{
         //echo "admin";
       }else if( $this->user->getTypeAccount() == "user"){
         if( $this->user->getStatus() == "activate"){ //สร้าง user ใน database ด้วย
-          $this->database->setConnect("3306","kittichai_garden","users","user");
+          $this->database->setConnect("3306","kittichai_garden","admin","password");
           //echo "user";
         }
       }

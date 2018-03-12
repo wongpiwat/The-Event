@@ -122,7 +122,7 @@
             $controller->getDatabase()->createWebboard($_POST['idEvent'],$_POST['username'],$_POST['ques'],$_POST['detail']);
             $controller->saveLog("Create webboard ".$_POST["ques"]);
         }else if(isset($_POST['readWebboard'])){
-            echo $controller->getDatabase()->readWebboard($_POST['idEvent']);
+            echo $controller->getDatabase()->readWebboard($_POST['idEvent'],$_POST['username'],$_POST['typeA']);
         }else if(isset($_POST['comment'])){
             $controller->getDatabase()->updateReply($_POST['idWebboard']);
             echo $controller->getDatabase()->writeComment($_POST['idWebboard'],$_POST['username'],$_POST['comment']);
@@ -191,6 +191,12 @@
             echo $_POST['linkGoogleForm'];
             echo $_POST['idEvent'];
             echo $controller->getDatabase()->linkGoogleForms($_POST['linkGoogleForm'],$_POST['idEvent']);
+        }else if(isset($_POST['deleteWebboard'])){
+            echo "Helllo";
+            $controller->getDatabase()->deleteWebboard($_POST['idWebboard']);
+        
+        }else if(isset($_POST['checkIn'])){
+            $controller->getDatabase()->confirmAttend($_POST['idEvent'],$_POST['username'],"CheckIn");
         }else if(isset($_POST['certis'])){
             // echo "Sunnny";
             $d = date("Y-m-d");
