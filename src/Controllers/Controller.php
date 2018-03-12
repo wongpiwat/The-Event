@@ -25,7 +25,8 @@ class Controller{
         //echo "admin";
       }else if( $this->user->getTypeAccount() == "user"){
         if( $this->user->getStatus() == "activate"){ //สร้าง user ใน database ด้วย
-          $this->database->setConnect("3306","kittichai_garden","user","user");
+          // $this->database->setConnect("3306","kittichai_garden","user","user");
+          $this->database->setConnect("3306","kittichai_garden","users","user");
           //echo "user";
         }
       }
@@ -65,14 +66,23 @@ class Controller{
     }
 
     //SignUp ของผู้ใช้ และ Admin
-    function  signUp($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,$check){
+    function  signUp($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,$check,$imageProfile){
         if($this->database->checkAccount($username,$email,$id_No,$phone)){
           if($check == 1){
-            $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"user","unActivate");
+            if ($imageProfile!=null) {
+              rename("../upload-files/files/".$imageProfile, "../upload-files/files/profile/".$username.$imageProfile);
+              $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"user","unActivate",'upload-files/files/profile/'.$username.$imageProfile);
+            } else {
+              $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"user","unActivate",'none');
+            }
           }else if($check == 0){
-            $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"admin","activate");
+            if ($imageProfile!=null) {
+              rename("../upload-files/files/".$imageProfile, "../upload-files/files/profile/".$username.$imageProfile);
+              $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"admin","activate",'upload-files/files/profile/'.$username.$imageProfile);
+            } else {
+              $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"admin","activate",'none');
+            }
           }
-          
         }else{
           echo "-1";
         }
@@ -88,13 +98,18 @@ class Controller{
 
     function createNewEvent($eventName,$locationEvent,$date,$size,$startTime,$endTime,$category,$type,$price,$details,$organizerName,$contactName,$email,$phone,$imagesPath,$latitude,$longitude,$teaserVDO,$preCondition,$postCondition) {
       echo "createNewEvent in controller";
+      $maxIDEvent = $this->database->getMaxIDEvent();
       if ($this->database->checkEvent($eventName)) {
         if (sizeof($imagesPath) > 0) {
           echo "omagee";
-          $this->database->createEvent($this->user->getUsername(),$eventName,$locationEvent,$date,$startTime,$endTime,$size,$category,$type,$price,$details,$teaserVDO,$preCondition,$postCondition,$organizerName,$contactName,$email,$phone,$latitude,$longitude,$imagesPath[0],0,$imagesPath[1]);
+          if(sizeof($imagesPath) >= 1){
+            $this->database->createEvent($this->user->getUsername(),$eventName,$locationEvent,$date,$startTime,$endTime,$size,$category,$type,$price,$details,$teaserVDO,$preCondition,$postCondition,$organizerName,$contactName,$email,$phone,$latitude,$longitude,$imagesPath[0],0,$imagesPath[1]);
+          }else{
+            $this->database->createEvent($this->user->getUsername(),$eventName,$locationEvent,$date,$startTime,$endTime,$size,$category,$type,$price,$details,$teaserVDO,$preCondition,$postCondition,$organizerName,$contactName,$email,$phone,$latitude,$longitude,$imagesPath[0],0,$imagesPath[0]);
+          }
           foreach ($imagesPath as $value) {
-            $this->database->addPath($eventName.$value);
-            rename("../upload-files/files/".$value, "../upload-files/files/upload/".$eventName.$value);
+            $this->database->addPath('upload-files/files/upload/'.$maxIDEvent.$value);
+            rename("../upload-files/files/".$value, "../upload-files/files/upload/".$maxIDEvent.$value);
           }
         } else {
           $this->database->createEvent($this->user->getUsername(),$eventName,$locationEvent,$date,$startTime,$endTime,$size,$category,$type,$price,$details,$teaserVDO,$preCondition,$postCondition,$organizerName,$contactName,$email,$phone,$latitude,$longitude,0);

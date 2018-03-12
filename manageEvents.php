@@ -169,7 +169,8 @@ function setValueEdit(array) {
     // document.getElementById('type').style.display= 'block';
     document.getElementById('create').style.display= 'block';
     document.getElementById('createNew').innerHTML= 'editEvent';
-    // document.getElementById('cPsw').style.display= 'none';
+    document.getElementById('fileupload').style.display= 'none';
+    document.getElementById('fileupload').value = array[0];
     // document.getElementById('conP').style.display= 'none';
     // document.getElementById('psw').type= "text";
     // document.getElementById('status').style.display= 'block';

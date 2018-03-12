@@ -47,10 +47,10 @@ class Database {
     }
     //สร้าง User ลงในดาต้าเบส
 
-    function createAccount($username,$password,$email,$firstName,$lastName,$idNo,$birthday,$gender,$address,$phone,$type,$status){
-        $statement = $this->connect->exec('INSERT INTO account (`username`, `password`, `email`, `firstName`, `lastName`, `idNo`, `birthday`, `gender`, `address`, `phone`, `typeAccount`, `status`) 
+    function createAccount($username,$password,$email,$firstName,$lastName,$idNo,$birthday,$gender,$address,$phone,$type,$status,$imagePath){
+        $statement = $this->connect->exec('INSERT INTO account (`username`, `password`, `email`, `firstName`, `lastName`, `idNo`, `birthday`, `gender`, `address`, `phone`, `typeAccount`, `status`,`image`) 
         VALUES ('."'".$username."'".','."'".$password."'".','."'".$email."'".','."'".$firstName."'".','."'".$lastName."'".','."'".$idNo."'".','."'".$birthday."'".','."'".$gender."'".','."'".$address."'".','."'".
-         $phone."'".','."'".$type."'".','."'".$status."'".')');
+         $phone."'".','."'".$type."'".','."'".$status."'".','."'".$imagePath."'".')');
          echo "1";
     }
 
@@ -126,7 +126,6 @@ class Database {
         $statement = $this->connect->prepare('SELECT * FROM event WHERE idEvent=:id');
         $statement->execute([ ':id' => $id]);
         $result = $statement->fetch(PDO::FETCH_BOTH);
-    
         return $result;
     }
 
@@ -213,15 +212,18 @@ class Database {
             }
         }
 
-     //สร้างevent
-     function createEvent($username,$eventName,$locationEvent,$date,$startTime,$endTime,$size,$category,$type,$price,$details,$teaserVDO,$preCondition,$postCondition,$organizerName,$contactName,$email,$phone,$latitude,$longitude,$imageCover,$attendView,$imageSlide) {
-        echo "createEvent in database";
+    function getMaxIDEvent() {
         $query = $this->connect->prepare('SELECT max(idEvent) FROM event');
         $query->execute();
         $result = $query->fetch(PDO::FETCH_BOTH);
         $this->maxID = $result['max(idEvent)']+1;
+        return $this->maxID;
+    }
+
+     //สร้างevent
+     function createEvent($username,$eventName,$locationEvent,$date,$startTime,$endTime,$size,$category,$type,$price,$details,$teaserVDO,$preCondition,$postCondition,$organizerName,$contactName,$email,$phone,$latitude,$longitude,$imageCover,$attendView,$imageSlide) {
         $statement = $this->connect->exec('INSERT INTO event (`idEvent`,`username`,`eventName`, `location`, `date`,`startTime`,`endTime`, `size`, `category`, `type`, `price`, `details`,`teaserVDO`, `preCondition`, `postCondition`, `organizerName`, `contactName`, `email`, `phone`,`latitude`,`longitude`,`imageCover`,`attendView`,`imageSlide`) VALUES
-         ('."'".$this->maxID."'".','."'".$username."'".','."'".$eventName."'".','."'".$locationEvent."'".','."'".$date."'".','."'".$startTime."'".','."'".$endTime."'".','."'".$size."'".','."'".$category."'".','."'".$type."'".','."'".$price."'".','."'".$details."'".','."'".$teaserVDO."'".','."'".$preCondition."'".','."'".$postCondition."'".','."'".$organizerName."'".','."'".$contactName."'".','."'".$email."'".','."'".$phone."'".','."'".$latitude."'".','."'".$longitude."'".','."'".$imageCover."'".','."'".$attendView."'".','."'".$imageSlide."'".')');
+         ('."'".$this->maxID."'".','."'".$username."'".','."'".$eventName."'".','."'".$locationEvent."'".','."'".$date."'".','."'".$startTime."'".','."'".$endTime."'".','."'".$size."'".','."'".$category."'".','."'".$type."'".','."'".$price."'".','."'".$details."'".','."'".$teaserVDO."'".','."'".$preCondition."'".','."'".$postCondition."'".','."'".$organizerName."'".','."'".$contactName."'".','."'".$email."'".','."'".$phone."'".','."'".$latitude."'".','."'".$longitude."'".','."'".'upload-files/files/upload/'.$this->maxID.$imageCover."'".','."'".$attendView."'".','."'".'upload-files/files/upload/'.$this->maxID.$imageSlide."'".')');
     }
 
     function getEvent($idEvent) {
@@ -469,6 +471,21 @@ class Database {
 
     }
 
+    function getAttenEventProfile($username){
+        $output = "";
+        $statement = $this->connect->prepare('SELECT event.eventName,event.date,event.idEvent FROM attendents,event WHERE attendents.idEvent=event.idEvent and attendents.username=:username');
+        $statement->execute([ ':username' => $username]);
+        while($row = $statement->fetch(PDO::FETCH_BOTH)){
+            $output .= '
+                <tr>
+                    <td><a href="event-new.php?idEvent= '.$row["idEvent"].' "> '.$row["eventName"]. '</td>
+                    <td align="right">'.$row["date"].'</td>
+                </tr></a>
+            ';
+        }
+        return $output;
+    }
+
     function getSystemLogs() {
         $output ="";
         $count = 1;
@@ -501,7 +518,7 @@ class Database {
             $username = $row["username"];
             $idEvent = $row["idEvent"];
             $eventName = $row["eventName"];
-            echo $idEvent;
+            // echo $idEvent;
             $edit  = sprintf('onclick="editEvent(\'%s\',\'edit\')"',$idEvent);
             $get  = sprintf('onclick="editEvent(\'%s\',\'get\')"',$idEvent);
             $delete = sprintf('onclick="deleteEvent(\'%s\')"',$idEvent);
@@ -523,8 +540,12 @@ class Database {
     return $output;
     }
 
-    function editEvent($eventName,$location,$date,$size,$Category,$type,$price,$details,$organizerName,$contactName,$email,$phone) {
-        $statement = $this->connect->exec('UPDATE event SET `password`='.'"'.$password.'"'.', `email`='.'"'.$email.'"'.', `firstName`='.'"'.$firstName.'"'.', `lastName`='.'"'.$lastName.'"'.', `idNo`="'.$idNo.'", `birthday`="'.$birthday.'", `gender`="'.$gender.'", `address`="'.$address.'", `phone`="'.$phone.'", `typeAccount`="'.$type.'", `status`="'.$status.'" WHERE `username`="'.$username.'"');
+    function editEvent($idEvent,$eventName,$location,$date,$size,$startTime,$endTime,$category,$type,$price,$details,$organizerName,$contactName,$email,$phone,$latitude,$longitude,$teaser,$preCondition,$postCondition) {
+        // echo $idEvent;
+        $idEvent = trim(preg_replace('/\s\s+/', ' ', $idEvent));
+        echo "d:".$idEvent;
+        $statement = $this->connect->exec('UPDATE event SET `eventName`='.'"'.$eventName.'"'.', `location`='.'"'.$location.'"'.', `date`='.'"'.$date.'"'.', `size`='.'"'.$size.'"'.', `category`="'.$category.'", `type`="'.$type.'", `price`="'.$price.'", `details`="'.$details.'", `organizerName`="'.$organizerName.'", `contactName`="'.$contactName.'", `email`="'.$email.'", `phone`="'.$phone.'", `precondition`="'.$preCondition.'", `postcondition`="'.$postCondition.'", `teaserVDO`="'.$teaser.'" WHERE `idEvent`="'.$idEvent.'"');
+        // echo 'UPDATE event SET `eventName`='.'"'.$eventName.'"'.', `location`='.'"'.$location.'"'.', `date`='.'"'.$date.'"'.', `size`='.'"'.$size.'"'.', `category`="'.$category.'", `type`="'.$type.'", `price`="'.$price.'", `details`="'.$details.'", `organizerName`="'.$organizerName.'", `contactName`="'.$contactName.'", `email`="'.$email.'", `phone`="'.$phone.'" WHERE `idEvent`="'.$idEvent.'"';
     }
 
     function getActivityLogs() {
@@ -549,6 +570,7 @@ class Database {
     function saveActivityLog($username,$date,$time,$event) {
 
     }
+    
 
     function deleteEvent($eventID) {
         $statement = $this->connect->prepare('DELETE FROM `event` WHERE idEvent=:eventID');

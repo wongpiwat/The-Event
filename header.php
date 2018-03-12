@@ -44,8 +44,6 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
 <body>
 <head>
 <link rel="stylesheet" href="css/styles.css">
-<!-- <link rel="stylesheet" href="css/styleProfile.css"> -->
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/jquery-clockpicker.min.js"></script>
@@ -53,6 +51,8 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 <link rel="stylesheet" href="css/jquery-clockpicker.min.css">
 <link rel="stylesheet" href="css/styleMap.css">
+<link href="css/uploadfile.css" rel="stylesheet">
+<script src="js/jquery.uploadfile.min.js"></script>
 </head>
 
 <!--header first page-->
@@ -60,8 +60,6 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
 <div id="header"></div> <!--tag for call in javascript-->
 
 <script type="text/javascript">
-    
-
 
     var typeAccount = "<?php echo $type_Account; ?>";
     var status  = "<?php echo $status; ?>";
@@ -243,6 +241,7 @@ width: 100%;">Login</button>
         <input type="radio" name="status" value="unActivate" id="statusU" > unActivate
         <input type="radio" name="status" value="Block" id="statusB" > Block<br>
     </div>
+    <div id="fileuploader">Upload</div>
       <!-- 20,40 -->
       <button id="signupCan" style="width: 20%; height: 7%;" type="button" onclick="document.getElementById('signUp').style.display='none';document.getElementById('signUpForm').reset(); setEdit();undisableInput()" class="cancelbtn">Cancel</button>
       <button id="signupbtn"  type="button" name="SignUp" onclick="signUp()" style="width: 60%; height: 7%;float: right;background-color: #4CAF50;color: white;padding: 10px 18px;margin: 8px 0;border: none;cursor: pointer;">SignUp</button>
@@ -333,90 +332,7 @@ width: 100%;">Login</button>
             <input type="file" name="files[]" multiple>
             <table class="table table-striped"><tbody class="files"></tbody></table>
         </form>
-        <script id="template-upload" type="text/x-tmpl">
-        {% for (var i=0, file; file=o.files[i]; i++) { %}
-            <tr class="template-upload fade">
-                <td>
-                    <span class="preview"></span>
-                </td>
-                <td>
-                    <p class="name">{%=file.name%}</p>
-                    <strong class="error text-danger"></strong>
-                </td>
-                <td>
-                    <p class="size">Processing...</p>
-                    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-                </td>
-                <td>
-                    {% if (!i && !o.options.autoUpload) { %}
-                        <button class="btn btn-primary start" disabled>
-                            <i class="glyphicon glyphicon-upload"></i>
-                            <span>Start</span>
-                        </button>
-                    {% } %}
-                    {% if (!i) { %}
-                        <button class="btn btn-warning cancel">
-                            <i class="glyphicon glyphicon-ban-circle"></i>
-                            <span>Cancel</span>
-                        </button>
-                    {% } %}
-                </td>
-            </tr>
-        {% } %}
-        </script>
-        <script id="template-download" type="text/x-tmpl">
-        {% for (var i=0, file; file=o.files[i]; i++) { %}
-            <tr class="template-download fade">
-                <td>
-                    <span class="preview">
-                        {% if (file.thumbnailUrl) { %}
-                            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
-                        {% } %}
-                    </span>
-                </td>
-                <td>
-                    <p class="name">
-                        {% if (file.url) {sendImagePath(file.name); %}
-                            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
-                        {% } else { %}
-                            <span>{%=file.name%}</span>
-                        {% } %}
-                    </p>
-                    {% if (file.error) { %}
-                        <div><span class="label label-danger">Error</span> {%=file.error%}</div>
-                    {% } %}
-                </td>
-                <td>
-                    <span class="size">{%=o.formatFileSize(file.size)%}</span>
-                </td>
-                <td>
-                    {% if (file.deleteUrl) { %}
-                        <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                            <i class="glyphicon glyphicon-trash"></i>
-                            <span>Delete</span>
-                        </button>
-                    {% } else { %}
-                        <button class="btn btn-warning cancel">
-                            <i class="glyphicon glyphicon-ban-circle"></i>
-                            <span>Cancel</span>
-                        </button>
-                    {% } %}
-                </td>
-            </tr>
-        {% } %}
-        </script>
 
-        <script src="js/vendor/jquery.ui.widget.js"></script>
-        <script src="js/tmpl.min.js"></script>
-        <script src="js/load-image.all.min.js"></script>
-        <script src="js/canvas-to-blob.min.js"></script>
-        <script src="js/jquery.iframe-transport.js"></script>
-        <script src="js/jquery.fileupload.js"></script>
-        <script src="js/jquery.fileupload-process.js"></script>
-        <script src="js/jquery.fileupload-image.js"></script>
-        <script src="js/jquery.fileupload-validate.js"></script>
-        <script src="js/jquery.fileupload-ui.js"></script>
-        <script src="js/main.js"></script>
         <!-- end image upload -->
             
         <!-- google map api key: AIzaSyC18bWr7foVxKW45n29XTfqOSryrlVBKfM -->
@@ -477,6 +393,8 @@ width: 100%;">Login</button>
 
 <script type="text/javascript">
 $(".input_fields_wrap").hide();
+var imageProfile = null;
+console.log("come");
 var imagesPath = [];
 var latitude = null;
 var longitude = null;
@@ -558,9 +476,9 @@ function signUp(){
 
     if(psw == cPsw && bday != "" && document.getElementById('signupbtn').textContent != "Edit Account" ){
         console.log("Same");
-        
+        console.log("Same:"+imageProfile);
         $.post('src/indexPHP.php',{signUp:"true",uname:username,psw:psw,umail:email,uFname:firstName,
-        uLname:lastName,uid:idNo,bday:bday,gender:gender,uaddress:address,uphone:phone,type:type},
+        uLname:lastName,uid:idNo,bday:bday,gender:gender,uaddress:address,uphone:phone,type:type,imageProfile:imageProfile},
     function(data){
         console.log(data);
 
@@ -694,17 +612,18 @@ function signUp(){
         var email = document.getElementById('email').value;
         var phone = document.getElementById('ePhone').value;
         var teaser = document.getElementById('teaser').value;
+        var id = document.getElementById('fileupload').value;
         document.getElementById('createNew').type = "submit";
         if(document.getElementById('createNew').textContent == "editEvent"){
             $.post('src/indexPHP.php',{editEvent:"true",
+            idEvent:id,
             eventName:eventName,locationEvent:locationEvent,
             date:date,size:size,
             startTime:startTime,endTime:endTime,
             category:category,type:type,
             price:ticketPrice,details:EventDetails,
             organizerName:organizerName,contactName:contactName,
-            email:email,phone:phone,
-            imagesPath:imagesPath,latitude:latitude,
+            email:email,phone:phone,latitude:latitude,
             longitude:longitude,teaser:teaser,preCondition,postCondition},
             function(data){
                 alert(data);
@@ -725,7 +644,114 @@ function signUp(){
             });
         }
       }
+
+$("#fileuploader").uploadFile({
+    url: "../php-uploader/upload.php",multiple:false,dragDrop: false,fileName: "myfile",
+    returnType: "json",showDelete: true,showDownload:false,maxFileSize:500*1024,showPreview:true,
+    previewHeight: "100px",previewWidth: "100px",onSuccess:function(files,data,xhr,pd){
+        imageProfile = data[0];
+        console.log(imageProfile);
+    },
+    deleteCallback: function (data, pd) {
+    for (var i = 0; i < data.length; i++) {
+        $.post("../php-uploader/delete.php", {op: "delete",name: data[i]},
+            function (resp,textStatus, jqXHR) {
+                // alert("File deleted");
+            });
+    }
+    pd.statusbar.hide();
+},
+downloadCallback:function(filename,pd) {
+        location.href="../php-uploader/download.php?filename="+filename;
+	}
+});
+
 </script>
+<script id="template-upload" type="text/x-tmpl">
+        {% for (var i=0, file; file=o.files[i]; i++) { %}
+            <tr class="template-upload fade">
+                <td>
+                    <span class="preview"></span>
+                </td>
+                <td>
+                    <p class="name">{%=file.name%}</p>
+                    <strong class="error text-danger"></strong>
+                </td>
+                <td>
+                    <p class="size">Processing...</p>
+                    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+                </td>
+                <td>
+                    {% if (!i && !o.options.autoUpload) { %}
+                        <button class="btn btn-primary start" disabled>
+                            <i class="glyphicon glyphicon-upload"></i>
+                            <span>Start</span>
+                        </button>
+                    {% } %}
+                    {% if (!i) { %}
+                        <button class="btn btn-warning cancel">
+                            <i class="glyphicon glyphicon-ban-circle"></i>
+                            <span>Cancel</span>
+                        </button>
+                    {% } %}
+                </td>
+            </tr>
+        {% } %}
+        </script>
+        <script id="template-download" type="text/x-tmpl">
+        {% for (var i=0, file; file=o.files[i]; i++) { %}
+            <tr class="template-download fade">
+                <td>
+                    <span class="preview">
+                        {% if (file.thumbnailUrl) { %}
+                            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                        {% } %}
+                    </span>
+                </td>
+                <td>
+                    <p class="name">
+                        {% if (file.url) {sendImagePath(file.name); %}
+                            <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                        {% } else { %}
+                            <span>{%=file.name%}</span>
+                        {% } %}
+                    </p>
+                    {% if (file.error) { %}
+                        <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+                    {% } %}
+                </td>
+                <td>
+                    <span class="size">{%=o.formatFileSize(file.size)%}</span>
+                </td>
+                <td>
+                    {% if (file.deleteUrl) { %}
+                        <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                            <i class="glyphicon glyphicon-trash"></i>
+                            <span>Delete</span>
+                        </button>
+                    {% } else { %}
+                        <button class="btn btn-warning cancel">
+                            <i class="glyphicon glyphicon-ban-circle"></i>
+                            <span>Cancel</span>
+                        </button>
+                    {% } %}
+                </td>
+            </tr>
+        {% } %}
+        </script>
+
+        <script src="js/vendor/jquery.ui.widget.js"></script>
+        <script src="js/tmpl.min.js"></script>
+        <script src="js/load-image.all.min.js"></script>
+        <script src="js/canvas-to-blob.min.js"></script>
+        <script src="js/jquery.iframe-transport.js"></script>
+        <script src="js/jquery.fileupload.js"></script>
+        <script src="js/jquery.fileupload-process.js"></script>
+        <script src="js/jquery.fileupload-image.js"></script>
+        <script src="js/jquery.fileupload-validate.js"></script>
+        <script src="js/jquery.fileupload-ui.js"></script>
+        <script src="js/main.js"></script>
+
 </div>
 </body>
 </html>

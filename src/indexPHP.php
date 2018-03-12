@@ -25,7 +25,6 @@
     $email = null;
     $phone = null;
     
-    
     if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
         $username = $_SESSION["username"];
         $userImage = $_SESSION["userImage"];
@@ -59,10 +58,7 @@
             $controller->signIn($_POST["username"],$_POST["password"]);
         }
         else if(isset($_POST["signUp"])){ //เมื่อมีการกดปุ่ม SignUp
-            
-           // echo "<br>---Sign up---<br>";
-            $controller->SignUp($_POST["uname"],$_POST["psw"],$_POST["umail"],$_POST["uFname"],$_POST["uLname"],$_POST["uid"],$_POST["bday"],$_POST["gender"],$_POST["uaddress"],$_POST["uphone"],$_POST["type"]);
-        
+            $controller->SignUp($_POST["uname"],$_POST["psw"],$_POST["umail"],$_POST["uFname"],$_POST["uLname"],$_POST["uid"],$_POST["bday"],$_POST["gender"],$_POST["uaddress"],$_POST["uphone"],$_POST["type"],$_POST["imageProfile"]);
         }else if(isset($_POST["signOut"])){
             $controller->signOut();
 
@@ -99,7 +95,7 @@
             $getEvent =  $controller->getDatabase()->getEvent($_POST["idEvent"]);
             echo "$getEvent[0]๏$getEvent[1]๏$getEvent[2]๏$getEvent[3]๏$getEvent[4]๏$getEvent[5]๏$getEvent[6]๏$getEvent[7]๏$getEvent[8]๏$getEvent[9]๏$getEvent[10]๏$getEvent[11]๏$getEvent[12]๏$getEvent[13]๏$getEvent[14]๏$getEvent[15]๏$getEvent[16]๏$getEvent[17]๏$getEvent[18]๏$getEvent[19]๏$getEvent[20]๏$getEvent[21]๏$getEvent[22]๏$getEvent[23]";
         } else if (isset($_POST["editEvent"])) {
-            echo $controller->getDatabase()->editEvent($_POST["eventName"],$_POST["locationEvent"],$_POST["date"],$_POST["size"],$_POST["startTime"],$_POST["endTime"],$_POST["category"],$_POST["type"],$_POST["price"],$_POST["details"],$_POST["organizerName"],$_POST["contactName"],$_POST["email"],$_POST["phone"],$imagesPath,$_POST["latitude"],$_POST["longitude"],$_POST["teaser"],$_POST["preCondition"],$_POST["postCondition"]);
+            echo $controller->getDatabase()->editEvent($_POST["idEvent"],$_POST["eventName"],$_POST["locationEvent"],$_POST["date"],$_POST["size"],$_POST["startTime"],$_POST["endTime"],$_POST["category"],$_POST["type"],$_POST["price"],$_POST["details"],$_POST["organizerName"],$_POST["contactName"],$_POST["email"],$_POST["phone"],$_POST["latitude"],$_POST["longitude"],$_POST["teaser"],$_POST["preCondition"],$_POST["postCondition"]);
         }
         else if(isset($_POST['attendant'])){
             echo "attendant";
@@ -121,6 +117,8 @@
         }else if(isset($_POST['updateView'])){
             // echo "readComment";
             echo $controller->getDatabase()->updateView($_POST['idWebboard']);
+        } else if (isset($_POST['getEventsProfile'])) {
+            echo $controller->getDatabase()->getAttenEventProfile($_POST['username']);
         }
     }
     if(isset($_GET["idEvent"])){
@@ -130,6 +128,16 @@
             $result .= "$e[$i]๏";
         }
         $result .= "$e[19]";
+        echo $result;
+    }
+
+    if (isset($_GET["username"])) {
+        $account = $controller->getDatabase()->autoSignIn($_GET["username"]);
+        $result="";
+        for($i = 0;$i <13 ;$i++){
+            $result .= "$account[$i]๏";
+        }
+        $result .= "$account[14]";
         echo $result;
     }
 ?>
