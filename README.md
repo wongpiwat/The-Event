@@ -2,7 +2,6 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title></title>
 </head>
 <body>
 	<h1>Project Webtext(The Event)</h1>
@@ -19,14 +18,6 @@
 	<p>Folder tcpdf เอาไว้สร้าง Pdf</p>
 	<p>Folder upload-files มี code ที่ช่วยให้ upload fileรูป และ file รูปจะถูกเก็บอยุ่ใน Folder ข้างใน ส่วน Folder upload จะเป็นรูป event ที่ผู้ใช้ uploadเข้าไป และ Folder profile จะเป็นรูป Profile ของผู้ใช้ที่ upload เข้าไป  </p>
 	<p>Folder vendor จะเป็นส่วนของการautoload</p>
-
-
-
-
-
-
-
-
 	<h3>ขั้นตอนการติดตั้งและเริ่มการทำงาน</h3>
 	--------------------------------------------------
 	<p>ขั้นตอนการติดตั้ง</p>
