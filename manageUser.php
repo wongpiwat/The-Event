@@ -12,7 +12,7 @@
 <div class="container" style="width:100%;">
 
 
-<h1 align="center" style="margin-top:35px;">Manager User</h1><br />
+<h1 align="center" style="margin-top:35px;">Manager Users</h1><br />
 <div id="head">
 <!-- <input type="button"value="Create Account" class="btn btn-warning ">
 <input type="button"value="Create Account" class="btn btn-info ">
@@ -21,9 +21,9 @@
 <input type="button"value="Create Account" class="btn btn-primary "> -->
 
 
-<form  method="post" style="margin-top:20px;">
+<form  method="post" style="margin-top:20px;" action="src/indexPHP.php">
 <button type="button" class="btn btn-primary" onclick="createAccount(null)" ><span class="glyphicon glyphicon-user" ></span> Create Account</button>
-<button type="submit" class="btn btn-warning" name="createPdf" ><span class="glyphicon glyphicon-file" ></span> Create PDF</button>
+<a href="src/indexPHP.php?create_pdf_user=1" target="_blank" ><button type="button" class="btn btn-warning" name="create_pdf" ><span class="glyphicon glyphicon-file" ></span> Create PDF</button></a>
 <!-- <input type="submit" name="<span class="glyphicon glyphicon-file" ></span> create_pdf" class="btn btn-warning" value="Create PDF"> -->
 </form>
 <!-- <input type="button"value="Edit Account" class="btn btn-info"> -->
@@ -100,6 +100,7 @@
 
 
 <script >
+
 readAccount();
 var deleteUser = null;
 var edit = false;
@@ -143,7 +144,7 @@ if(type == "del" ||del == true){
         success: function(response) {
             console.log("Sun");
             console.log(response);
-            var array = response.split(",");
+            var array = response.split("๏");
             
             setValueEdit(array);
             if(type == "read" && edit == false){
@@ -207,7 +208,7 @@ document.getElementById('psw').type = "password";
 }
 
 function setValueEdit(array){
-// console.log(array);
+console.log(array);
 document.getElementById('usrn').value= array[0];
 document.getElementById('usrn').disabled= "true";
 document.getElementById('psw').value= array[1];
@@ -239,13 +240,13 @@ document.getElementById('status').style.display= 'block';
 
 }
 
-function setEdit(){
-edit = false;
-}
+// function setEdit(){
+// edit = false;
+// }
 
-function setDel(){
-del = false;
-}
+// function setDel(){
+// del = false;
+// }
 
 function deleteA(){
 $.post('src/indexPHP.php',{deleteAccount:"true",username:deleteUser},

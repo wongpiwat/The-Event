@@ -45,11 +45,15 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
 <head>
 <link rel="stylesheet" href="css/styles.css">
 <!-- <link rel="stylesheet" href="css/styleProfile.css"> -->
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
+<script src="js/jquery-clockpicker.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" href="css/jquery-clockpicker.min.css">
+<link rel="stylesheet" href="css/styleMap.css">
+<link href="css/uploadfile.css" rel="stylesheet">
+<script src="js/jquery.uploadfile.min.js"></script>
 </head>
 
 <!--header first page-->
@@ -82,16 +86,16 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
       <a class="navbar-brand" href="index.php">The Event</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-    <form class="navbar-form navbar-left" >
+    <div class="navbar-form navbar-left" >
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search" name="search" style="margin-top:3px;height:28px;">
+            <input type="text" class="form-control" placeholder="Search"  id="searchS" name="search" style="margin-top:3px;height:28px;">
             <div class="input-group-btn">
-              <button class="btn btn-default" type="submit" style="height:28px;margin-top:3px;">
+              <button class="btn btn-default" type="button"  onclick="sunny()" style="height:28px;margin-top:3px;">
                 <i class="glyphicon glyphicon-search"></i>
               </button>
             </div>
           </div>
-        </form>
+        </div>
       <ul class="nav navbar-nav navbar-right">
       <li><a href="#" onclick="document.getElementById('create').style.display='block'"><span class="glyphicon glyphicon-th-large"></span> Create Event</a></li>
       <li><a href="index.php" onclick="document.getElementById('create').style.display='block'"><span class="glyphicon glyphicon-home"></span> Home</a></li>
@@ -127,19 +131,19 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
       <a class="navbar-brand" href="index.php" >The Event</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-    <form class="navbar-form navbar-left" >
+    <div class="navbar-form navbar-left" >
           <div class="input-group" >
-            <input type="text" class="form-control" placeholder="Search" name="search" style="margin-top:3px;height:28px;">
+            <input type="text" class="form-control" placeholder="Search" name="search" id="searchS" style="margin-top:3px;height:28px;">
             <div class="input-group-btn">
-              <button class="btn btn-default" type="submit" style="height:28px;margin-top:3px;">
+              <button class="btn btn-default" type="button" onclick="sunny()" style="height:28px;margin-top:3px;">
                 <i class="glyphicon glyphicon-search"></i>
               </button>
             </div>
           </div>
-        </form>
+        </div>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"  onclick="document.getElementById('signUp').style.display='block'" ><span class="glyphicon glyphicon-user" ></span> Sign Up</a></li>
-        <li><a href="#"  onclick="document.getElementById('login').style.display='block'"><span class="glyphicon glyphicon-log-in" ></span> Login</a></li>
+        <li><a href="#"  onclick="document.getElementById('login').style.display='block'"><span class="glyphicon glyphicon-log-in" ></span> Sign In</a></li>
       </ul>
     </div>
   </div>
@@ -201,24 +205,24 @@ width: 100%;">Login</button>
 <div id="signUp" class="signUp">
   <form class="signUp-content animate"  id="signUpForm" method="POST" action="src/indexPHP.php">
   <div style="padding: 16px;" id="b">
-      <label for="uname" id="nameu"><b>Username</b></label>
+      <label for="uname" id="nameu"><span style="color: red;">*</span><b>Username</b></label>
       <input type="text" placeholder="Enter Username" name="uname" id="usrn" required>
-      <label for="psw"><b>Password</b></label>
+      <label for="psw"><span style="color: red;">*</span><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="psw"  id="psw" required>
 
-      <label for="psw" id="conP"><b>Confirm Your Password</b></label>
+      <label for="psw" id="conP"><span style="color: red;">*</span><b>Confirm Your Password</b></label>
       <input type="password" placeholder="Enter Password Again" name="cPsw" id="cPsw" required>
 
-      <label for="email"><b>Email</b></label>
+      <label for="email"><span style="color: red;">*</span><b>Email</b></label>
       <input type="text" placeholder="Enter Email" name="umail" id="umail" required>
 
-      <label for="Fname"><b>FirstName</b></label>
+      <label for="Fname"><span style="color: red;">*</span><b>FirstName</b></label>
       <input type="text" placeholder="FirstName" name="uFname" id="firstName" required>
       <label for="Lname"><b>LastName</b></label>
       <input type="text" placeholder="LastName" name="uLname" id="lastName" required>
       <label for="id"><b>Id No.</b></label>
       <input type="text" placeholder="Enter Id No." name="uid" id="idNo" required>
-      <label for="birth"><b>Birthday</b></label>
+      <label for="birth"><span style="color: red;">*</span><b>Birthday</b></label>
       <input type="date" name="bday" id="bday" require><br>
       <label for="gen"><b>Gender</b></label><br>
       <input type="radio" name="gender" value="male" id="male" checked> Male
@@ -240,17 +244,10 @@ width: 100%;">Login</button>
         <input type="radio" name="status" value="unActivate" id="statusU" > unActivate
         <input type="radio" name="status" value="Block" id="statusB" > Block<br>
     </div>
+    <div id="fileuploader">Upload</div>
       <!-- 20,40 -->
       <button id="signupCan" style="width: 20%; height: 7%;" type="button" onclick="document.getElementById('signUp').style.display='none';document.getElementById('signUpForm').reset(); setEdit();undisableInput()" class="cancelbtn">Cancel</button>
-      <button id="signupbtn"  type="button" name="SignUp" onclick="signUp()" style="width: 60%; height: 7%;float: right;background-color: #4CAF50;
-color: white;
-padding: 10px 18px;
-margin: 8px 0;
-border: none;
-cursor: pointer;
-">SignUp</button>
-
-
+      <button id="signupbtn"  type="button" name="SignUp" onclick="signUp()" style="width: 60%; height: 7%;float: right;background-color: #4CAF50;color: white;padding: 10px 18px;margin: 8px 0;border: none;cursor: pointer;">SignUp</button>
   </div>
 </form>
 </div>
@@ -258,65 +255,471 @@ cursor: pointer;
 <!-- สร้าง event -->
 <div id="create" class="create">
 <form class="create-content animate"  method="POST">
-    <center><h1>Create a Event</h1></center>
-    <div class="con">
-        <label for="eventName"><b>Event Name</b></label>
-        <input id="eventName" type="text" name="eventName" required="">
+    <center><h1>Create Event</h1></center>
+    <div style="padding: 16px;">
+        <label for="eventName"><span style="color: red;">*</span><b>Event Name</b></label><br>
+        <input id="eventName" type="text" required=""><br><br>
 
-        <label for="location"><b>Location</b></label>
-        <input id="location" type="text" name="location" required="">
+        <label for="locationEvent"><span style="color: red;">*</span><b>Location</b></label><br>
+        <input id="locationEvent" type="text" required=""><br><br>
 
-        <label for="birth"><b>Date of Event</b></label>
-        <input id="date" type="date" name="date">
-        <br>
-        <label for="size"><b>Size of Event</b></label>
-        <select id="size" name="size">
-            <option value="one">1 - 50 People</option>
-            <option value="fifty">51 - 100 People</option>
-            <option value="one-hundred-one">101 - 500 People</option>
-            <option value="five-hundred-one">501 - 1000 People</option>
-            <option value="one-thoudsand-one">1001 - 5000 People</option>
-            <option value="over">More than 5000 people</option>
-        </select>
-        <br>
-        <label for="eventCategory"><b>Event Category</b></label>
-        <select id="category" name="category">
-            <option value="business">Business</option>
-            <option value="education">Education</option>
-            <option value="family">Family</option>
-            <option value="health">Health</option>
-            <option value="hobbies">Hobbies</option>
-            <option value="technology">Technology</option>
-            <option value="travel">Travel</option>
-            <option value="sport">Sport</option>
-            <option value="food">Food</option>
-        </select>
-        <br>
+        <label for="date"><span style="color: red;">*</span><b>Date</b></label>
+        <input id="date" type="date" style="margin-right:10%;margin-left:1%;"><br><br>
+
+        <label for="startTime"><span style="color: red;">*</span><b>Start Time</b></label><br>
+        <input id="inputStartTime" value="" data-default="00:00">
+        <button type="button" class="btn btn-default btn-sm" id="buttonStartTime" style="margin-right:10%;margin-left:1%;">
+        <span class="glyphicon glyphicon-time"></span> Time</button>
+
+        <label for="endTime"><span style="color: red;">*</span><b>End Time</b></label>
+        <input id="inputEndTime" value="" data-default="00:00">
+        <button type="button" class="btn btn-default btn-sm" id="buttonEndTime">
+        <span class="glyphicon glyphicon-time"></span> Time</button><br><br>
+
         <form>
-            <label for="eventType"><b>Event Type</b></label> 
-            <input id="typePaid" type="radio" name="type" value="paid" checked>Paid</input>
-            <input id="typeFree" type="radio" name="type" value="free">Free</input>
-        </form>
-        <br>
-        <label for="price"><b>Ticket Price (Thai Baht)</b></label>
-        <input id="price" type="text" name="price" required><br>
+            <label for="eventType"><span style="color: red;">*</span><b>Type</b></label>
+            <input id="typeFree" type="radio" value="free" checked style="margin-right:.5%;margin-left:3%;">Free</input>
+            <input id="typePaid" type="radio" value="paid" style="margin-right:.5%;margin-left:.5%;">Paid</input>
+        </form><br>
+
+        <div class="input_fields_wrap">
+            <!-- <button class="add_field_button">Add Ticket Price</button> -->
+            <label for="price"><span style="color: red;">*</span><b>Ticket Price</b></label>
+            <!-- <div><input id="ticketPrice" type="text" name="ticketPrice[]"></div> -->
+            <div><input id="ticketPrice" type="text"></div>
+        </div>
+
+        <label for="eventCategory"><b>Category</b></label>
+        <select id="category" style="margin-right:5%;margin-left:1%;">
+            <option value="Business">Business</option>
+            <option value="Education">Education</option>
+            <option value="Family">Family</option>
+            <option value="Health">Health</option>
+            <option value="Hobbies">Hobbies</option>
+            <option value="Technology">Technology</option>
+            <option value="Travel">Travel</option>
+            <option value="Sports">Sports</option>
+            <option value="Food">Food</option>
+        </select><br><br>
+
+        <label for="size"><span style="color: red;">*</span><b>Size</b></label><br>
+        <input id="size" type="text"><br><br>
 
         <label for="details"><b>Details</b></label>
-        <input id="details" type="text" placeholder="" name="details" required>
+        <input id="details" type="text" placeholder="" required><br><br>
         
-        <!-- image upload -->
-            <form id="fileupload" method="POST" enctype="multipart/form-data" data-url="upload-files/">
-                <div>
-                    <div>
-                        <span>
-                            <span>Add files...</span>
-                            <input type="file" name="files[]" multiple>
-                        </span>
-                    </div>
-                </div>
-                <table class="table table-striped"><tbody class="files"></tbody></table>
-            </form>
-        <script id="template-upload" type="text/x-tmpl">
+        <label for="preCondition"><b>Pre Condition</b></label>
+        <input id="preCondition" type="text" placeholder="" required><br><br>
+
+        <label for="postCondition"><b>Post Condition</b></label>
+        <input id="postCondition" type="text" placeholder="" required><br><br>
+
+        <label for="organizerName"><b>Organizer Name</b></label>
+        <input id="organizerName" type="text" required=""><br><br>
+
+        <label for="contactName"><b>Contact Name</b></label>
+        <input id="contactName" type="text" required><br><br>
+
+        <label for="email"><b>Email</b></label>
+        <input id="email" type="text" required><br><br>
+
+        <label for="ePhone"><b>Phone</b></label>
+        <input id="ePhone" maxlength="10" onKeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" required><br><br>
+        
+        <label for="teaserVDO"><span style="color: red;">*</span><b>Youtube Video Link (Optional)</b></label>
+        <input id="teaser" type="text"><br><br>
+
+        <!-- start image upload -->
+        <form id="fileupload" method="POST" enctype="multipart/form-data" data-url="upload-files/">
+            <label for="Add files"><span style="color: red;">*</span><b>Add Images</b></label>
+            <input type="file" name="files[]" multiple>
+            <table class="table table-striped"><tbody class="files"></tbody></table>
+        </form>
+        
+            
+        <!-- google map api key: AIzaSyC18bWr7foVxKW45n29XTfqOSryrlVBKfM -->
+        <label for="marker" ><b>Place Marker On Map</b></label>
+        <div id="map"></div>
+        <script>
+            var map;
+            var lat;
+            var lng;
+            var markers = [];
+            function initMap() {
+                var location = {lat: 13.75398, lng: 100.50144};
+                map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: location,
+                });
+                map.addListener('click', function(event) {
+                var myLatLng = event.latLng;
+                lat = myLatLng.lat();
+                lng = myLatLng.lng();
+                deleteMarkers();
+                addMarker(event.latLng);
+                });
+            }
+
+            function addMarker(location) {
+                var marker = new google.maps.Marker({
+                position: location,
+                map: map
+                });
+                sendLatLng(lat,lng);
+                // console.log(lat+" "+lng);
+                markers.push(marker);
+            }
+
+            function setMapOnAll(map) {
+                for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+                }
+            }
+
+            function clearMarkers() {
+                setMapOnAll(null);
+            }
+
+            function deleteMarkers() {
+                clearMarkers();
+                markers = [];
+            }
+        </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC18bWr7foVxKW45n29XTfqOSryrlVBKfM&callback=initMap"></script>
+        <button type="button" onclick="document.getElementById('create').style.display='none';reloadJs()" style="width: 20%; height: 2%; background-color: #f44336; color: white;padding: 10px 18px; margin-top: -1%; border: none;cursor: pointer;">Cancel</button>
+        <button id="createNew" type="button" style="width: 50%; height: 2%;float: right;background-color: #4CAF50;color: white;padding: 10px 18px; margin-top: -1%; border: none;cursor: pointer;" name="CreateEvent" onClick="createNewEvent()">Create event</button>
+    </div>
+</form>
+
+
+
+<script type="text/javascript">
+$(".input_fields_wrap").hide();
+var imagesPath = [];
+var latitude = null;
+var longitude = null;
+console.log(window.location.pathname);
+// /ProjectWebtech_1/adminManage.php
+var login = document.getElementById('login');
+window.onclick = function(e){
+    if (event.target == login){
+        login.style.display = "none";    
+    }
+}
+
+document.getElementById('login').addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("logBtn").click();
+    }
+});
+
+function signIn(){
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
+    console.log(username);
+    console.log(password);
+    document.getElementById('login').style.display='none';
+    document.getElementById('signInForm').reset();
+    $.post('src/indexPHP.php',{signIn:"true",username:username,password:password},
+    function(data){
+        console.log(data);
+
+     if(data == 1){// login ได้
+        location.reload();
+        console.log("Sun");
+     }else if(data == "-1"){
+         alert("username or password wrong!!!");
+     }
+    });
+
+
+
+}
+
+
+
+function signOut(){
+    $.post('src/indexPHP.php',{signOut:"true"},function(data){
+        //console.log(data);
+        window.location.href = "index.php";
+        // location.reload();
+    });
+}
+
+
+function signUp(){
+    var username = document.getElementById('usrn').value;
+    var psw = document.getElementById('psw').value;
+    var cPsw = document.getElementById('cPsw').value;
+    var email = document.getElementById('umail').value;
+    var firstName = document.getElementById('firstName').value;
+    var lastName = document.getElementById('lastName').value;
+    var idNo = document.getElementById('idNo').value;
+    var gender = "male";
+    var address = document.getElementById('address').value;
+    var phone = document.getElementById('phone').value;
+    var bday = document.getElementById('bday').value;
+    var type = 1;
+    var status = null;
+    if(document.getElementById('male').checked == false){
+      gender = "female";
+    }
+    console.log(document.getElementById('typeA').style.display);
+    //console.log(document.getElementById('type').checked);
+    if(document.getElementById('signupbtn').textContent == "Edit Account"){
+        console.log("Edit!!!");
+        cPsw = psw;
+        status = $('input[name=status]:checked').val();
+        console.log(status);
+    }
+    if(document.getElementById('type').style.display == "block" && document.getElementById('typeA').checked == true){
+        type = 0;
+    }
+    // console.log(psw);
+    // console.log(cPsw);
+    // console.log(bday);
+
+    if(psw == cPsw && bday != "" && document.getElementById('signupbtn').textContent != "Edit Account" ){
+        console.log("Same");
+        console.log("Same:"+imageProfile);
+        $.post('src/indexPHP.php',{signUp:"true",uname:username,psw:psw,umail:email,uFname:firstName,
+        uLname:lastName,uid:idNo,bday:bday,gender:gender,uaddress:address,uphone:phone,type:type,imageProfile:imageProfile},
+    function(data){
+        console.log(data);
+
+        if(data == 1){
+            if(window.location.pathname == "/ProjectWebtech_1/setting.php"){
+                successTell(" Add User => Username: "+username+" into Database.");
+                readAccount();
+                document.getElementById('signUp').style.display='none';
+                document.getElementById('signUpForm').reset();
+            }else{
+            console.log("SignUp Successful.");
+            alert("SignUp Successful.");
+            location.reload();
+            }
+        }else if(data == -1){
+            alert("Username is already use!!!.")
+            document.getElementById('usrn').value = "";
+            document.getElementById('psw').value = "";
+            document.getElementById('cPsw').value = "";
+        }
+    });
+
+    }else if(psw != cPsw){
+        console.log("Not Same");
+        document.getElementById('username').value = "";
+        document.getElementById('psw').value = "";
+        document.getElementById('cPsw').value = "";
+        alert("Password Not the same.");
+        //ฝากทำให้ช่องพาสเวิสเป็นสีแดงด้วยครับ ^^
+        $('#conP').html('Not Matching').css('color', 'red');
+    }else if(bday == ""){
+        alert("Input Birthday.");
+    }else if(psw == cPsw && bday != "" && document.getElementById('signupbtn').textContent == "Edit Account" ){
+        $.post('src/indexPHP.php',{Edit:"true",uname:username,psw:psw,umail:email,uFname:firstName,
+        uLname:lastName,uid:idNo,bday:bday,gender:gender,uaddress:address,uphone:phone,type:type,status:status},
+    function(data){
+        console.log(data);
+
+     if(data == 1){
+         if(window.location.pathname == "/ProjectWebtech_1/setting.php"){
+            successTell(" Edit User => Username: "+username+" into Database.");
+            readAccount();
+            setEdit();
+            document.getElementById('signUp').style.display='none';
+            document.getElementById('signUpForm').reset();
+         }
+     }
+     }
+     );
+    }
+}
+
+    function setEdit(){
+        edit = false;
+    }
+
+    function setDel(){
+        del = false;
+    }
+    var inputStartTime = $('#inputStartTime');
+    inputStartTime.clockpicker({autoclose: true});
+
+    var inputEndTime = $('#inputEndTime');
+    inputEndTime.clockpicker({autoclose: true});
+
+    $('#buttonStartTime').click(function(e){
+        e.stopPropagation();
+        inputStartTime.clockpicker('show').clockpicker('toggleView', 'hours');
+    });
+
+    $('#buttonEndTime').click(function(e){
+        e.stopPropagation();
+        inputEndTime.clockpicker('show').clockpicker('toggleView', 'hours');
+    });
+
+    $(document).ready(function() {
+        $("#typePaid").click(function () {
+            $("#typePaid").prop("checked", true);
+            $("#typeFree").prop("checked", false);
+            $(".input_fields_wrap").show();
+        });
+
+        $("#typeFree").click(function () {
+            $("#typeFree").prop("checked", true);
+            $("#typePaid").prop("checked", false);
+            $(".input_fields_wrap").hide();
+        });
+
+    var max_fields = 5;
+    var wrapper = $(".input_fields_wrap");
+    var add_button = $(".add_field_button");
+    var textBoxItem = 0;
+    $(add_button).click(function(e){
+        e.preventDefault();
+        if(textBoxItem < max_fields){
+            textBoxItem++;
+            $(wrapper).append('<div><input type="text" name="ticketPrice[]"/><a href="#" class="remove_field">Remove</a></div>');
+        }
+    });
+    
+    $(wrapper).on("click",".remove_field", function(e){
+        e.preventDefault(); $(this).parent('div').remove(); x--;
+        })
+    });
+
+    function sendLatLng(lat,lng) {
+        latitude = lat;
+        longitude = lng; 
+    }
+
+    function sendImagePath(path) {
+            imagesPath.push(path);
+        };
+
+      function reloadJs(){
+          location.reload();
+          console.log(imagesPath);
+      }
+      function createNewEvent(){
+        var type = null;
+        var eventName = document.getElementById('eventName').value;
+        var locationEvent = document.getElementById('locationEvent').value;
+        var date = document.getElementById('date').value;
+        var startTime = document.getElementById('inputStartTime').value;
+        var endTime = document.getElementById('inputEndTime').value;
+        var category = document.getElementById('category').value;
+        if (document.getElementById('typePaid').checked) {
+            type = document.getElementById('typePaid').value;
+        } else if (document.getElementById('typeFree').checked) {
+            type = document.getElementById('typeFree').value;
+        }
+        var ticketPrice = document.getElementById('ticketPrice').value;
+        var size = document.getElementById('size').value;        
+        var EventDetails = document.getElementById('details').value;
+        var preCondition = document.getElementById('preCondition').value;
+        var postCondition = document.getElementById('postCondition').value;
+        var organizerName = document.getElementById('organizerName').value;
+        var contactName = document.getElementById('contactName').value;
+        var email = document.getElementById('email').value;
+        var phone = document.getElementById('ePhone').value;
+        var teaser = document.getElementById('teaser').value;
+        document.getElementById('createNew').type = "submit";
+        if (status == "active") {
+
+            if (eventName != ""  && locationEvent != "" && teaser != "" && size != "" ) /*Gu edit*/
+            {
+            /*Edit*/
+            if(document.getElementById('createNew').textContent == "editEvent"){
+                $.post('src/indexPHP.php',{editEvent:"true",
+                eventName:eventName,locationEvent:locationEvent,
+                date:date,size:size,
+                startTime:startTime,endTime:endTime,
+                category:category,type:type,
+                price:ticketPrice,details:EventDetails,
+                organizerName:organizerName,contactName:contactName,
+                email:email,phone:phone,
+                imagesPath:imagesPath,latitude:latitude,
+                longitude:longitude,teaser:teaser,preCondition,postCondition},
+                function(){
+                    alert("Edit Complete");
+                });
+                /*New*/
+            } else {
+            $.post('src/indexPHP.php',{createEvent:"true",
+                eventName:eventName,locationEvent:locationEvent,
+                date:date,size:size,
+                startTime:startTime,endTime:endTime,
+                category:category,type:type,
+                price:ticketPrice,details:EventDetails,
+                organizerName:organizerName,contactName:contactName,
+                email:email,phone:phone,
+                imagesPath:imagesPath,latitude:latitude,
+                longitude:longitude,teaser:teaser,preCondition,postCondition},
+                function(){
+                    alert("Create Complete");
+                });
+            }
+              
+            }else{
+              alert("Please input")
+    
+            }
+            }else{
+              alert("Please activate your email!");
+            }
+          }
+
+      function sendEmail(username,email,fname,title,body){
+         console.log("SendEmailllllll");
+       
+        document.getElementById('signUp').style.display = "none";
+        $.post("email/phpSendMailGmail.php",{title:title,body:body,email:email,fname:fname},
+        function(data){
+            // alert(data);
+            // location.reload();
+        })
+
+     }
+
+    //  function Hello(){
+    //      console.log("Sunnnnnnnnnnn");
+    //  }
+
+     function sunny(){
+        if(document.getElementById('searchS').value != ""){
+        window.location = "searchEventS.php?search="+document.getElementById('searchS').value;
+        }else{
+            alert("Please Fill in Word.");
+        }
+     }
+ //POOM
+     $("#fileuploader").uploadFile({
+    url: "../php-uploader/upload.php",multiple:false,dragDrop: false,fileName: "myfile",
+    returnType: "json",showDelete: true,showDownload:false,maxFileSize:500*1024,showPreview:true,
+    previewHeight: "100px",previewWidth: "100px",onSuccess:function(files,data,xhr,pd){
+        imageProfile = data[0];
+        console.log(imageProfile);
+    },
+    deleteCallback: function (data, pd) {
+    for (var i = 0; i < data.length; i++) {
+        $.post("../php-uploader/delete.php", {op: "delete",name: data[i]},
+            function (resp,textStatus, jqXHR) {
+                // alert("File deleted");
+            });
+    }
+    pd.statusbar.hide();
+},
+downloadCallback:function(filename,pd) {
+        location.href="../php-uploader/download.php?filename="+filename;
+	}
+});
+
+</script>
+
+<script id="template-upload" type="text/x-tmpl">
         {% for (var i=0, file; file=o.files[i]; i++) { %}
             <tr class="template-upload fade">
                 <td>
@@ -400,208 +803,7 @@ cursor: pointer;
         <script src="js/jquery.fileupload-validate.js"></script>
         <script src="js/jquery.fileupload-ui.js"></script>
         <script src="js/main.js"></script>
-        <!-- image upload -->
-        <label for="organizerName"><b>Organizer Name</b></label>
-        <input id="organizerName" type="text" name="organizerName" required="">
-
-        <label for="contactName"><b>Contact Name</b></label>
-        <input id="contactName" type="text" name="contactName" required><br>
-
-        <label for="email"><b>Email</b></label>
-        <input id="email" type="text" name="email" required>
-
-        <label for="ePhone" ><b>Phone</b></label>
-        <input id="ePhone" maxlength="10" onKeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" name="phone" required>
-
-            <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('create').style.display='none';reload_js()" class="cancelbtnSignup">Cancel</button>
-            <button id="createNew" type="button" style="width: 60%; height: 40%;float: right;" name="CreateEvent" onClick="createNewEvent()">Create a event</button>
-
-        <!-- <button style="width: 20%; height: 20%;" type="button" onclick="document.getElementById('create').style.display='none';reload_js()" class="cancelbtn">Cancel</button>
-        <button id="creataevent" type="submit" name="CreateEvent" >Create a event</button> -->
-        
-       
-    </div>
-</form>
-
-
-<script type="text/javascript">
-var imagesPath =[];
-console.log(window.location.pathname);
-// /ProjectWebtech_1/adminManage.php
-var login = document.getElementById('login');
-window.onclick = function(e){
-    if (event.target == login){
-        login.style.display = "none";    }
-
-}
-
-document.getElementById('login').addEventListener("keyup", function(event) {
-    event.preventDefault();
-    if (event.keyCode === 13) {
-        document.getElementById("logBtn").click();
-    }
-});
-
-function signIn(){
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
-    console.log(username);
-    console.log(password);
-    document.getElementById('login').style.display='none';
-    document.getElementById('signInForm').reset();
-    $.post('src/indexPHP.php',{signIn:"true",username:username,password:password},
-    function(data){
-        console.log(data);
-
-     if(data == 1){// login ได้
-        location.reload();
-        console.log("Sun");
-     }else if(data == "-1"){
-         alert("username or password wrong!!!");
-     }
-    });
-
-
-
-}
-
-
-
-function signOut(){
-    $.post('src/indexPHP.php',{signOut:"true"},function(data){
-        //console.log(data);
-        location.reload();
-    });
-}
-
-
-function signUp(){
-
-    var username = document.getElementById('usrn').value;
-    var psw = document.getElementById('psw').value;
-    var cPsw = document.getElementById('cPsw').value;
-    var email = document.getElementById('umail').value;
-    var firstName = document.getElementById('firstName').value;
-    var lastName = document.getElementById('lastName').value;
-    var idNo = document.getElementById('idNo').value;
-    var gender = "male";
-    var address = document.getElementById('address').value;
-    var phone = document.getElementById('ePhone').value;
-    var bday = document.getElementById('bday').value;
-    var type = 1;
-    var status = null;
-    if(document.getElementById('male').checked == false){
-      gender = "female";
-    }
-    console.log(document.getElementById('typeA').style.display);
-    //console.log(document.getElementById('type').checked);
-    if(document.getElementById('signupbtn').textContent == "Edit Account"){
-        console.log("Edit!!!");
-        cPsw = psw;
-        status = $('input[name=status]:checked').val();
-        console.log(status);
-    }
-    if(document.getElementById('type').style.display == "block" && document.getElementById('typeA').checked == true){
-        type = 0;
-    }
-    // console.log(psw);
-    // console.log(cPsw);
-    // console.log(bday);
-
-    if(psw == cPsw && bday != "" && document.getElementById('signupbtn').textContent != "Edit Account" ){
-        console.log("Same");
-        
-        $.post('src/indexPHP.php',{signUp:"true",uname:username,psw:psw,umail:email,uFname:firstName,
-        uLname:lastName,uid:idNo,bday:bday,gender:gender,uaddress:address,uphone:phone,type:type},
-    function(data){
-        console.log(data);
-
-        if(data == 1){
-            if(window.location.pathname == "/ProjectWebtech_1/setting.php"){
-                successTell(" Add User => Username: "+username+" into Database.");
-                readAccount();
-                document.getElementById('signUp').style.display='none';
-                document.getElementById('signUpForm').reset();
-            }else{
-            console.log("SignUp Successful.");
-            alert("SignUp Successful.");
-            location.reload();
-            }
-        }else if(data == -1){
-            alert("Username is already use!!!.")
-            document.getElementById('usrn').value = "";
-            document.getElementById('psw').value = "";
-            document.getElementById('cPsw').value = "";
-        }
-    });
-
-    }else if(psw != cPsw){
-        console.log("Not Same");
-        document.getElementById('username').value = "";
-        document.getElementById('psw').value = "";
-        document.getElementById('cPsw').value = "";
-        alert("Password Not the same.");
-        //ฝากทำให้ช่องพาสเวิสเป็นสีแดงด้วยครับ ^^
-    }else if(bday == ""){
-        alert("Input Birthday.");
-    }else if(psw == cPsw && bday != "" && document.getElementById('signupbtn').textContent == "Edit Account" ){
-        $.post('src/indexPHP.php',{Edit:"true",uname:username,psw:psw,umail:email,uFname:firstName,
-        uLname:lastName,uid:idNo,bday:bday,gender:gender,uaddress:address,uphone:phone,type:type,status:status},
-    function(data){
-        console.log(data);
-
-     if(data == 1){
-         if(window.location.pathname == "/ProjectWebtech_1/setting.php"){
-            successTell(" Edit User => Username: "+username+" into Database.");
-            readAccount();
-            setEdit();
-            document.getElementById('signUp').style.display='none';
-            document.getElementById('signUpForm').reset();
-         }
-     }
-     }
-     );
-    }
-}
-
-    function sendImagePath(path) {
-            imagesPath.push(path);
-        };
-
-
-      function reload_js(){
-          location.reload();
-      }
-      function createNewEvent(){
-        var type = null;
-        var eventName = document.getElementById('eventName').value;
-        var location = document.getElementById('location').value;
-        var date = document.getElementById('date').value;
-        var size = document.getElementById('size').value;
-        var category = document.getElementById('category').value;
-        if (document.getElementById('typePaid').checked) {
-            type = document.getElementById('typePaid').value;
-        } else if (document.getElementById('typeFree').checked) {
-            type = document.getElementById('typeFree').value;
-        }
-        var price = document.getElementById('price').value;
-        var details = document.getElementById('details').value;
-        var organizerName = document.getElementById('organizerName').value;
-        var contactName = document.getElementById('contactName').value;
-        var email = document.getElementById('email').value;
-        var phone = document.getElementById('ePhone').value;
-        document.getElementById('createNew').type = "submit";
-        // document.getElementById('createNew').trigger("click");
-        $.post('src/indexPHP.php',{createEvent:"true",eventName:eventName,location:location,date:date,size:size,category:category,type:type,price:price,details:details,organizerName:organizerName,contactName:contactName,email:email,phone:phone,imagesPath:imagesPath});     
-      }
-     
-
-
-</script>
-
-o
+        <!-- end image upload -->
 </div>
-
- 
 </body>
 </html>
