@@ -32,7 +32,11 @@ class Controller{
     }
 
     function saveLog($event){
-      $this->database->saveActivityLog($_SESSION['username'],$this->getDateFormatter(),$this->getTimeFormatter(),$event);
+      if(isset($_SESSION['username'])){      
+        $this->database->saveActivityLog($_SESSION['username'],$this->getDateFormatter(),$this->getTimeFormatter(),$event);
+      }else{
+        $this->database->saveActivityLog("guest",$this->getDateFormatter(),$this->getTimeFormatter(),$event);
+      }
     }
 
     function checkType($username){
@@ -50,6 +54,7 @@ class Controller{
     function signIn($username,$password){
       // echo "$username<br>$password";
       // echo "<br>";
+      
       if($this->database->findUser($username,$password)){
         //echo "SignIn Success.";
 
@@ -70,6 +75,7 @@ class Controller{
     //SignUp ของผู้ใช้ และ Admin
    function  signUp($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,$check,$imageProfile){
         if($this->database->checkAccount($username,$email,$id_No,$phone)){
+
           if($check == 1){
             if ($imageProfile!=null) {
               rename("../upload-files/files/".$imageProfile, "../upload-files/files/profile/".$username.$imageProfile);
@@ -80,9 +86,9 @@ class Controller{
           }else if($check == 0){
             if ($imageProfile!=null) {
               rename("../upload-files/files/".$imageProfile, "../upload-files/files/profile/".$username.$imageProfile);
-              $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"admin","activate",'upload-files/files/profile/'.$username.$imageProfile);
+              $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"admin","Activate",'upload-files/files/profile/'.$username.$imageProfile);
             } else {
-              $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"admin","activate",'none');
+              $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"admin","Activate",'none');
             }
           }
         }else{

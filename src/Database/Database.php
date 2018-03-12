@@ -107,9 +107,18 @@ class Database {
     }
 
     function updateAccount($username,$password,$email,$firstName,$lastName,$idNo,$birthday,$gender,$address,$phone,$type,$status){
+        $t = "";
+        if($type == 0){
+            $t = "admin";
+        }else{
+            $t = "user";
+        }
+ 
+        
+     
         $statement = $this->connect->exec('UPDATE account SET `password`='.'"'.$password.'"'.', `email`='.'"'.$email.'"'.', `firstName`='.'"'.$firstName.'"'.'
     , `lastName`='.'"'.$lastName.'"'.', `idNo`="'.$idNo.'", `birthday`="'.$birthday.'", `gender`="'.$gender.'", 
-    `address`="'.$address.'", `phone`="'.$phone.'", `typeAccount`="'.$type.'", `status`="'.$status.'" WHERE `username`="'.$username.'"');
+    `address`="'.$address.'", `phone`="'.$phone.'", `typeAccount`="'.$t.'", `status`="'.$status.'" WHERE `username`="'.$username.'"');
          echo $statement;
     }
 
@@ -196,6 +205,16 @@ class Database {
         $this->lengthE = $count;
         return $result;
     }
+
+
+    function readEventUpTime(){
+        $date = date("Y-m-d");
+        $time = date("H:i:s");
+        $statement = $this->connect->prepare('SELECT * FROM event WHERE (date=:date and startTime>=:time)');
+        $statement->execute([':date' => $date , 'time' => $time]);
+        return $statement;
+    }
+
 
     function readEventUp(){
         // or date>=:date ORDER
@@ -331,15 +350,18 @@ class Database {
         $count = 1;
         $statement = $this->connect->query('SELECT * FROM webboard WHERE idEvent='.$idEvent.' ORDER  BY date,time DESC');
         while($row = $statement->fetch(PDO::FETCH_BOTH)){
+            $idWebboard = $row["idWebboard"];
+            $delete = sprintf('onclick="deleteWebboard(\'%s\')"',$idWebboard);
             $output .= '
             <tr>
             <td>'.$count.'</td>
-            <td width="40%" ><a href="#" onclick="comment('.$row[0].')" ><span class="glyphicon glyphicon-envelope"  ></span> '.$row["question"].'</a></td>
+            <td width="40%" ><a href="#" onclick="comment('.$row[0].')"><span class="glyphicon glyphicon-envelope"></span> '.$row["question"].'</a></td>
             <td>'.$row["username"].'</td>
             <td>'.$row["date"].'</td>
             <td>'.$row["time"].'</td>
             <td>'.$row["view"].'</td>
             <td>'.$row["reply"].'</td>
+            <td><button type="button" class="btn btn-danger" '.$delete.' ><span class="glyphicon glyphicon-trash"></span> Delete</button> </td>
           </tr>';
         $count+=1;
         }
@@ -405,7 +427,7 @@ class Database {
             color: black; */">
             <div style="bottom: 0;width: 100%;margin-top:-40px;color:#ffc955;">
             <br>
-            User: '.$r["username"].' &nbsp;&nbsp;&nbsp;&nbsp;Date: '.$row['date'].' &nbsp;&nbsp;&nbsp;&nbsp;Time: '.$row['time'].'
+            User: '.$row["username"].' &nbsp;&nbsp;&nbsp;&nbsp;Date: '.$row['date'].' &nbsp;&nbsp;&nbsp;&nbsp;Time: '.$row['time'].'
             </div>
         </div>';
         $count += 1;
@@ -446,7 +468,7 @@ class Database {
 
 
     function activateAccount($username){
-        $s = $this->connect->prepare('UPDATE account SET status="activate" Where username=:username');
+        $s = $this->connect->prepare('UPDATE account SET status="Activate" Where username=:username');
         $s->execute(['username'=> $username]);
 
         // echo "UPDATE account SET status=activate Where username=$username";
@@ -773,6 +795,11 @@ class Database {
         $query = $this->connect->prepare('DELETE FROM `event` WHERE `idEvent`=:id');
         $query->execute(['id' => $eventID]);    
     
+    }
+    function deleteWebboard($idWebboard) {
+        $statement = $this->connect->prepare('DELETE FROM webboard WHERE idWebboard=:idWebboard');
+        $statement->execute(['idWebboard' => $idWebboard]);
+        echo "1";
     }
 
     function getAttenEventProfile($username){

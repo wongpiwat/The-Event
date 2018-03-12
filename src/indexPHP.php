@@ -275,15 +275,7 @@
 
         pdf('Attendants Event: '.$_GET['nameEvent'],$s);
     }
-    if (isset($_GET["username"])) {
-        $account = $controller->getDatabase()->autoSignIn($_GET["username"]);
-        $result="";
-        for($i = 0;$i <13 ;$i++){
-            $result .= "$account[$i]๏";
-        }
-        $result .= "$account[14]";
-        echo $result;
-    }
+
 
     if(isset($_GET["create_pdf_Event"])){
             $w = "";
@@ -333,7 +325,7 @@
             }
             
             $s .='</table>';
-            echo $s;
+    
             pdf('All Events Filter: '.$_GET['filter'],$s);
     }
 
@@ -375,6 +367,15 @@
            }
     }
   
+    if (isset($_GET["p"])) {
+        $account = $controller->getDatabase()->autoSignIn($_GET["username"]);
+        $result="";
+        for($i = 0;$i <12 ;$i++){
+            $result .= "$account[$i]๏";
+        }
+        $result .= "$account[12]";
+        echo $result;
+    }
 
 
 
@@ -387,7 +388,7 @@
 
     function pdf($title,$content)
  {  echo "PDF";
-
+    
       $obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
       $obj_pdf->SetCreator(PDF_CREATOR);
       $obj_pdf->SetTitle($title);

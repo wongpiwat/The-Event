@@ -21,7 +21,7 @@
 
 	$mail->AddAddress($_POST['email'] , $_POST['fname'] ); // to Address
 	if(isset($_POST['certis'])){
-		$mail->AddAttachment($_POST['certis']);
+		$mail->AddAttachment($_SERVER['DOCUMENT_ROOT'].$_POST['certis']);
 	}
 	
 
