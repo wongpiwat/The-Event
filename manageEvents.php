@@ -438,15 +438,16 @@ function mailCon(username,idEvent,nameEvent){
 
 }
 
-function certi(username,idEvent,nameEvent){
+function certi(user,idEvent,nameEvent){
     var personal = ""
     var fname = "";
     var title = "The Event Certificate";
     var body = "";
     var email = "" ; 
-    var certis = "<?php echo $_SERVER['DOCUMENT_ROOT'];?>";
-    certis += '/ProjectWebtech_1/certificates/'+idEvent+'/'+username+'.pdf'
-            $.post("src/indexPHP.php",{editAccount:true,username:username},
+    var certis = '';
+    console.log(certis);
+    certis += '/ProjectWebtech_1/certificates/'+idEvent+'/'+user+'.pdf'
+            $.post("src/indexPHP.php",{editAccount:true,username:user},
             function(data){
                 console.log(data);
                 personal = data.split('๏');
@@ -456,7 +457,7 @@ function certi(username,idEvent,nameEvent){
                 // sendEmail(username,personal[2],personal[3],"The Event Certificate","You are buy ticket from Event: "+arrayE[2]+" hope you enjoys, Thankyou.");
             
                 
-            $.post("src/indexPHP.php",{certis:true,username:username,idEvent:ealID,nameEvent:nameEvent,fNames:fname},
+            $.post("src/indexPHP.php",{certis:true,username:user,idEvent:ealID,nameEvent:nameEvent,fNames:fname},
             function(sun){
                 //  console.log(sun);
             });

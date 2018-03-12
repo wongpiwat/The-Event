@@ -82,7 +82,7 @@ console.log(username);
 $.ajax({
   type: "GET",
   url: "src/indexPHP.php", 
-  data: { username: username},
+  data: {p:true,username: username},
   success: function(response) {
     arrayProfile = response.split("๏");
     console.log(arrayProfile);

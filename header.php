@@ -101,12 +101,10 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
       <li><a href="index.php" onclick="document.getElementById('create').style.display='block'"><span class="glyphicon glyphicon-home"></span> Home</a></li>
         
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Profile <span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> `+username+` <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="profile.php">Profile</a></li>
             <li><a href="setting.php">Settings</a></li>
-            <li><a href="#">Feedback</a></li>
-            <li><a href="#">Help</a></li>
             <li><a href="#" onclick="signOut()"><span class="glyphicon glyphicon-log-out" ></span> Sign out</a></li>
           </ul>
         </li>
@@ -428,7 +426,7 @@ function signIn(){
      if(data == 1){// login ได้
         location.reload();
         console.log("Sun");
-     }else if(data == "-1"){
+     }else {
          alert("username or password wrong!!!");
      }
     });
@@ -483,12 +481,14 @@ function signUp(){
     if(psw == cPsw && bday != "" && document.getElementById('signupbtn').textContent != "Edit Account" ){
         console.log("Same");
         console.log("Same:"+imageProfile);
+        
         $.post('src/indexPHP.php',{signUp:"true",uname:username,psw:psw,umail:email,uFname:firstName,
         uLname:lastName,uid:idNo,bday:bday,gender:gender,uaddress:address,uphone:phone,type:type,imageProfile:imageProfile},
     function(data){
         console.log(data);
 
         if(data == 1){
+            sendEmail(username,email,firstName,"The Event Account","Activate your account Username: "+username+" please click= http://localhost:120/ProjectWebtech_1/activateEmail.php?xTaScDwdlsdafqAdatwqcsIar="+username+" Thankyou.");
             if(window.location.pathname == "/ProjectWebtech_1/setting.php"){
                 successTell(" Add User => Username: "+username+" into Database.");
                 readAccount();
@@ -499,6 +499,7 @@ function signUp(){
             alert("SignUp Successful.");
             location.reload();
             }
+            
         }else if(data == -1){
             alert("Username is already use!!!.")
             document.getElementById('usrn').value = "";
@@ -627,7 +628,7 @@ function signUp(){
         var phone = document.getElementById('ePhone').value;
         var teaser = document.getElementById('teaser').value;
         document.getElementById('createNew').type = "submit";
-        if (status == "active") {
+        if (status == "Activate") {
 
             if (eventName != ""  && locationEvent != "" && teaser != "" && size != "" ) /*Gu edit*/
             {
@@ -670,6 +671,7 @@ function signUp(){
             }else{
               alert("Please activate your email!");
             }
+         
           }
 
       function sendEmail(username,email,fname,title,body){

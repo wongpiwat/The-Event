@@ -161,7 +161,7 @@
 		$.post("src/indexPHP.php",{readWebCom:true,idWebboard:idWB},
         function(data){
 			
-			console.log(data);cDelWB
+			console.log(data);
 			var arrayC = data.split('๏');
 			console.log(arrayC);
 			$('#us').text(arrayC[2]);

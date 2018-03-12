@@ -534,7 +534,7 @@ $(document).ready(function() {
             if(price == 0){
                 if (typeAccount != "guest") /*Gu edit*/
                 {
-                    if (status == "activate") {
+                    if (status == "Activate") {
                         successTell(" Get Tickets.");     
                     }else{
                         alert("Please activate your email!");
@@ -545,7 +545,7 @@ $(document).ready(function() {
                 }
             }else{
                 if (typeAccount != "guest") {
-                    if (status == "activate") {
+                    if (status == "Activate") {
                         document.getElementById('hPrice').value = price*numTicket;
                         document.getElementById('hNumTicket').value =numTicket;
                         document.getElementById('hIdEvent').value = idEv ;
@@ -557,7 +557,8 @@ $(document).ready(function() {
                 }else{
                     alert("Please Login!")
                 }
-            }
+            }   
+            resetValue();
                 setEventNew();
                 
             

@@ -77,6 +77,7 @@
 
 
     <script>
+    document.getElementById('mSystemLogs').style.display = "none";
         if(typeAccount == "user"){
             document.getElementById('mUser').style.display = "none";
             document.getElementById('mSystemLogs').style.display = "none";
