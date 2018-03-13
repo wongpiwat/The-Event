@@ -487,8 +487,8 @@ $(document).ready(function() {
                 document.getElementById("bTs").innerHTML = " Get Tickets";
                 document.getElementById("Ticbtn").innerHTML = " Get Tickets";
             }else{
-                price = arrayT['10'];
-                $('#priceTicket').text(array['10']+'.00');
+                price = arrayT[10];
+                $('#priceTicket').text(price+'.00');
                 $('#totalPrice').text(price+'.00');
                 
             }

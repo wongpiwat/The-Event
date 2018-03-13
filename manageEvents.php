@@ -50,6 +50,7 @@
       <li><a href="#">Attendent</a></li>
     </ul>
     <a href="#" target="_blank" id="pdf_link" ><button type="button" class="btn btn-warning" name="createPdf" style="margin-left:5px;" onclick="createPDF()" id="pdfC" ><span class="glyphicon glyphicon-file" ></span> Create PDF</button></a>
+    <a href="generateCheckIn.php" target="_blank"  ><button type="button" class="btn btn-primary"  style="margin-left:5px;"  ><span class="glyphicon glyphicon-bullhorn" ></span> Alert</button></a>
   </div>
 </div>
 
@@ -444,9 +445,7 @@ function certi(user,idEvent,nameEvent){
     var title = "The Event Certificate";
     var body = "";
     var email = "" ; 
-    var certis = '';
-    console.log(certis);
-    certis += '/ProjectWebtech_1/certificates/'+idEvent+'/'+user+'.pdf'
+    var certis = cer + "/ProjectWebtech_1/certificates/"+idEvent+"/"+user+".pdf"
             $.post("src/indexPHP.php",{editAccount:true,username:user},
             function(data){
                 console.log(data);

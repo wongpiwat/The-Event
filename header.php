@@ -11,6 +11,7 @@ $username = null;
 $userImage = null;
 $user = null;
 $controller = new Controller();
+$cer = $_SERVER['DOCUMENT_ROOT'];
 
 
 if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
@@ -69,6 +70,7 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
     var login = "<?php echo $login; ?>";
     var username = "<?php echo $username; ?>";
     var userImage = "<?php echo $userImage; ?>";
+    var cer = "<?php echo $cer; ?>";
     console.log(typeAccount);
     console.log(status);
 
