@@ -21,7 +21,7 @@
 <div class="container" style="width:70%;margin-top: -35px;">
     <h2>Event:<span id="tNameEvent"></span></h2><br>
     <div align="right" style="margin-top:10px;color:white;">
-       <button type="button" class="btn btn-success"  style="margin-right:10px;" onclick="document.getElementById('createWebboard').style.display='block';" ><span style="color:white"><span class="glyphicon glyphicon-envelope" ></span> Create</span></a></button>
+       <button type="button" class="btn btn-success"  style="margin-right:10px;" onclick="document.getElementById('createWebboard').style.display='block';" ><span style="color:white"><span class="glyphicon glyphicon-pencil" ></span> Create</span></a></button>
     </div>
     
     <center>
@@ -30,7 +30,7 @@
             <thead>
                 <tr align="center">
                 <th>No.</th>
-                <th>Question</th>
+                <th>Topic</th>
                 <th>Username</th>
                 <th>CreateDate</th>
                 <th>View</th>
@@ -52,12 +52,12 @@
             <hr style="display: block;height: 1px;border: 0;border-top: 3px solid #f44336;margin-top: -5px;padding: 0;">
         </div>
         <div style="padding-left:11%;margin-top:-30px;" class="con">
-		    <label><h4><b>Question</b></h4></label>
+		    <label><h4><b>Topic</b></h4></label>
 		    <input style="width:90%; height: 15%;" id="quesW"  type="text" required autofocus /><!-- <p style="font-size: 10px;">*input text not over 50</p> --><br>
-		    <p><label><h4><b>Detail</b></h4></label></p>
+		    <p><label><h4><b>Details</b></h4></label></p>
 		    <textarea  id="detW"  style="width:90%; height: 120px;"></textarea><br><br>
 		    <div  align="right"style="margin-right:45px;" >
-                <button type="button" class="btn btn-success" style="margin-right:10px;" onclick="createWebB();"><span class="glyphicon glyphicon-envelope" ></span> Create</button>
+                <button type="button" class="btn btn-success" style="margin-right:10px;" onclick="createWebB();"><span class="glyphicon glyphicon-pencil" ></span> Create</button>
                 <button type="button" class="btn btn-danger" onclick="document.getElementById('createWebboard').style.display='none';document.getElementById('createWebboardForm').reset();"><span class="glyphicon glyphicon-remove" ></span> Cancle</button>
             </div>
         </div>
@@ -100,7 +100,7 @@
                     '<thead>'+
                         '<tr align="center">'+
                         '<td><b>No.</b></th>'+
-                        '<td><b>Question</b></td>'+
+                        '<td><b>Topic</b></td>'+
                         '<td><b>Username</b></td>'+
                         '<td><b>Date</b></td>'+
                         '<td><b>Time</b></td>'+

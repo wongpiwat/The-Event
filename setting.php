@@ -65,7 +65,7 @@
                 document.getElementById('mEvents').className='';
                 document.getElementById('mSystemLogs').className='';
                 document.getElementById('mActivityLogs').className='active';
-                "><span class="glyphicon glyphicon-tasks" ></span> Manage Activity Logs</a></li>
+                "><span class="glyphicon glyphicon-tasks" ></span> Activity Logs</a></li>
             </ul>
             </nav>
             <div class="col-sm-9" id="sett" style="margin-left:-7%;width:80%;">

@@ -54,7 +54,7 @@
 		<div style="margin-left:5%;font-size:14px;bottom: 0;width: 70%;margin-top:-40px;color:#ffc955;">
 		<br>
 
-		User: <span id="us">adminSun</span>  &nbsp;&nbsp;&nbsp;&nbsp;Date: <span id="ds">2018-03-18</span> &nbsp;&nbsp;&nbsp;&nbsp;Time: <span id="ts">12:30:00</span>
+		<a href="#" id="Himg" style="margin-top:5px;" ><img src"" id="imG" style="width:50px;height:50px;" ></a> User: <span id="us">adminSun</span>  &nbsp;&nbsp;&nbsp;&nbsp;Date: <span id="ds">2018-03-18</span> &nbsp;&nbsp;&nbsp;&nbsp;Time: <span id="ts">12:30:00</span>
 		</div>
 	</div>
 	<!--comment-->
@@ -171,6 +171,7 @@
 			$('#creatorWB').text(arrayC[3]);
 			$('#cDelWB').text(arrayC[4]);
 			setTitle(arrayC[1]);
+			setImg(arrayC[2]);
 		});
 	}
 
@@ -180,6 +181,16 @@
 				var title = data.split('๏');
 				console.log(title);
 				$('#title').text(title[2]);
+		});
+	}
+
+	function setImg(user){
+		$.post("src/indexPHP.php",{editAccount:true,username:user},
+        function(data){
+				var profile = data.split('๏');
+				console.log(profile);
+				document.getElementById('imG').src = profile[11];
+				document.getElementById('Himg').href = "profile.php?username="+user;
 		});
 	}
 

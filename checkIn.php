@@ -17,6 +17,7 @@
     </div>
     </center>
     <script>
+    
 var username = "<?php echo $_GET['xTaScDwdasfw'];?>";
 var idEvent = "<?php echo $_GET['ifwn23Evewge'] ?>";
 // console.log(username);

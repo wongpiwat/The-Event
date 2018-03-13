@@ -54,6 +54,9 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
 <link rel="stylesheet" href="css/jquery-clockpicker.min.css">
 <link rel="stylesheet" href="css/styleMap.css">
 <link href="css/uploadfile.css" rel="stylesheet">
+<!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script> -->
 <script src="js/jquery.uploadfile.min.js"></script>
 </head>
 
@@ -482,7 +485,7 @@ function signUp(){
 
     if(psw == cPsw && bday != "" && document.getElementById('signupbtn').textContent != "Edit Account" ){
         console.log("Same");
-        console.log("Same:"+imageProfile);
+        // console.log("Same:"+imageProfile);
         
         $.post('src/indexPHP.php',{signUp:"true",uname:username,psw:psw,umail:email,uFname:firstName,
         uLname:lastName,uid:idNo,bday:bday,gender:gender,uaddress:address,uphone:phone,type:type,imageProfile:imageProfile},
@@ -490,7 +493,8 @@ function signUp(){
         console.log(data);
 
         if(data == 1){
-            sendEmail(username,email,firstName,"The Event Account","Activate your account Username: "+username+" please click= http://localhost:120/ProjectWebtech_1/activateEmail.php?xTaScDwdlsdafqAdatwqcsIar="+username+" Thankyou.");
+            sendEmailQR(username,email,"http://localhost:120/ProjectWebtech_1/activateEmail.php?xTaScDwdlsdafqAdatwqcsIar="+username,firstName,"The Event Account","Activate your account Username: "+username+" please click= http://localhost:120/ProjectWebtech_1/activateEmail.php?xTaScDwdlsdafqAdatwqcsIar="+username+" Thankyou.");
+            
             if(window.location.pathname == "/ProjectWebtech_1/setting.php"){
                 successTell(" Add User => Username: "+username+" into Database.");
                 readAccount();
@@ -499,7 +503,7 @@ function signUp(){
             }else{
             console.log("SignUp Successful.");
             alert("SignUp Successful.");
-            location.reload();
+            // location.reload();
             }
             
         }else if(data == -1){
@@ -688,6 +692,27 @@ function signUp(){
 
      }
 
+     function sendEmailQR(username,email,qr,fname,title,body){
+         console.log("SendEmailllllll");
+       var ul = setChartImage(qr);
+       console.log(ul);
+        document.getElementById('signUp').style.display = "none";
+        $.post("email/phpSendMailGmail.php",{title:title,body:body,email:email,fname:fname,qr:ul},
+        function(data){
+            // alert(data);
+            // location.reload();
+        })
+
+     }
+
+     function setChartImage(uls) {
+    var query = { cht: "qr", choe: "UTF-8", 
+              chs: '300', chld: '50x50' ,
+              chl: uls };
+
+    var url = "http://chart.apis.google.com/chart?" + $.param(query);
+    return url;
+    }
     //  function Hello(){
     //      console.log("Sunnnnnnnnnnn");
     //  }

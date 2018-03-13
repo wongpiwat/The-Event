@@ -50,7 +50,7 @@
       <li><a href="#">Attendent</a></li>
     </ul>
     <a href="#" target="_blank" id="pdf_link" ><button type="button" class="btn btn-warning" name="createPdf" style="margin-left:5px;" onclick="createPDF()" id="pdfC" ><span class="glyphicon glyphicon-file" ></span> Create PDF</button></a>
-    <a href="generateCheckIn.php" target="_blank"  ><button type="button" class="btn btn-primary"  style="margin-left:5px;"  ><span class="glyphicon glyphicon-bullhorn" ></span> Alert</button></a>
+    <a href="generateCheckIn.php" target="_blank"  ><button type="button" class="btn btn-primary"  style="margin-left:5px;"  id="alet" ><span class="glyphicon glyphicon-bullhorn" ></span> Alert</button></a>
   </div>
 </div>
 
@@ -114,6 +114,9 @@ var edit = false;
 var del = false;
 var delE = false;
 
+if(typeAccount == "user"){
+    document.getElementById('alet').style.display = 'none';
+}
 
 function setDelE(){
 delE = false;
@@ -435,7 +438,7 @@ function mailCon(username,idEvent,nameEvent){
                 console.log(data);
                 var personal = data.split('๏');
                 
-                sendEmail(username,personal[2],personal[3],"The Event Comfirm Event","Please comfirm "+nameEvent+". To reserve a seat click= "+"http://localhost:120/ProjectWebtech_1/confirmEvent.php?xTaScDwdl78X2ACs7Sc="+username+"&eVS4S5fkc27fc7p="+idEvent+"  hope you enjoys, Thankyou.");
+                sendEmailQR(username,personal[2],"http://localhost:120/ProjectWebtech_1/confirmEvent.php?xTaScDwdl78X2ACs7Sc="+username+"&eVS4S5fkc27fc7p="+idEvent,personal[3],"The Event Comfirm Event","Please comfirm "+nameEvent+". To reserve a seat click= "+"http://localhost:120/ProjectWebtech_1/confirmEvent.php?xTaScDwdl78X2ACs7Sc="+username+"&eVS4S5fkc27fc7p="+idEvent+"  hope you enjoys, Thankyou.");
             });
             showSucFul("Send Comfirm Email.")
 

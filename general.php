@@ -95,6 +95,7 @@
                 document.getElementById('gsrn').value= array[0];
                 document.getElementById('gsrn').disabled= "true";
                 document.getElementById('gpsw').value= array[1];
+                document.getElementById('gpsw').disabled = "true";
                 document.getElementById('gmail').value=  array[2];
                 document.getElementById('gfirstName').value= array[3];
                 document.getElementById('glastName').value= array[4];
@@ -118,7 +119,7 @@
                 
                 document.getElementById('gPsw').style.display= 'none';
                 
-                document.getElementById('gpsw').type= "text";
+                // document.getElementById('gpsw').type= "text";
                 // document.getElementById('status').style.display= 'block';
                 
     }

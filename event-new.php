@@ -516,8 +516,10 @@ $(document).ready(function() {
             function(data){
                 console.log(data);
                 var personal = data.split('๏');
-                
-                sendEmail(username,personal[2],personal[3],"The Event Ticket","You are buy ticket from Event: "+arrayE[2]+" hope you enjoys, Thankyou.");
+                // http://localhost:120/ProjectWebtech_1/checkIn.php?ifwn23Evewge=%s&xTaScDwdasfw=%s
+                // sendEmail(username,personal[2],personal[3],"The Event Ticket","You are buy ticket from Event: "+arrayE[2]+" hope you enjoys, Thankyou.");
+                sendEmailQR(username,personal[2],'http://localhost:120/ProjectWebtech_1/checkIn.php?ifwn23Evewge='+idE+'&xTaScDwdasfw='+username ,personal[3],"The Event Ticket",'You are buy ticket from Event: '+arrayE[2]+' hope you enjoys. '+'CheckIn Event: '+arrayE[2]+' click= http://localhost:120/ProjectWebtech_1/checkIn.php?ifwn23Evewge='+idE+'&xTaScDwdasfw='+username+' Thankyou.');
+            
             });
         }
         
@@ -551,12 +553,9 @@ $(document).ready(function() {
                         document.getElementById('hPrice').value = price*numTicket;
                         document.getElementById('hNumTicket').value =numTicket;
                         document.getElementById('hIdEvent').value = idEv ;
-                                                
-                        $.post("src/indexPHP.php",{attendant:true,idEvent:idE,username:username,amount:numTicket},
-                            function(data){
-                                console.log(data);
-                                sendM();
-                            });   
+                        document.getElementById('buyTicketForm').action = "buyTicket.php?idEvent="+idE+"&num="+numTicket ;
+                        
+
                         document.getElementById('Ticbtn').type = "submit" ;
                         document.getElementById('Ticbtn').toggle().click() ; 
  

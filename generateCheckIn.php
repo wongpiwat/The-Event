@@ -1,4 +1,9 @@
-
+echo '<center>
+    <div style="margin-top:300px;">
+    <h1><span >Send E-mail Alert Already.</span></h1>
+    </div>
+    </center>
+    <h1><span ></span></h1>';
 <?php //ใส่ทุกอัน
     include 'header.php';
     require_once('email/class.phpmailer.php');
@@ -6,14 +11,14 @@
     $time =  date("H:i:s");
 
 	
-
  
+    
     $result = $controller->getDatabase()->readEventUpTime();
     while($row = $result->fetch(PDO::FETCH_BOTH)){
         
         $statement = $controller->getDatabase()->getConnect()->prepare('SELECT * FROM `attendents` WHERE idEvent=:idEvent');
         $statement->execute(['idEvent' => $row[0]]);
-        echo 'SELECT * FROM `attendents` WHERE idEvent='.$row[0];
+        // echo 'SELECT * FROM `attendents` WHERE idEvent='.$row[0];
         while($r = $statement->fetch(PDO::FETCH_BOTH)){
             // var_dump($r);
             $sun = $controller->getDatabase()->getConnect()->query('SELECT * FROM account WHERE username="'.$r[1].'"');

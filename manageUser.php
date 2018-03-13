@@ -1,18 +1,19 @@
-<div class="alert alert-success alert-dismissible" style="display:none" id="showSuc">
+<div class="alert alert-success alert-dismissible" style="display:none;width:150%;" id="showSuc">
 <a href="#" class="close" data-dismiss="alert" aria-label="close" >&times;</a>
-<strong>Successful!</strong><span id="susUser">This alert box could indicate a successful or positive action.</span>
+<strong>Successful!</strong><span id="susUser">This alert box could indicate a successful or positive action.</span><br>
 </div>
 
-<div class="alert alert-danger alert-dismissible"  style="display:none" id="showWg">
+<div class="alert alert-danger alert-dismissible"  style="display:none;width:150%;" id="showWg">
 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-<strong>Success!</strong> This alert box could indicate a successful or positive action.
-</div>
+<strong>Success!</strong> <span id="asa">This alert box could indicate a successful or positive action.</span><br>
 </div>
 
+</div>
+<br>
 <div class="container" style="width:100%;">
 
 
-<h1 align="center" style="margin-top:35px;">Manager Users</h1><br />
+<p><h1 align="center" style="margin-top:35px;">Manager Users</h1></p><br>
 <div id="head">
 <!-- <input type="button"value="Create Account" class="btn btn-warning ">
 <input type="button"value="Create Account" class="btn btn-info ">
@@ -181,7 +182,7 @@ document.getElementById('signupCan').innerHTML= 'Submit';
 function undisableInput(){
 console.log("Noellllllllll");
 document.getElementById('usrn').disabled= false;
-document.getElementById('psw').disabled= false;
+// document.getElementById('psw').disabled= false;
 document.getElementById('umail').disabled= false;
 document.getElementById('firstName').disabled= false;
 document.getElementById('lastName').disabled= false;
@@ -235,7 +236,7 @@ document.getElementById('signUp').style.display= 'block';
 document.getElementById('signupbtn').innerHTML= 'Edit Account';
 document.getElementById('cPsw').style.display= 'none';
 document.getElementById('conP').style.display= 'none';
-document.getElementById('psw').type= "text";
+// document.getElementById('psw').type= "text";
 document.getElementById('status').style.display= 'block';
 
 }
@@ -249,6 +250,7 @@ document.getElementById('status').style.display= 'block';
 // }
 
 function deleteA(){
+    if(typeAccount != "admin"){
 $.post('src/indexPHP.php',{deleteAccount:"true",username:deleteUser},
 function(data){
         console.log(data);
@@ -260,7 +262,15 @@ function(data){
         document.getElementById('showWg').style.display='block'; 
         document.getElementById('deleteAccount').style.display='none';
     }
-    });
+    });}
+    else{
+        // alert("Can't Delete Type Account: Admin.")
+        document.getElementById('asa').innerHTML =  "Can't Delete Type Account: Admin."
+        document.getElementById('showWg').style.display='block'; 
+
+        document.getElementById('deleteAccount').style.display='none';
+       
+    }
 }
 
 function successTell(message){

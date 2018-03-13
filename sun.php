@@ -1,29 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+
   <?php
     register("1234");
     function register($password) {
     $hash = password_hash($password, PASSWORD_BCRYPT);
-    echo
+    echo $hash;
     }
-
-    function login($username, $password) {
-    $hash = loadHashByUsername($username);
-    if (password_verify($password, $hash)) {
-        //login
-    } else {
-        // failure
-    }
+//$2y$10$fCj/B3ybxHSZ1valmHIJ7OARY9vHbredtZxoc8YQ6ceBkprF/459G
+    // function login($password) {
+    // $hash = loadHashByUsername($username);
+    // if (password_verify('1234','$2y$10$fCj/B3ybxHSZ1valmHIJ7OARY9vHbredtZxoc8YQ6ceBkprF/459G')) {
+    //     //login
+    //     echo 'login';
+    // } else {
+    //     // failure
+    //     echo 'fail';
+    // }
+// }
     ?>
-}
-    <script>
 
-</body>
-</html>
+
+

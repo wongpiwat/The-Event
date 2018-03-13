@@ -367,7 +367,11 @@
 <script type="text/javascript">
 
 var idE = <?php echo $idE; ?>;
+
 console.log(idE);
+
+var num = "<?php echo $_GET['num'];?>";
+console.log(num+"ssss");
 document.getElementById('creditForm').action = "event-new.php?idEvent="+idE;
 document.getElementById('sEvent').value = idE;
 var credit = document.getElementById('credit');
@@ -381,11 +385,40 @@ function successTell(message){
             document.getElementById('susUser').innerHTML = message;
             document.getElementById('showSuc').style.display='block';
 						document.getElementById('credit').style.display='none';
-						 
+						$.post("src/indexPHP.php",{attendant:true,idEvent:idE,username:username,amount:num},
+                            function(data){
+                                console.log(data);
+                                sendM();
+                            });   
+														window.open("src/indexPHP.php?create_pdf_receipt=1&idEvent="+idE,'_blank');
 						setTimeout(function() {
+							
 							window.location.href = "event-new.php?idEvent="+idE;
-}, 2000);
+																}, 7000);
+						
         }
+
+
+				function sendM(){
+            var personal = ""
+            $.post("src/indexPHP.php",{editAccount:true,username:username},
+            function(data){
+                console.log(data);
+                var personal = data.split('๏');
+							
+								$.get("src/indexPHP.php",{idEvent:idE},
+            function(data){
+								var ee = data.split('๏');
+								console.log(ee);
+								// sendEmail(username,personal[2],personal[3],"The Event Ticket","You are buy ticket from Event: "+ee[2]+" hope you enjoys, Thankyou.");
+                sendEmailQR(username,personal[2],'http://localhost:120/ProjectWebtech_1/checkIn.php?ifwn23Evewge='+idE+'&xTaScDwdasfw='+username ,personal[3],"The Event Ticket",'You are buy ticket from Event: '+ee[2]+' hope you enjoys. '+'CheckIn Event: '+ee[2]+' click= http://localhost:120/ProjectWebtech_1/checkIn.php?ifwn23Evewge='+idE+'&xTaScDwdasfw='+username+' Thankyou.');
+						});
+
+                
+            
+            });
+        }
+
 
 // function clickB(){
 // 	window.location.href = "event-new.php?idEvent="+idE;

@@ -17,8 +17,8 @@
     <div class="column3-profile">
       <div class="card">
           <img id="qImage" class="img-thumbnail" style="width:100%">
-          <span class="name-profile" id="qFirstName"></span>
-          <span class="name-profile" id="qLastName"></span>
+          <br><span class="name-profile" id="qFirstName"></span>
+          <span class="name-profile" id="qLastName"></span><br>
           <span class="glyphicon info-profile">&#xe021;</span><span class="info-profile" id="qAddress"></span><br>
           <span class="glyphicon info-profile">&#x2709;</span><span class="info-profile" id="qEmail"></span>
       </div>
@@ -53,12 +53,16 @@
   </footer>
 <script>
 var arrayProfile = null;
-
+var us = username;
+var a = "<?php if(isset($_GET['username'])){echo $_GET['username'];}?>";
+if( a != "" ){
+  us = a;
+}
 function getEvents(){
 $.ajax({  
      type: "POST",  
      url: "src/indexPHP.php", 
-    data: { getEventsProfile:"true",username},
+    data: { getEventsProfile:"true",username:us},
     success: function(response) {
         $("#events").html(
         '<div class="table-responsive"  id="events">'+
@@ -82,7 +86,7 @@ console.log(username);
 $.ajax({
   type: "GET",
   url: "src/indexPHP.php", 
-  data: {p:true,username: username},
+  data: {p:true,username:us },
   success: function(response) {
     arrayProfile = response.split("๏");
     console.log(arrayProfile);
