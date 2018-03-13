@@ -24,9 +24,9 @@ class Controller{
         $this->database->setConnect("3306","kittichai_garden","admin","password");
         //echo "admin";
       }else if( $this->user->getTypeAccount() == "user"){
-        if( $this->user->getStatus() == "activate"){ //สร้าง user ใน database ด้วย
-          $this->database->setConnect("3306","kittichai_garden","admin","password");
-          //echo "user";
+        if( $this->user->getStatus() == "Activate"){ //สร้าง user ใน database ด้วย
+          // echo "user";
+          $this->database->setConnect("3306","kittichai_garden","user1","user1");
         }
       }
     }
@@ -55,16 +55,24 @@ class Controller{
       // echo "$username<br>$password";
       // echo "<br>";
       
-      if($this->database->findUser($username,$password)){
+      
+        //login
+        // echo 'login';
+    
         //echo "SignIn Success.";
 
         $result = $this->database->signIn($username,$password);
-       
-        $this->user = new Account($result[0],$result[1],$result[2],$result[3],$result[4],$result[5],$result[6],$result[7],$result[8],$result[9],$result[10],$result[11],$result[12]);
-      
-        $_SESSION['username'] = $this->user->getUsername();
-        $_SESSION['userImage'] = $this->user->getImage();
-        echo "1";
+        // var_dump($result);
+        // echo $password;
+        // echo "<br>";
+        // echo $result["password"];
+        // echo "<br>";
+        if (password_verify($password,$result[1])) {
+            $this->user = new Account($result[0],$result[1],$result[2],$result[3],$result[4],$result[5],$result[6],$result[7],$result[8],$result[9],$result[10],$result[11],$result[12]);
+          
+            $_SESSION['username'] = $this->user->getUsername();
+            $_SESSION['userImage'] = $this->user->getImage();
+            echo "1";
 
       }
       else{
@@ -74,21 +82,22 @@ class Controller{
 
     //SignUp ของผู้ใช้ และ Admin
    function  signUp($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,$check,$imageProfile){
-        if($this->database->checkAccount($username,$email,$id_No,$phone)){
+        $pass = password_hash($password, PASSWORD_BCRYPT);
+    if($this->database->checkAccount($username,$email,$id_No,$phone)){
 
           if($check == 1){
             if ($imageProfile!=null) {
               rename("../upload-files/files/".$imageProfile, "../upload-files/files/profile/".$username.$imageProfile);
-              $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"user","unActivate",'upload-files/files/profile/'.$username.$imageProfile);
+              $this->database->createAccount($username,$pass,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"user","unActivate",'upload-files/files/profile/'.$username.$imageProfile);
             } else {
-              $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"user","unActivate",'none');
+              $this->database->createAccount($username,$pass,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"user","unActivate",'upload-files/files/profile/default-avatar.png');
             }
           }else if($check == 0){
             if ($imageProfile!=null) {
               rename("../upload-files/files/".$imageProfile, "../upload-files/files/profile/".$username.$imageProfile);
-              $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"admin","Activate",'upload-files/files/profile/'.$username.$imageProfile);
+              $this->database->createAccount($username,$pass,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"admin","Activate",'upload-files/files/profile/'.$username.$imageProfile);
             } else {
-              $this->database->createAccount($username,$password,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"admin","Activate",'none');
+              $this->database->createAccount($username,$pass,$email,$firstName,$lastName,$id_No,$birthday,$gender,$address,$phone,"admin","Activate",'upload-files/files/profile/default-avatar.png');
             }
           }
         }else{

@@ -18,12 +18,12 @@ class Database {
     //อ่าน User จากดาต้าเบส
 
     function signIn($username,$password){
-        $statement = $this->connect->query('SELECT * FROM account WHERE username='."'".$username."'".' and password='."'".$password."'");
+        $statement = $this->connect->query('SELECT * FROM account WHERE username='."'".$username."'");
         $result = $statement->fetch(PDO::FETCH_BOTH);
         return $result;
 
     }
-    //ตรวจสอบว่ามี Username Email บัตรปชช.โทรศัพท์ อยู่ในดาต้าเบสหรือยัง ?
+    //ตรวจสอบว่ามี Username email อยู่ในดาต้าเบสหรือยัง ?
     function checkAccount($username,$email,$idNo,$phone){
         $statement = $this->connect->prepare('SELECT username FROM account WHERE username=:username');
         $statement->execute([':username' => $username  ]);
@@ -433,8 +433,10 @@ class Database {
             /* background-color: black;
             color: black; */">
             <div style="bottom: 0;width: 100%;margin-top:-40px;color:#ffc955;">
-            <br>
-            User: '.$row["username"].' &nbsp;&nbsp;&nbsp;&nbsp;Date: '.$row['date'].' &nbsp;&nbsp;&nbsp;&nbsp;Time: '.$row['time'].'
+            <br>';
+            $ss = $this->connect->query('SELECT * FROM account WHERE username="'.$row["username"].'"');
+            $rr = $ss->fetch(PDO::FETCH_BOTH);
+            $output .= '<a href="profile.php?username='.$row["username"].'" id="Himg" style="margin-top:5px;" ><img src="'.$rr["image"].'" id="imG" style="width:40px;height:40px;" ></a> User: '.$row["username"].' &nbsp;&nbsp;&nbsp;&nbsp;Date: '.$row['date'].' &nbsp;&nbsp;&nbsp;&nbsp;Time: '.$row['time'].'
             </div>
         </div>';
         $count += 1;
@@ -826,6 +828,42 @@ class Database {
 
     public function getLenE(){
         return $this->lengthE;
+    }
+
+    function getReceipt($username,$idEvent) {
+
+        $output ="";
+
+        $count = 1;
+
+        $statement = $this->connect->prepare('SELECT event.eventName,attendents.amount,event.price FROM attendents,event WHERE attendents.username=:username and attendents.idEvent=:ide and event.idEvent=:ide');
+
+        $statement->execute([ ':username' => $username , ':ide' => $idEvent]);
+
+        while($row = $statement->fetch(PDO::FETCH_BOTH)){
+
+        $output .= '<tr>
+
+                <td>'.$count.'</td>
+
+                <td>'.$row["eventName"].'</td>
+
+                <td>'.$row["amount"].'</td>
+
+                <td>'.$row["price"].'</td>';
+
+                $output .= '</tr>';
+
+        $count+=1;
+
+        $total = $row["amount"] * $row["price"];
+
+        $output .='Total:'.$total;
+
+        }
+
+    return $output;
+
     }
 
 }

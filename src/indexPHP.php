@@ -416,4 +416,45 @@
      
     //   echo "PDF";
  }
+
+
+ if(isset($_GET["create_pdf_receipt"])){
+
+    $s = "";
+
+     $s .='<h2 align="center">Receipt</h2><br /><br />
+
+     <table border="1" cellspacing="0" cellpadding="5">
+
+     <thead>
+
+            <tr>
+
+            <th>No.</th>
+
+            <th>Event</th>
+
+            <th>Amount</th>
+
+            <th>Price</th>
+
+            </tr>
+
+        </thead>';
+
+        $sun = $controller->getDatabase()->getReceipt($username,$_GET['idEvent']);
+
+        // echo $sun;
+
+         $s .= $sun;
+
+        $s .= '</table>';
+
+        // echo $s;
+
+
+
+        pdf("Event Receipt",$s);
+
+    }
 ?>
