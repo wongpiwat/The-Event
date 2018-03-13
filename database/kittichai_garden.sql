@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 13, 2018 at 03:58 PM
+-- Generation Time: Mar 13, 2018 at 04:19 PM
 -- Server version: 10.1.29-MariaDB
 -- PHP Version: 7.2.0
 
@@ -151,6 +151,7 @@ INSERT INTO `activitylogs` (`username`, `date`, `time`, `idEvent`, `event`) VALU
 ('adminSun', '2018-03-13', '09:25:25', 0, 'Sign out'),
 ('adminSun', '2018-03-13', '09:28:12', 0, 'Sign in'),
 ('adminSun', '2018-03-13', '09:28:18', 0, 'Sign out'),
+('adminSun', '2018-03-13', '10:14:27', 0, 'Sign in'),
 ('adminSun', '2018-03-13', '11:08:58', 0, 'Sign in'),
 ('adminSun', '2018-03-13', '11:09:07', 0, 'Edit account toon'),
 ('adminSun', '2018-03-13', '11:09:09', 0, 'Sign out'),

@@ -1,6 +1,4 @@
-
 <?php   
-
     //-----------ส่วนของ PHP-----------
     require '../vendor/autoload.php';
     require '../tcpdf/tcpdf.php';
@@ -27,15 +25,11 @@
     $email = null;
     $phone = null;
     
-    
     if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
         $username = $_SESSION["username"];
         $userImage = $_SESSION["userImage"];
         // echo "$username<br>$userImage<br>";
-      
-    
         $user = $controller->checkType($username);
-    
         // echo "<pre>";
         // var_dump($detialUser);
         // echo "</pre>";
@@ -43,46 +37,40 @@
         // //เขียน HTML ตรงนี้  User
         // echo "<br>".$detialUser["type_Account"];
         // echo "<br>".$detialUser["status"];
-    
         if($user != null){
             $type_Account = $user->getTypeAccount();
             $status = $user->getStatus();
             $login = true;
         }
-    
     }
 
     // $_SESSION['control'] = $controller;
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         //echo "POST";
         //เมื่อมีการกดปุ่ม SignIn
-        if(isset($_POST["signIn"])){
+        if (isset($_POST["signIn"])){
            //echo "<br>---Sign in---<br>";
             $controller->signIn($_POST["username"],$_POST["password"]);
             $controller->saveLog("Sign in");
-        }
-        else if(isset($_POST["signUp"])){ //เมื่อมีการกดปุ่ม SignUp
-            
+        } else if (isset($_POST["signUp"])){ //เมื่อมีการกดปุ่ม SignUp
            // echo "<br>---Sign up---<br>";
            $controller->SignUp($_POST["uname"],$_POST["psw"],$_POST["umail"],$_POST["uFname"],$_POST["uLname"],$_POST["uid"],$_POST["bday"],$_POST["gender"],$_POST["uaddress"],$_POST["uphone"],$_POST["type"],$_POST["imageProfile"]);
             $controller->saveLog("Sign up");
-        }else if(isset($_POST["signOut"])){
+        } else if (isset($_POST["signOut"])){
             $controller->saveLog("Sign out");
             $controller->signOut();
-
-
-        }else if(isset($_POST["deleteAccount"])){
+        } else if (isset($_POST["deleteAccount"])){
             $controller->getDatabase()->deleteAccounts($_POST["username"]);
             $controller->saveLog("Delete account ".$_POST["username"]);
-        }else if(isset($_POST["readAccount"])){
+        } else if (isset($_POST["readAccount"])){
             echo $controller->getDatabase()->readAccount(0);
-        }else if(isset($_POST["editAccount"])){
+        } else if (isset($_POST["editAccount"])){
             $editUser =  $controller->getDatabase()->autoSignIn($_POST["username"]);
             echo "$editUser[0]๏$editUser[1]๏$editUser[2]๏$editUser[3]๏$editUser[4]๏$editUser[5]๏$editUser[6]๏$editUser[7]๏$editUser[8]๏$editUser[9]๏$editUser[10]๏$editUser[11]๏$editUser[12]";
-        }else if(isset($_POST["Edit"])){
+        } else if (isset($_POST["Edit"])){
             $controller->getDatabase()->updateAccount($_POST["uname"],$_POST["psw"],$_POST["umail"],$_POST["uFname"],$_POST["uLname"],$_POST["uid"],$_POST["bday"],$_POST["gender"],$_POST["uaddress"],$_POST["uphone"],$_POST["type"],$_POST["status"]);
             $controller->saveLog("Edit account ".$_POST["uname"]);
-        }else if (isset($_POST["createEvent"])) { //เมื่อมีการกดปุ่ม Create Event
+        } else if (isset($_POST["createEvent"])) { //เมื่อมีการกดปุ่ม Create Event
             echo "_POST[] in indexPHP";
             if(!isset($_POST["imagesPath"])){
                 $imagesPath = "";
@@ -146,55 +134,42 @@
             if($_POST['type'] == 'user' ){
                 $w = " and username='".$_POST['username']."'";
             }
-  
             if($filter == "Username "){
                 if($w == ""){
                     echo $controller->getDatabase()->filterEvent('SELECT * FROM event WHERE username="'.$_POST['word'].'"',"0");
                 }else{
                     echo $controller->getDatabase()->filterEvent('SELECT * FROM event WHERE username="'.$_POST['username'].'"',"0");
                 }
-                
             }else if($filter == "Day "){
                 echo $controller->getDatabase()->filterEvent('SELECT * FROM event WHERE date="'.$_POST['word'].'" '.$w,"0");
             }else if($filter == "Month "){
                 $m = explode("-",$_POST['word']);
                 // echo $m['0'];
                 echo $controller->getDatabase()->filterEvent('SELECT * FROM event WHERE MONTH(date) = '.$m['1'].' AND YEAR(date) = '.$m['0'].' '.$w,"0");
-
             }
             else if($filter == "Year "){
-             
                 // echo $m['0'];
                 echo $controller->getDatabase()->filterEvent('SELECT * FROM event WHERE YEAR(date) = '.$_POST['word'].' '.$w,"0");
-
             }
             else if($filter == "Location "){
-             
                 // echo $m['0'];
                 echo $controller->getDatabase()->filterEvent('SELECT * FROM event WHERE locate("'.$_POST['word'].'",location)>0 '.$w,"0");
-
             } else if($filter == "Attendent "){
-             
                 // echo $m['0'];
                 echo $controller->getDatabase()->filterAttendant($_POST['word'],$w,"0");
-                
-
             }
-            
-           
             // echo $controller->getDatabase()->filterEvent($_POST["filter"],$_POST['word']);
         }else if(isset($_POST['AttenEvent'])){
             // echo "2222";
             echo $controller->getDatabase()->getAttenEvent($_POST['idEvent'],$_POST['nameEvent'],"0");
         }else if(isset($_POST['linkGoogleForm'])){
-            echo "2222";
+            // echo "2222";
             echo $_POST['linkGoogleForm'];
             echo $_POST['idEvent'];
             echo $controller->getDatabase()->linkGoogleForms($_POST['linkGoogleForm'],$_POST['idEvent']);
         }else if(isset($_POST['deleteWebboard'])){
-            echo "Helllo";
+            // echo "Helllo";
             $controller->getDatabase()->deleteWebboard($_POST['idWebboard']);
-        
         }else if(isset($_POST['checkIn'])){
             $controller->getDatabase()->confirmAttend($_POST['idEvent'],$_POST['username'],"CheckIn");
         }else if(isset($_POST['certis'])){
@@ -211,11 +186,9 @@
                    <span style="font-size:30px"><b>'.$_POST['fNames'].'</b></span><br/><br/>
                    <span style="font-size:25px"><i>has completed the Event</i></span> <br/><br/>
                    <span style="font-size:30px">'.$_POST['nameEvent'].'</span> <br/><br/>
-                   
                    <span style="font-size:25px"><i>dated</i></span><br>
                    <span style="font-size:20px">'.$d.'</span>
                    <br><br><br>
-                  
             </div>
             </div>';
             createDir($_POST['username'],$_POST['idEvent']);
@@ -224,10 +197,21 @@
             $controller->getDatabase()->confirmAttend($_POST['idEvent'],$_POST['username'],"Comfirm");
         }else if (isset($_POST['getEventsProfile'])) {
             echo $controller->getDatabase()->getAttenEventProfile($_POST['username']);
+        } else if (isset($_POST['changePassword'])) {
+            $rUsername = $_POST["rUsername"];
+            $rEmail = $_POST["rEmail"];
+            $rNewPassword = $_POST['rNewPassword'];
+            // echo $rUsername.",".$rEmail;
+            $isUserInWeb = $controller->getDatabase()->checkForgotPassword($rUsername,$rEmail);
+            if ($isUserInWeb == "true") {
+                $pass = password_hash($rNewPassword, PASSWORD_BCRYPT);
+                echo $controller->getDatabase()->setNewPassword($rUsername,$pass);
+                echo $isUserInWeb;
+            }
+            
         }
     }
     if(isset($_GET["idEvent"])){
-        
         $e = $controller->getDatabase()->rEventTop($_GET["idEvent"]);
         $result="";
         for($i = 0;$i <23 ;$i++){
@@ -239,9 +223,9 @@
 
     if(isset($_GET["create_pdf_user"])){
         $s = "";
-     $s .='<h2 align="center">All User in System</h2><br /><br />
-     <table border="1" cellspacing="0" cellpadding="5">
-     <thead>
+        $s .='<h2 align="center">All User in System</h2><br /><br />
+        <table border="1" cellspacing="0" cellpadding="5">
+        <thead>
             <tr>
             <th>No.</th>
             <th>Username</th>
@@ -251,13 +235,13 @@
             <th>Type Account</th>
             <th>Status</th>
             </tr></thead>';
-        $sun = $controller->getDatabase()->readAccount(1);
-        // echo $sun;
-         $s .= $sun;
-        $s .= '</table>';
-        echo $s;
+            $sun = $controller->getDatabase()->readAccount(1);
+            // echo $sun;
+            $s .= $sun;
+            $s .= '</table>';
+            echo $s;
 
-        pdf("All User in System",$s);
+            pdf("All User in System",$s);
     }
 
     if(isset($_GET["create_pdf_Attend"])){
@@ -383,78 +367,44 @@
         echo $result;
     }
 
-
-
-
-
-
-
-
-
-
-    function pdf($title,$content)
- {  echo "PDF";
-    
-      $obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-      $obj_pdf->SetCreator(PDF_CREATOR);
-      $obj_pdf->SetTitle($title);
-      $obj_pdf->SetHeaderData('', '', PDF_HEADER_TITLE, PDF_HEADER_STRING);
-      $obj_pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-      $obj_pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-      $obj_pdf->SetDefaultMonospacedFont('helvetica');
-      $obj_pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-    //   $obj_pdf->SetMargins(PDF_MARGIN_LEFT, '5', PDF_MARGIN_RIGHT);
-    $obj_pdf->SetMargins(10, 20, 10, true);
-      $obj_pdf->setPrintHeader(false);
-      $obj_pdf->setPrintFooter(false);
-      $obj_pdf->SetAutoPageBreak(TRUE, 10);
-      $obj_pdf->SetFont('helvetica', '', 12);
-      $obj_pdf->AddPage();
-      $obj_pdf->writeHTML($content);
-      ob_end_clean();
-      $obj_pdf->Output($title.'.pdf', 'I');
-     
-    //   echo "PDF";
- }
-
-
- if(isset($_GET["create_pdf_receipt"])){
-
-    $s = "";
-
-     $s .='<h2 align="center">Receipt</h2><br /><br />
-
-     <table border="1" cellspacing="0" cellpadding="5">
-
-     <thead>
-
-            <tr>
-
-            <th>No.</th>
-
-            <th>Event</th>
-
-            <th>Amount</th>
-
-            <th>Price</th>
-
-            </tr>
-
-        </thead>';
-
-        $sun = $controller->getDatabase()->getReceipt($username,$_GET['idEvent']);
-
-        // echo $sun;
-
-         $s .= $sun;
-
-        $s .= '</table>';
-
-        // echo $s;
-
-
-
-        pdf("Event Receipt",$s);
-
+    function pdf($title,$content) {
+        echo "PDF";
+        $obj_pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $obj_pdf->SetCreator(PDF_CREATOR);
+        $obj_pdf->SetTitle($title);
+        $obj_pdf->SetHeaderData('', '', PDF_HEADER_TITLE, PDF_HEADER_STRING);
+        $obj_pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+        $obj_pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+        $obj_pdf->SetDefaultMonospacedFont('helvetica');
+        $obj_pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+        //   $obj_pdf->SetMargins(PDF_MARGIN_LEFT, '5', PDF_MARGIN_RIGHT);
+        $obj_pdf->SetMargins(10, 20, 10, true);
+        $obj_pdf->setPrintHeader(false);
+        $obj_pdf->setPrintFooter(false);
+        $obj_pdf->SetAutoPageBreak(TRUE, 10);
+        $obj_pdf->SetFont('helvetica', '', 12);
+        $obj_pdf->AddPage();
+        $obj_pdf->writeHTML($content);
+        ob_end_clean();
+        $obj_pdf->Output($title.'.pdf', 'I');
+        //   echo "PDF";
     }
+
+    if(isset($_GET["create_pdf_receipt"])){
+        $s = "";
+        $s .='<h2 align="center">Receipt</h2><br /><br />
+        <table border="1" cellspacing="0" cellpadding="5">
+        <thead>
+                <tr>
+                <th>No.</th>
+                <th>Event</th>
+                <th>Amount</th>
+                <th>Price</th>
+                </tr>
+            </thead>';
+            $sun = $controller->getDatabase()->getReceipt($username,$_GET['idEvent']);
+            $s .= $sun;
+            $s .= '</table>';
+            pdf("Event Receipt",$s);
+        }
 ?>
