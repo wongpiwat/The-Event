@@ -204,6 +204,8 @@ function editEvent(id,type){
         if(type == "edit"){
             edit = true;
         }
+        // alert("Sunny");
+        // alert(id);
         $.ajax({
             type: "POST",  
             url: "src/indexPHP.php", 

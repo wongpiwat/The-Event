@@ -228,7 +228,7 @@ width: 100%;">Login</button>
       <input type="radio" name="gender" value="male" id="male" checked> Male
       <input type="radio" name="gender" value="female" id="female" > Female<br>
       
-    <label for="address"><b>Address</b></label>
+    <label for="address"><span style="color: red;">*</span><b>Address</b> <i>(บัตรเข้าร่วมกิจกรรมจะถูกส่งตามที่อยู่ที่คุณลงทะเบียน)</i></label>
     <input type="text" placeholder="Enter Address" name="uaddress" id="address" required>
 
     <label for="phone"><b>Phone Number</b></label>

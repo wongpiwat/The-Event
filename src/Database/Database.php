@@ -527,8 +527,8 @@ class Database {
                 $eventName = $r["eventName"];
                 // echo $idEvent;
                 $sunny  = sprintf('onclick="showP(\'%s\',\'read\',\'%s\',\'%s\')"',$idEvent,$eventName,$row[25]);
-                $edit  = sprintf('onclick="showP(\'-1\',\'edit\',\'%s\',\'%s\'),editEvent(\'%s\',\'edit\')"',$idEvent,$row[25],$eventName);
-                $get  = sprintf('onclick="showP(\'-1\',\'edit\',\'%s\',\'%s\'),editEvent(\'%s\',\'get\')"',$idEvent,$row[25],$eventName);
+                $edit  = sprintf('onclick="showP(\'-1\',\'edit\',\'%s\',\'%s\'),editEvent(\'%s\',\'edit\')"',$idEvent,$row[25],$idEvent);
+                $get  = sprintf('onclick="showP(\'-1\',\'edit\',\'%s\',\'%s\'),editEvent(\'%s\',\'get\')"',$idEvent,$row[25],$idEvent);
                 $delete = sprintf('onclick="showP(\'-1\',\'delete\',\'%s\',\'%s\'),setDeleteEvent(\'%s\',\'%s\')"',$idEvent,$row[25],$idEvent,$eventName);
 
                 if($r[0] != ""){
@@ -567,8 +567,8 @@ class Database {
             $eventName = $row["eventName"];
             // echo $idEvent;
             $sunny  = sprintf('onclick="showP(\'%s\',\'read\',\'%s\',\'%s\')"',$idEvent,$eventName,$row[25]);
-            $edit  = sprintf('onclick="showP(\'-1\',\'edit\',\'%s\',\'%s\'),editEvent(\'%s\',\'edit\')"',$idEvent,$row[25],$eventName);
-            $get  = sprintf('onclick="showP(\'-1\',\'edit\',\'%s\',\'%s\'),editEvent(\'%s\',\'get\')"',$idEvent,$row[25],$eventName);
+            $edit  = sprintf('onclick="showP(\'-1\',\'edit\',\'%s\',\'%s\'),editEvent(\'%s\',\'edit\')"',$idEvent,$row[25],$idEvent);
+            $get  = sprintf('onclick="showP(\'-1\',\'edit\',\'%s\',\'%s\'),editEvent(\'%s\',\'get\')"',$idEvent,$row[25],$idEvent);
             $delete = sprintf('onclick="showP(\'-1\',\'delete\',\'%s\',\'%s\'),setDeleteEvent(\'%s\',\'%s\')"',$idEvent,$row[25],$idEvent,$eventName);
             if($row[0] != ""){
             $output .= '
@@ -719,8 +719,8 @@ class Database {
             $eventName = $row["eventName"];
             // echo $idEvent;
             $s  = sprintf('onclick="showP(\'%s\',\'read\',\'%s\',\'%s\')"',$idEvent,$eventName,$row[25]);
-            $edit  = sprintf('onclick="showP(\'-1\',\'edit\',\'%s\',\'%s\'),editEvent(\'%s\',\'edit\')"',$idEvent,$row[25],$eventName);
-            $get  = sprintf('onclick="showP(\'-1\',\'edit\',\'%s\',\'%s\'),editEvent(\'%s\',\'get\')"',$idEvent,$row[25],$eventName);
+            $edit  = sprintf('onclick="showP(\'-1\',\'edit\',\'%s\',\'%s\'),editEvent(\'%s\',\'edit\')"',$idEvent,$row[25],$idEvent);
+            $get  = sprintf('onclick="showP(\'-1\',\'edit\',\'%s\',\'%s\'),editEvent(\'%s\',\'get\')"',$idEvent,$row[25],$idEvent);
             $delete = sprintf('onclick="showP(\'-1\',\'delete\',\'%s\',\'%s\'),setDeleteEvent(\'%s\',\'%s\')"',$idEvent,$row[25],$idEvent,$eventName);
             $output .= '
                 <tr '.$s.'>

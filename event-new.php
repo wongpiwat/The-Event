@@ -525,17 +525,18 @@ $(document).ready(function() {
             console.log(arrayE['0']);
             var idEv = arrayE['0'];
             console.log(idEv);
-            $.post("src/indexPHP.php",{attendant:true,idEvent:idE,username:username,amount:numTicket},
-            function(data){
-                console.log(data);
-                sendM();
-            });
+  
 
             if(price == 0){
                 if (typeAccount != "guest") /*Gu edit*/
                 {
                     if (status == "Activate") {
-                        successTell(" Get Tickets.");     
+                        successTell(" Get Tickets.");   
+                        $.post("src/indexPHP.php",{attendant:true,idEvent:idE,username:username,amount:numTicket},
+            function(data){
+                console.log(data);
+                sendM();
+            });  
                     }else{
                         alert("Please activate your email!");
                     }
@@ -546,12 +547,21 @@ $(document).ready(function() {
             }else{
                 if (typeAccount != "guest") {
                     if (status == "Activate") {
+                        
                         document.getElementById('hPrice').value = price*numTicket;
                         document.getElementById('hNumTicket').value =numTicket;
                         document.getElementById('hIdEvent').value = idEv ;
+                                                
+                        $.post("src/indexPHP.php",{attendant:true,idEvent:idE,username:username,amount:numTicket},
+                            function(data){
+                                console.log(data);
+                                sendM();
+                            });   
                         document.getElementById('Ticbtn').type = "submit" ;
-                        document.getElementById('Ticbtn').toggle().click() ;     
+                        document.getElementById('Ticbtn').toggle().click() ; 
+ 
                     }else{
+                        
                         alert("Please activate your email!");
                     }
                 }else{
