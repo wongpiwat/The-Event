@@ -74,6 +74,7 @@ if(isset($_SESSION["username"])){ // User login อยู่ในระบบ
     var username = "<?php echo $username; ?>";
     var userImage = "<?php echo $userImage; ?>";
     var cer = "<?php echo $cer; ?>";
+    var imageProfile = null;
     console.log(typeAccount);
     console.log(status);
 
@@ -200,7 +201,7 @@ width: 100%;">Login</button>
 
   <div class="con" style="background-color:#f1f1f1">
     <button type="button" onclick="document.getElementById('login').style.display='none'" class="cancelbtn">Cancel</button>
-    <span class="psw">Forgot <a href="#">password?</a></span>
+    <span class="psw">Forgot <a href="forgotPassword.php">Password ?</a></span>
   </div>
 </form>
 </div>
@@ -261,10 +262,10 @@ width: 100%;">Login</button>
     <center><h1>Create Event</h1></center>
     <div style="padding: 16px;">
         <label for="eventName"><span style="color: red;">*</span><b>Event Name</b></label><br>
-        <input id="eventName" type="text" required=""><br><br>
+        <input id="eventName" type="text" ><br><br>
 
         <label for="locationEvent"><span style="color: red;">*</span><b>Location</b></label><br>
-        <input id="locationEvent" type="text" required=""><br><br>
+        <input id="locationEvent" type="text" ><br><br>
 
         <label for="date"><span style="color: red;">*</span><b>Date</b></label>
         <input id="date" type="date" style="margin-right:10%;margin-left:1%;"><br><br>
@@ -309,25 +310,25 @@ width: 100%;">Login</button>
         <input id="size" type="text"><br><br>
 
         <label for="details"><b>Details</b></label>
-        <input id="details" type="text" placeholder="" required><br><br>
+        <input id="details" type="text" placeholder=""><br><br>
         
         <label for="preCondition"><b>Pre Condition</b></label>
-        <input id="preCondition" type="text" placeholder="" required><br><br>
+        <input id="preCondition" type="text" placeholder="" ><br><br>
 
         <label for="postCondition"><b>Post Condition</b></label>
-        <input id="postCondition" type="text" placeholder="" required><br><br>
+        <input id="postCondition" type="text" placeholder="" ><br><br>
 
         <label for="organizerName"><b>Organizer Name</b></label>
-        <input id="organizerName" type="text" required=""><br><br>
+        <input id="organizerName" type="text" ><br><br>
 
         <label for="contactName"><b>Contact Name</b></label>
-        <input id="contactName" type="text" required><br><br>
+        <input id="contactName" type="text" ><br><br>
 
         <label for="email"><b>Email</b></label>
-        <input id="email" type="text" required><br><br>
+        <input id="email" type="text" ><br><br>
 
         <label for="ePhone"><b>Phone</b></label>
-        <input id="ePhone" maxlength="10" onKeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" required><br><br>
+        <input id="ePhone" maxlength="10" onKeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" ><br><br>
         
         <label for="teaserVDO"><span style="color: red;">*</span><b>Youtube Video Link (Optional)</b></label>
         <input id="teaser" type="text"><br><br>
@@ -429,7 +430,8 @@ function signIn(){
         console.log(data);
 
      if(data == 1){// login ได้
-        location.reload();
+    //    location.reload()
+        window.location.href = "index.php";
         console.log("Sun");
      }else {
          alert("username or password wrong!!!");

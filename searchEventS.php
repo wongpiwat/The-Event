@@ -63,11 +63,13 @@
         </div>
     </div> -->
 
-    <footer class="footer navbar-inverse" style="color:white;margin-top:70px;">
-        <br>
-        <p><b>&copy; Designed by Kiticha Garden</b></p>
-        <br>
-    </footer>
+    <footer class="nav navbar-inverse">
+    <center>
+    <br>
+    <p style="color:white;"><b>&copy; Designed by Kitichai Garden</b></p>
+    <br>
+    </center>
+</footer>
     <script>
 
         // alert("l: "+l);

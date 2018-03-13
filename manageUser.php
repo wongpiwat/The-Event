@@ -5,7 +5,7 @@
 
 <div class="alert alert-danger alert-dismissible"  style="display:none;width:150%;" id="showWg">
 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-<strong>Success!</strong> <span id="asa">This alert box could indicate a successful or positive action.</span><br>
+<strong>Fail!</strong> <span id="asa">This alert box could indicate a successful or positive action.</span><br>
 </div>
 
 </div>
@@ -106,6 +106,7 @@ readAccount();
 var deleteUser = null;
 var edit = false;
 var del = false;
+var deleteType = null;
 function createAccount(name){
 
 console.log(name);
@@ -118,8 +119,10 @@ document.getElementById('signUp').style.display='block';
 
 
 
-function deleteAccount(name){
-deleteUser = name;       
+function deleteAccount(name,type){
+deleteUser = name; 
+deleteType = type;      
+// alert(type);
 document.getElementById('tellUser').innerHTML = "Delete Account Username: " + name;
 document.getElementById('deleteAccount').style.display='block';   
 }
@@ -250,7 +253,8 @@ document.getElementById('status').style.display= 'block';
 // }
 
 function deleteA(){
-    if(typeAccount != "admin"){
+    
+    if(deleteType == "user"){
 $.post('src/indexPHP.php',{deleteAccount:"true",username:deleteUser},
 function(data){
         console.log(data);
@@ -262,7 +266,9 @@ function(data){
         document.getElementById('showWg').style.display='block'; 
         document.getElementById('deleteAccount').style.display='none';
     }
-    });}
+    });
+    
+    }
     else{
         // alert("Can't Delete Type Account: Admin.")
         document.getElementById('asa').innerHTML =  "Can't Delete Type Account: Admin."

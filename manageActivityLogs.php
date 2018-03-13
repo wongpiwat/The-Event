@@ -1,5 +1,5 @@
 <div class="container" style="width:100%;">
-<h1 align="center" style="margin-top:35px;">Manage Activity Logs</h1><br />
+<h1 align="center" style="margin-top:35px;"> Activity Logs</h1><br />
 
 <div class="table-responsive" id="activityLog">
 <table class="table table-hover table-bordered" style="margin-top:10px;text-align:center;">

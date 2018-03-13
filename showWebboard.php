@@ -95,7 +95,13 @@
     </div>
     <button  type="button" class="btn btn-success" style="color:white;float:right;margin-top:10px;" align="right" onclick="comment()" ><span class="glyphicon glyphicon-envelope" ></span> Comment</button>
 </div>
-
+<footer class="nav navbar-inverse">
+        <center>
+        <br>
+        <p style="color:white;"><b>&copy; Designed by Kitichai Garden</b></p>
+        <br>
+        </center>
+    </footer>
    <script type="text/javascript">
    	$(document).ready(function(){
   		$(".editor-header a").click(function(e){

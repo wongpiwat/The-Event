@@ -464,6 +464,12 @@ function certi(user,idEvent,nameEvent){
             $.post("src/indexPHP.php",{certis:true,username:user,idEvent:ealID,nameEvent:nameEvent,fNames:fname},
             function(sun){
                 //  console.log(sun);
+
+                $.post("email/phpSendMailGmail.php",{title:title,body:body,email:email,fname:fname,certis:certis},
+            function(data){
+                //  alert(data);
+                // location.reload();
+            })
             });
            
 
@@ -472,11 +478,7 @@ function certi(user,idEvent,nameEvent){
            console.log(body);
            console.log(title);
            console.log(fname);
-            $.post("email/phpSendMailGmail.php",{title:title,body:body,email:email,fname:fname,certis:certis},
-            function(data){
-                //  alert(data);
-                // location.reload();
-            })
+
             
             });
             //createCertificate  $_SERVER['DOCUMENT_ROOT'].'/ProjectWebtech_1/certificates/'.$idEvent.'/'.$username.'.pdf'

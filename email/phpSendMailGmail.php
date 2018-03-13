@@ -17,14 +17,18 @@
 	//$mail->AddReplyTo = "support@thaicreate.com"; // Reply
 	$mail->FromName = $_POST['title']  ;// set from Name
 	$mail->Subject = $_POST['title'] ; 
-	$mail->Body = $_POST['body'] ;
-
+	
+	$b = $_POST['body'] ;
+	if(isset($_POST['qr'])){
+		$b .= '<a  href="'.$_POST['qr'].'"><img  src="'.$_POST['qr'].'" alt="QR code" /></a>';
+	}
+	$mail->Body = $b;
 	$mail->AddAddress($_POST['email'] , $_POST['fname'] ); // to Address
 	if(isset($_POST['certis'])){
-		$mail->AddAttachment($_SERVER['DOCUMENT_ROOT'].$_POST['certis']);
+		$mail->AddAttachment($_POST['certis']);
 	}
 	
-
+	// $_SERVER['DOCUMENT_ROOT']
 	//$mail->AddCC("member@thaicreate.com", "Mr.Member ShotDev"); //CC
 	//$mail->AddBCC("member@thaicreate.com", "Mr.Member ShotDev"); //CC
 
